@@ -1,6 +1,8 @@
 package AgileTraining.Backend.entities;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.sql.Date;
 
@@ -14,6 +16,11 @@ public class Activity {
 
     private Date duration;
     private Date prevTime;
+
+
+    @ManyToOne
+    @JoinColumn(name = "module_id")
+    private Module module;
 
     public Activity() {
     }

@@ -9,5 +9,4 @@ public class AgileTrainingBeApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(AgileTrainingBeApplication.class, args);
 	}
-
 }

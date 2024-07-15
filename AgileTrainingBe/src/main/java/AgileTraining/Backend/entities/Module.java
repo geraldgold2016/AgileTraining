@@ -16,6 +16,13 @@ public class Module {
     private String module_video;
     private Boolean is_completed;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_id")
+    private Course course;
+
+
+
+
     public Module() {
     }
 

@@ -15,6 +15,13 @@ public class Subscription {
     private Boolean is_sub_valid;
     private Boolean is_certificate_issued;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_id")
+    private Course course;
     public Subscription() {
     }
 

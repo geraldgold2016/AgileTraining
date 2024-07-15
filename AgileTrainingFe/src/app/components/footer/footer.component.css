@@ -1,0 +1,28 @@
+footer
+{
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+
+    background-color: #333;
+    padding: 10px;
+}
+
+a 
+{
+  float: left;
+  font-size: 16px;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+
+  padding: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+a:hover
+{
+  background-color: rgb(169, 169, 169);
+}

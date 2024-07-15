@@ -1,0 +1,42 @@
+h1
+{
+    text-align: center;
+}
+h3
+{
+    margin-left: 50px;
+}
+
+#corsiIscritti
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#corsiInteressanti
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.riga
+{
+    display: flex;
+    margin: 10px;
+}
+.riga div
+{
+    /*padding: 50px 60px 50px 60px;*/
+    height: 130px;
+    width: 190px;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 20px;
+    border: solid 4px black;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

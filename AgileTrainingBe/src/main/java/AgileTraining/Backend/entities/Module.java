@@ -11,10 +11,10 @@ public class Module {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String module_name;
-    private String module_description;
-    private String module_video;
-    private Boolean is_completed;
+    private String moduleName;
+    private String moduleDescription;
+    private String moduleVideo;
+    private Boolean isCompleted;
 
     public Module() {
     }
@@ -27,35 +27,35 @@ public class Module {
         this.id = id;
     }
 
-    public String getModule_name() {
-        return module_name;
+    public String getModuleName() {
+        return moduleName;
     }
 
-    public void setModule_name(String module_name) {
-        this.module_name = module_name;
+    public void setModuleName(String moduleName) {
+        this.moduleName = moduleName;
     }
 
-    public String getModule_description() {
-        return module_description;
+    public String getModuleDescription() {
+        return moduleDescription;
     }
 
-    public void setModule_description(String module_description) {
-        this.module_description = module_description;
+    public void setModuleDescription(String moduleDescription) {
+        this.moduleDescription = moduleDescription;
     }
 
-    public String getModule_video() {
-        return module_video;
+    public String getModuleVideo() {
+        return moduleVideo;
     }
 
-    public void setModule_video(String module_video) {
-        this.module_video = module_video;
+    public void setModuleVideo(String moduleVideo) {
+        this.moduleVideo = moduleVideo;
     }
 
-    public Boolean getIs_completed() {
-        return is_completed;
+    public Boolean getCompleted() {
+        return isCompleted;
     }
 
-    public void setIs_completed(Boolean is_completed) {
-        this.is_completed = is_completed;
+    public void setCompleted(Boolean completed) {
+        isCompleted = completed;
     }
 }

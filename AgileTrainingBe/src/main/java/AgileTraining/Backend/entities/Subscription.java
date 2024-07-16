@@ -13,7 +13,7 @@ public class Subscription {
 
     private Date registrationDate;
     private Boolean isSubValid;
-    private Boolean isCertificateIssued;
+    private Boolean isCertificateIssued = false;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

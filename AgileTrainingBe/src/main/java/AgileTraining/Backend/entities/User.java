@@ -23,7 +23,7 @@ public class User {
     private String gender;
     private String placeOfBirth;
     private Date birthDate;
-    private Integer phoneNumber;
+    private Long phoneNumber;
 
 
     public User() {
@@ -125,11 +125,11 @@ public class User {
         this.birthDate = birthDate;
     }
 
-    public Integer getPhoneNumber() {
+    public Long getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(Integer phoneNumber) {
+    public void setPhoneNumber(Long phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 }

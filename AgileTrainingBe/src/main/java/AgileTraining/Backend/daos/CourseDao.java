@@ -11,7 +11,7 @@ public interface CourseDao extends JpaRepository<Course, Integer> {
 
 
     // TODO - Implementare la query per ottenere i corsi completati dall'utente
-    @Query()
+    @Query(value="SELECT * FROM courses", nativeQuery = true)
 
     /*
     *   WHERE username = :username", nativeQuery = true)

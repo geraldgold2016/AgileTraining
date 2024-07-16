@@ -9,7 +9,6 @@ import AgileTraining.Backend.daos.UserDao;
 import AgileTraining.Backend.entities.Course;
 import AgileTraining.Backend.entities.Subscription;
 import AgileTraining.Backend.entities.User;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

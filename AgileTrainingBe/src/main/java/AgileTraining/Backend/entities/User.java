@@ -17,14 +17,15 @@ public class User {
     private String email;
     private String name;
     private String surname;
-    private String fiscal_code;
-    private String residential_address;
-    private String home_address;
+    private String fiscalCode;
+    private String residentialAddress;
+    private String homeAddress;
     private String gender;
-    private String place_of_birth;
-    private Date birth_date;
-    private Long phone_number;
+    private String placeOfBirth;
+    private Date birthDate;
+    private Long phoneNumber;
     private Boolean isLoggedIn;
+
 
     public User() {
     }
@@ -80,28 +81,28 @@ public class User {
         this.surname = surname;
     }
 
-    public String getFiscal_code() {
-        return fiscal_code;
+    public String getFiscalCode() {
+        return fiscalCode;
     }
 
-    public void setFiscal_code(String fiscal_code) {
-        this.fiscal_code = fiscal_code;
+    public void setFiscalCode(String fiscalCode) {
+        this.fiscalCode = fiscalCode;
     }
 
-    public String getResidential_address() {
-        return residential_address;
+    public String getResidentialAddress() {
+        return residentialAddress;
     }
 
-    public void setResidential_address(String residential_address) {
-        this.residential_address = residential_address;
+    public void setResidentialAddress(String residentialAddress) {
+        this.residentialAddress = residentialAddress;
     }
 
-    public String getHome_address() {
-        return home_address;
+    public String getHomeAddress() {
+        return homeAddress;
     }
 
-    public void setHome_address(String home_address) {
-        this.home_address = home_address;
+    public void setHomeAddress(String homeAddress) {
+        this.homeAddress = homeAddress;
     }
 
     public String getGender() {
@@ -120,21 +121,22 @@ public class User {
         this.gender = gender;
     }
 
-    public String getPlace_of_birth() {
-        return place_of_birth;
+    public String getPlaceOfBirth() {
+        return placeOfBirth;
     }
 
-    public void setPlace_of_birth(String place_of_birth) {
-        this.place_of_birth = place_of_birth;
+    public void setPlaceOfBirth(String placeOfBirth) {
+        this.placeOfBirth = placeOfBirth;
     }
 
-    public Date getBirth_date() {
-        return birth_date;
+    public Date getBirthDate() {
+        return birthDate;
     }
 
-    public void setBirth_date(Date birth_date) {
-        this.birth_date = birth_date;
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
     }
+
 
     public Long getPhone_number() {
         return phone_number;
@@ -142,5 +144,6 @@ public class User {
 
     public void setPhone_number(Long phone_number) {
         this.phone_number = phone_number;
+
     }
 }

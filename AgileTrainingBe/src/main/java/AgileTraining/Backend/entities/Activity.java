@@ -15,7 +15,7 @@ public class Activity {
     private Integer id;
 
     private Date duration;
-    private Date prev_time;
+    private Date prevTime;
 
 
     @ManyToOne
@@ -41,11 +41,11 @@ public class Activity {
         this.duration = duration;
     }
 
-    public Date getPrev_time() {
-        return prev_time;
+    public Date getPrevTime() {
+        return prevTime;
     }
 
-    public void setPrev_time(Date prev_time) {
-        this.prev_time = prev_time;
+    public void setPrevTime(Date prevTime) {
+        this.prevTime = prevTime;
     }
 }

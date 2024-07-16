@@ -9,8 +9,8 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String course_name;
-    private String course_description;
+    private String courseName;
+    private String courseDescription;
     private String category;
 
     public Course() {
@@ -28,20 +28,20 @@ public class Course {
         this.id = id;
     }
 
-    public String getCourse_name() {
-        return course_name;
+    public String getCourseName() {
+        return courseName;
     }
 
-    public void setCourse_name(String course_name) {
-        this.course_name = course_name;
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
 
-    public String getDescription() {
-        return course_description;
+    public String getCourseDescription() {
+        return courseDescription;
     }
 
-    public void setDescription(String description) {
-        this.course_description = description;
+    public void setCourseDescription(String courseDescription) {
+        this.courseDescription = courseDescription;
     }
 
     public String getCategory() {

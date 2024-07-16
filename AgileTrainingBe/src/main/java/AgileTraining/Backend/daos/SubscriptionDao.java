@@ -15,4 +15,10 @@ public interface SubscriptionDao extends JpaRepository<Subscription, Integer> {
             "JOIN courses ON subscriptions.course_id = courses.id " +
             "WHERE users.username = :username", nativeQuery = true)
     List<Object[]> getCourses(@Param("username") String username);
+
+    @Query(value="SELECT CASE WHEN CURRENT_DATE - registration_date <= 90 THEN TRUE ELSE FALSE END AS is_subscription_valid " +
+            "FROM subscriptions " +
+            "WHERE user_id = :id) ", nativeQuery = true)
+    Boolean isSubscriptionValid(@Param("id") Integer id);
+
 }

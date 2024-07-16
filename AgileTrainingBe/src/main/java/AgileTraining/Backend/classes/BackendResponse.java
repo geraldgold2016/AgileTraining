@@ -1,11 +1,17 @@
 package AgileTraining.Backend.classes;
 
+import AgileTraining.Backend.entities.Module;
+
 import java.util.List;
 
 public class BackendResponse {
 
     private List<?> lista;
     private String s;
+
+    public BackendResponse(Boolean isSubscriptionValid) {
+
+    }
 
     public List<?> getLista() {
         return lista;

@@ -9,25 +9,8 @@ import java.util.List;
 
 public interface ModuleDao extends JpaRepository<Module, Integer> {
 
-
-    @Query(value = "SELECT * FROM modules" +
-            "JOIN courses ON modules.course_id = courses.id " +
-            "WHERE courses.id = :id", nativeQuery = true)
-    default List<Module> getAllModules(@Param("id") Integer id) {
-        return null;
-    }
+    List<java.lang.Module> getCompletedModules();
 }
-
-//    @Query(value="SELECT * FROM modules"+
-//            "JOIN courses ON modules.course_id" +
-//            "JOIN users ON users.id"+
-//            "WHERE username = :username " +
-//            "WHERE courses.id = :id", nativeQuery = true)
-//    )
-//    List<Module> getCompletedModules(@Param("id")Integer id), @Param("id") Integer id);
-//}
-
-
 
 /*
 @Query(value="SELECT courses.course_name FROM users " +

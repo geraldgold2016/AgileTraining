@@ -72,4 +72,5 @@ public class Subscription {
     public void setCertificateIssued(Boolean certificateIssued) {
         isCertificateIssued = certificateIssued;
     }
+
 }

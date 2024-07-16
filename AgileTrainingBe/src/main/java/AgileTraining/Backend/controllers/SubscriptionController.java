@@ -60,9 +60,10 @@ public class SubscriptionController {
     }
 
 
-
     @PostMapping("/subscribeToCourse")
     public ResponseEntity<?> subscribeToCourse(@RequestBody SubscriptionRequest subscriptionRequest) {
+
+        // controllo che l'utente e il corso esistano
         Optional<Course> courseOptional = cDao.findById(subscriptionRequest.getCourseId());
         Course course;
         if (courseOptional.isPresent()) {
@@ -86,9 +87,10 @@ public class SubscriptionController {
             subscription = new Subscription();
             subscription.setUser(user);
             subscription.setCourse(course);
-            subscription.setRegistration_date(new Date(System.currentTimeMillis()));
+            // aggiungo la data di registrazione
+            subscription.setRegistrationDate(new Date(System.currentTimeMillis()));
             sDao.save(subscription);
-            return ResponseEntity.ok("Subscription updated successfully");
+            return ResponseEntity.status(200).body("Subscription updated successfully");
 
     }
 }

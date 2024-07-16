@@ -27,6 +27,7 @@ public class CourseController {
         return new BackendResponse(courses);
     }
 
+    //TODO: da sistemare
     @GetMapping("/completedCourses")
     public BackendResponse getCompletedCourses(@RequestBody User user) {
         List<Object[]> courses = cDao.getCompletedCourses(user.getUsername());

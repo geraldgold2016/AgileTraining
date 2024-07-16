@@ -13,13 +13,16 @@
   margin-bottom: 60px;
 }
 
-.userInp {
-  border: solid 2px;
+.userInp, .passInp {
+  border: none;
+  border-bottom: 2px solid black;
   margin: 20px;
-}
-.passInp {
-  border: solid 2px;
-  margin: 20px;
+  width: 80%;
+  font-size: 18px;
+  padding: 5px;
+  text-align: center;
+  outline: none;
+  box-shadow: none;
 }
 
 .btnLogin {
@@ -32,18 +35,17 @@
   background-color: #2d9bf0;
 }
 
-.passIcon{
-    display:none
-}
-.userIcon{
-    display: none;
+.passIcon {
+  display: none;
 }
 
+.userIcon {
+  display: none;
+}
 
-
-@media (max-width: 431px) {
+@media (orientation: portrait) {
   .loremP {
-   font-size: 20px;
+    font-size: 20px;
   }
 
   .container {
@@ -59,25 +61,34 @@
   .Login {
     font-size: 40px;
   }
-  .userInp {
-    border: none;
+
+  .inpBox {
     margin: 20px;
     font-size: 30px;
     text-align: center;
   }
-  .passInp {
+
+  .inpBox label {
+    position: absolute;
+  }
+
+  .userInp, .passInp {
     border: none;
+    border-bottom: 2px solid black;
     margin: 20px;
+    width: 80%;
     font-size: 30px;
+    padding: 5px;
     text-align: center;
+    outline: none;
+    box-shadow: none;
   }
 
   .btnLogin {
     border: none;
     padding: 4px 70px;
     border-radius: 50px;
-    font-size:30px ;
-   
+    font-size: 30px;
   }
 
   .btnLogin:hover {
@@ -88,66 +99,85 @@
   .lblUser {
     display: none;
   }
+
   .lblPass {
     display: none;
   }
 
-  .passIcon{display:block;}
-  .userIcon{display: block;}
+  .passIcon {
+    display: block;
+  }
+
+  .userIcon {
+    display: block;
+  }
 }
 
-@media(orientation:landscape){
-    .loremP {
-        margin: ;
-        font-size: 20px;
-       }
-     
-       .container {
-         text-align: center;
-         line-height: 20px;
-         margin: 0 auto;
-       }
-     
-       .intro {
-         margin-bottom: 40px;
-       }
-     
-       .Login {
-         font-size: 40px;
-       }
-       .userInp {
-         border: none;
-         margin: 20px;
-         font-size: 30px;
-         text-align: center;
-       }
-       .passInp {
-         border: none;
-         margin: 20px;
-         font-size: 30px;
-         text-align: center;
-       }
-     
-       .btnLogin {
-         border: none;
-         padding: 4px 70px;
-         border-radius: 50px;
-         font-size:30px ;
-        
-       }
-     
-       .btnLogin:hover {
-         color: white;
-         background-color: #2d9bf0;
-       }
-     
-       .lblUser {
-         display: none;
-       }
-       .lblPass {
-         display: none;
-       }
-     
-       .passIcon{display:block;}
-       .userIcon{display: block;}
+@media (orientation: landscape) {
+  .container {
+    text-align: center;
+    line-height: 20px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .intro {
+    margin-bottom: 20px;
+    font-size: 24px;
+  }
+
+  .loremP {
+    font-size: 16px;
+    margin-bottom: 30px;
+  }
+
+  .Login {
+    font-size: 32px;
+  }
+
+  .inpBox {
+    margin: 10px;
+    font-size: 24px;
+    text-align: center;
+  }
+
+  .userInp, .passInp {
+    border: none;
+    border-bottom: 2px solid black;
+    margin: 10px;
+    width: 70%;
+    font-size: 20px;
+    padding: 5px;
+    text-align: center;
+    outline: none;
+    box-shadow: none;
+  }
+
+  .btnLogin {
+    border: none;
+    padding: 4px 50px;
+    border-radius: 25px;
+    font-size: 24px;
+  }
+
+  .btnLogin:hover {
+    color: white;
+    background-color: #2d9bf0;
+  }
+
+  .lblUser {
+    display: none;
+  }
+
+  .lblPass {
+    display: none;
+  }
+
+  .passIcon {
+    display: block;
+  }
+
+  .userIcon {
+    display: block;
+  }
 }

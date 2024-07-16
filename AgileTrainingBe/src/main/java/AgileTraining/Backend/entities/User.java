@@ -29,6 +29,9 @@ public class User {
     public User() {
     }
 
+    public User(Integer userId) {
+    }
+
     public Integer getId() {
         return id;
     }

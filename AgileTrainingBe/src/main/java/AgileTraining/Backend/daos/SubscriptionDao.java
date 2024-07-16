@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface SubscriptionDao extends JpaRepository<Subscription, Integer> {
@@ -21,8 +22,7 @@ public interface SubscriptionDao extends JpaRepository<Subscription, Integer> {
             "WHERE user_id = :id) ", nativeQuery = true)
     Boolean isSubscriptionValid(@Param("id") Integer userId);
 
-
-
+    Optional<Subscription> findByUserIdAndCourseId(Integer userId, Integer courseId);
 
 
 //    @Query(value="SELECT CASE WHEN CURRENT_DATE - registration_date <= 90 THEN TRUE ELSE FALSE END AS is_subscription_valid " +

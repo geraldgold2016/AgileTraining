@@ -40,6 +40,21 @@ public class Subscription {
         this.registration_date = registration_date;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public Boolean getIs_certificate_issued() {
         return is_certificate_issued;

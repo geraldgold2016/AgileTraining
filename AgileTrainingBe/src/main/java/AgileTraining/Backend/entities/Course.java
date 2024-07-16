@@ -16,6 +16,10 @@ public class Course {
     public Course() {
     }
 
+    public Course(Integer courseId) {
+
+    }
+
     public Integer getId() {
         return id;
     }

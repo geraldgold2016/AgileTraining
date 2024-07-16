@@ -23,8 +23,8 @@ public class User {
     private String gender;
     private String place_of_birth;
     private Date birth_date;
-    private Integer phone_number;
-
+    private Long phone_number;
+    private Boolean isLoggedIn;
 
     public User() {
     }
@@ -105,6 +105,14 @@ public class User {
         return gender;
     }
 
+    public Boolean getLoggedIn() {
+        return isLoggedIn;
+    }
+
+    public void setLoggedIn(Boolean loggedIn) {
+        isLoggedIn = loggedIn;
+    }
+
     public void setGender(String gender) {
         this.gender = gender;
     }
@@ -125,11 +133,11 @@ public class User {
         this.birth_date = birth_date;
     }
 
-    public Integer getPhone_number() {
+    public Long getPhone_number() {
         return phone_number;
     }
 
-    public void setPhone_number(Integer phone_number) {
+    public void setPhone_number(Long phone_number) {
         this.phone_number = phone_number;
     }
 }

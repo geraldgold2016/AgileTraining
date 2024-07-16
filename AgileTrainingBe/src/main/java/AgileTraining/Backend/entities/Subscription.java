@@ -12,7 +12,6 @@ public class Subscription {
     private Integer id;
 
     private Date registration_date;
-    private Boolean is_sub_valid;
     private Boolean is_certificate_issued;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -41,13 +40,6 @@ public class Subscription {
         this.registration_date = registration_date;
     }
 
-    public Boolean getIs_sub_valid() {
-        return is_sub_valid;
-    }
-
-    public void setIs_sub_valid(Boolean is_sub_valid) {
-        this.is_sub_valid = is_sub_valid;
-    }
 
     public Boolean getIs_certificate_issued() {
         return is_certificate_issued;

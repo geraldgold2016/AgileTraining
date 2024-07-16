@@ -27,4 +27,10 @@ public class SubscriptionController {
         return new BackendResponse(courses);
     }
 
+
+    @GetMapping("/isSubscriptionValid")
+    public BackendResponse isSubscriptionValid(@RequestBody User user) {
+        Boolean isSubscriptionValid = sDao.isSubscriptionValid(user.getId());
+        return new BackendResponse(isSubscriptionValid);
+    }
 }

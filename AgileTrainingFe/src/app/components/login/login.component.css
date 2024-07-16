@@ -1,0 +1,39 @@
+.container{
+    text-align: center;
+    line-height: 20px;
+    margin:0 auto
+}
+
+.intro{
+    margin-bottom: 40px;
+}
+
+.loremP{
+    border:solid black 2px;
+    margin-bottom: 60px;
+}
+
+.userInp{
+border: solid 2px;
+margin: 20px;
+}
+.passInp{
+    border: solid 2px;
+    margin: 20px;
+    
+}
+
+.btnLogin{
+    border: none;
+    padding: 4px 70px;
+}
+
+.btnLogin:hover{
+color: white;
+background-color: #2d9bf0;
+
+}
+
+@media{
+    
+}

@@ -11,8 +11,9 @@ public class Subscription {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Date registration_date;
-    private Boolean is_certificate_issued;
+    private Date registrationDate;
+    private Boolean isSubValid;
+    private Boolean isCertificateIssued;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -32,20 +33,28 @@ public class Subscription {
         this.id = id;
     }
 
-    public Date getRegistration_date() {
-        return registration_date;
+    public Date getRegistrationDate() {
+        return registrationDate;
     }
 
-    public void setRegistration_date(Date registration_date) {
-        this.registration_date = registration_date;
+    public void setRegistrationDate(Date registrationDate) {
+        this.registrationDate = registrationDate;
     }
 
 
-    public Boolean getIs_certificate_issued() {
-        return is_certificate_issued;
+    public Boolean getSubValid() {
+        return isSubValid;
     }
 
-    public void setIs_certificate_issued(Boolean is_certificate_issued) {
-        this.is_certificate_issued = is_certificate_issued;
+    public void setSubValid(Boolean subValid) {
+        isSubValid = subValid;
+    }
+
+    public Boolean getCertificateIssued() {
+        return isCertificateIssued;
+    }
+
+    public void setCertificateIssued(Boolean certificateIssued) {
+        isCertificateIssued = certificateIssued;
     }
 }

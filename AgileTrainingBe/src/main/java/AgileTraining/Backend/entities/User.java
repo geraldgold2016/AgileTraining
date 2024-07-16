@@ -138,12 +138,11 @@ public class User {
     }
 
 
-    public Long getPhone_number() {
-        return phone_number;
+    public Long getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone_number(Long phone_number) {
-        this.phone_number = phone_number;
-
+    public void setPhoneNumber(Long phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }

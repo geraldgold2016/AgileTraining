@@ -1,15 +1,12 @@
 package AgileTraining.Backend.controllers;
 
 
-import AgileTraining.Backend.classes.BackendResponse;
 import AgileTraining.Backend.daos.ModuleDao;
-import AgileTraining.Backend.entities.Course;
-import AgileTraining.Backend.entities.User;
+import AgileTraining.Backend.entities.Module;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.dao.DataAccessException;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,6 +17,7 @@ public class ModuleController {
     @Autowired
     ModuleDao mDao;
 
+    //  mi sa che non serve
     public static class request {
         private Integer userId;
         private Integer courseId;
@@ -42,16 +40,25 @@ public class ModuleController {
     }
 
 
-//    @GetMapping("/allModules")
-//    public BackendResponse getAllModules(@RequestBody Course course) {
-//        List<Module> modules = mDao.getAllModules(course.getId());
-//        return new BackendResponse(modules);
-//    }
+    @GetMapping("/allModules")
+    public ResponseEntity<Object> getAllModules(@RequestParam Integer courseId) {
+        try {
+            // Recupera i moduli dal DAO usando l'ID del corso
+            List<Module> modules = mDao.getAllModules(courseId);
 
-
-    @GetMapping("/completedModules")
-    public BackendResponse getCompletedModules(@RequestBody Course course, User user) {
-        List<Module> modules = mDao.getCompletedModules();
-        return new BackendResponse(modules);
+            // Crea una risposta contenente i moduli
+            return ResponseEntity.status(200).body(modules);
+        } catch (DataAccessException e) {
+            // Gestione delle eccezioni relative all'accesso ai dati
+            return ResponseEntity.status(500).body("Errore nell'accesso ai dati: " + e.getMessage());
+        } catch (Exception e) {
+            // Gestione di altre eccezioni
+            return ResponseEntity.status(500).body("Si è verificato un errore: " + e.getMessage());
+        }
     }
 }
+
+
+
+
+

@@ -10,7 +10,8 @@ import static org.hibernate.FetchMode.JOIN;
 
 public interface UserDao extends JpaRepository<User, Integer> {
 
-    @Query(value = "select * from users where username = :username", nativeQuery = true) // è native perchè è una query sql
+
+    @Query(value = "select * from users where username = :username", nativeQuery = true)
     User userLogin(@Param("username") String username);
 
 }

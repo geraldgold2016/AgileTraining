@@ -48,7 +48,67 @@ import org.springframework.web.bind.annotation.RestController;
         }
 
 
+        public static class LoginRequest {
+            private String username;
+            private String password;
+
+            public String getUsername() {
+                return username;
+            }
+
+            public void setUsername(String username) {
+                this.username = username;
+            }
+
+            public String getPassword() {
+                return password;
+            }
+
+            public void setPassword(String password) {
+                this.password = password;
+            }
+        }
+
         @PostMapping("/login")
+        public ResponseEntity<Object> loginAndPrivateArea(@RequestBody LoginRequest loginRequest, HttpSession session) {
+
+            // Step 1: Effettua il login dell'user
+            User u = uDao.userLogin(loginRequest.getUsername());
+
+            if (u == null) {
+                return ResponseEntity.status(400).body(new BackendResponse("user non trovato!"));
+            }
+
+            if (!encoder.matches(loginRequest.getPassword(), u.getPassword())) {
+                return ResponseEntity.status(400).body(new BackendResponse("Password non valida"));
+            }
+
+            // Step 2: Imposta l'user come loggato nella sessione
+            session.setAttribute(u.getUsername(), true);
+
+            // Step 3: Genera il token JWT
+            String userToken = JwtUtils.generateToken(u.getName(), u.getSurname(), u.getUsername());
+
+            // Step 4: Verifica se l'user ha accesso alla private area usando il token JWT appena generato
+            Jws<Claims> claims = JwtUtils.verifyToken(userToken);
+
+            if (claims == null) {
+                return ResponseEntity.status(400).body(new BackendResponse("Token non valido"));
+            }
+
+            Boolean isLoggedIn = (Boolean) session.getAttribute(u.getUsername());
+
+            if (isLoggedIn == null || !isLoggedIn) {
+                return ResponseEntity.status(401).body(new BackendResponse("User non loggato"));
+            }
+
+            // Se tutte le verifiche sono passate, l'user ha accesso alla private area
+            return ResponseEntity.status(200).body(new BackendResponse("Puoi accedere ai corsi"));
+        }
+
+
+        /*
+                @PostMapping("/login")
         public ResponseEntity<Object> loginAndPrivateArea(@RequestBody User user, HttpSession session) {
 
             // Step 1: Effettua il login dell'user
@@ -84,4 +144,6 @@ import org.springframework.web.bind.annotation.RestController;
             // Se tutte le verifiche sono passate, l'user ha accesso alla private area
             return ResponseEntity.status(200).body(new BackendResponse("Puoi accedere ai corsi"));
         }
+        */
+
     }

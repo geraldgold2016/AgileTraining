@@ -52,14 +52,36 @@ public class SubscriptionController {
         }
     }
 
-    
+    public static class UserIdRequest {
+
+        private Integer userId;
+
+        public Integer getUserId() {
+            return userId;
+        }
+
+        public void setUserId(Integer userId) {
+            this.userId = userId;
+        }
+
+    }
+
+    // endpoint per ottenere i corsi a cui l'utente è iscritto
     @GetMapping("/subscriptions")
-    public BackendResponse getCourses(@RequestBody User user) {
-        List<Object[]> courses = sDao.getCourses(user.getUsername());
-        return new BackendResponse(courses);
+    public ResponseEntity getCourses(@RequestBody UserIdRequest userIdRequest) {
+        List<Object[]> courses = sDao.getCourses(userIdRequest.getUserId());
+        return ResponseEntity.status(200).body(courses);
+    }
+
+    // endpoint per ottenere i corsi a cui l'utente non è iscritto
+    @GetMapping("/coursesAvailable")
+    public ResponseEntity getMoreCourses(@RequestBody UserIdRequest userIdRequest) {
+        List<Object[]> courses = sDao.getMoreCourses(userIdRequest.getUserId());
+        return ResponseEntity.status(200).body(courses);
     }
 
 
+    // endpoint per iscriversi a un corso
     @PostMapping("/subscribeToCourse")
     public ResponseEntity<?> subscribeToCourse(@RequestBody SubscriptionRequest subscriptionRequest) {
 
@@ -80,8 +102,13 @@ public class SubscriptionController {
             return ResponseEntity.badRequest().body("User not found");
         }
 
-        // TODO Aggiungere controllo per evitare che un utente si iscriva due volte allo stesso corso
-        // Optional<Subscription> existingSubscription = sDao.findByUserIdAndCourseId(subscriptionRequest.getUserId(), subscriptionRequest.getCourseId());
+
+        // Check if the user is already subscribed to the course
+        Optional<Subscription> existingSubscription = sDao.findByUserIdAndCourseId(user.getId(), course.getId());
+        if (existingSubscription.isPresent()) {
+            return ResponseEntity.badRequest().body("User is already subscribed to this course");
+        }
+
         Subscription subscription;
 
             subscription = new Subscription();
@@ -95,9 +122,11 @@ public class SubscriptionController {
     }
 }
 
-//    @GetMapping("/isSubscriptionValid")
-//    public BackendResponse isSubscriptionValid(@RequestBody User user) {
-//        Boolean isSubscriptionValid = sDao.isSubscriptionValid(user.getId());
-//        return new BackendResponse(isSubscriptionValid);
-//    }
+/*
+    @GetMapping("/isSubscriptionValid")
+    public BackendResponse isSubscriptionValid(@RequestBody User user) {
+        Boolean isSubscriptionValid = sDao.isSubscriptionValid(user.getId());
+        return new BackendResponse(isSubscriptionValid);
+    }
+*/
 

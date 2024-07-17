@@ -1,0 +1,149 @@
+/* Stili di base per il layout generale */
+.container {
+  text-align: center;
+  line-height: 20px;
+  margin: 0 auto;
+  max-width: 800px; /* Larghezza massima del contenitore */
+}
+
+.intro {
+  margin-bottom: 40px;
+  font-size: 24px;
+}
+
+.loremP {
+  border: solid black 2px;
+  margin-bottom: 60px;
+  padding: 20px;
+  font-size: 18px;
+}
+
+.Login {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.inpBox {
+  margin: 20px;
+  font-size: 20px;
+  text-align: center;
+  position: relative; /* Per posizionare le icone FontAwesome */
+}
+
+.userInp, .passInp {
+  border: none;
+  border-bottom: 2px solid black;
+  margin: 12px;
+  width: 80%;
+  font-size: 18px;
+  padding: 8px;
+  text-align: center;
+  outline: none;
+  box-shadow: none;
+}
+
+.btnLogin {
+  border: none;
+  padding: 10px 40px;
+  font-size: 20px;
+  border-radius: 25px;
+}
+
+.btnLogin:hover {
+  color: white;
+  background-color: #2d9bf0;
+}
+
+.lblUser, .lblPass {
+  display: none;
+}
+
+.passIcon, .userIcon {
+  display: none;
+}
+
+.password-wrapper {
+  position: relative;
+}
+
+.passToggle {
+  position: absolute;
+  right: 10px; /* Posizione a destra rispetto all'input password */
+  top: 50%; /* Allinea verticalmente al centro */
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+@media (orientation: portrait) {
+  .container {
+    max-width: 600px;
+  }
+
+  .intro {
+    margin-bottom: 20px;
+    font-size: 25px;
+  }
+
+  .loremP {
+    font-size: 16px;
+    margin-bottom: 40px;
+  }
+
+  .Login {
+    font-size: 40px;
+  }
+
+  .inpBox {
+    margin: 16px;
+    font-size: 25px;
+  }
+
+  .userInp, .passInp {
+    margin: 10px;
+    width: 90%;
+    font-size: 22px;
+    padding: 10px;
+  }
+
+  .btnLogin {
+    padding: 12px 50px;
+    font-size: 24px;
+  }
+}
+
+@media (orientation: landscape) {
+  .container {
+    max-width: 1000px;
+  }
+
+  .intro {
+    margin-bottom: 10px;
+    font-size: 18px;
+  }
+
+  .loremP {
+    font-size: 14px;
+    margin-bottom: 30px;
+  }
+
+  .Login {
+    font-size: 19px;
+  }
+
+  .inpBox {
+    margin: 5px;
+    font-size: 18px;
+  }
+
+  .userInp, .passInp {
+    margin: 8px;
+    width: 70%;
+    font-size: 16px;
+    padding: 8px;
+  }
+
+  .btnLogin {
+    padding: 8px 40px;
+    font-size: 18px;
+  }
+}

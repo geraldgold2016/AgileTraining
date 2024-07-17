@@ -2,11 +2,23 @@
 {
     display: flex;
     justify-content: center;
-    overflow: hidden;
     align-items: center;
-
+    position: fixed;
+    top: 0px;
+    width: 100%;
     padding: 10px;
     background-color: #333;
+    z-index: 3;
+}
+.navbar-item
+{
+  display: block;
+}
+ul
+{
+  display: flex;
+  margin: 0px;
+  padding: 0px;
 }
   
 input
@@ -83,4 +95,89 @@ input
 .dropdown:hover .dropdown-content 
 {
   display: block;
+}
+
+
+
+.hamburger 
+{
+  display: none;
+  position: fixed;
+  cursor: pointer;
+
+  padding: 7px 10px 7px 10px;
+  border: white solid 2px;
+  border-radius: 7px;
+
+  margin-right: 40px;
+  margin-left: 40px;
+  z-index: 10;
+  right: 0px;
+  top: 10px;
+}
+.bar 
+{
+  display: block;
+  width: 25px;
+  height: 3px;
+  margin: 5px auto;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  background-color: #ffffff;
+}
+/*Media Query*/
+
+@media screen and (max-width: 1150px) /*al di sotto dei 1150 pixel*/
+{
+  .navbar li
+  {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+}
+
+@media screen and (max-width: 1050px) /*al di sotto dei 1050 pixel*/
+{
+  .navbar li
+  {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+}
+
+@media screen and (max-width: 900px) /*al di sotto dei 900 pixel*/
+{
+  .navbar li
+  {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+}
+
+@media screen and (max-width: 800px) /*al di sotto dei 800 pixel*/
+{
+  .navbar-item
+  {
+    display: none;
+  }
+  .navbar-item.active
+  {
+    display: block;
+  }
+  .hamburger 
+  {
+    display: block;
+  }
+  .navbar
+  {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  ul
+  {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }

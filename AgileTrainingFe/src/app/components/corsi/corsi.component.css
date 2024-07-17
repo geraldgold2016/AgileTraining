@@ -1,0 +1,73 @@
+h1
+{
+    text-align: center;
+    margin-top: 110px;
+}
+
+#corsi
+{
+    display: flex;
+    align-items: center;
+    margin: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#corsi div
+{
+    height: 130px;
+    width: 190px;
+    margin: 10px;
+    font-size: 20px;
+    border: solid 4px black;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttonVedi
+{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+    padding: 5px;
+    background-color: #333;
+    color: white;
+}
+
+#corsi div.corso
+{
+    display: none;
+}
+
+#corsi div.corso.active
+{
+    display: flex;
+}
+
+img
+{
+    width: 100%; /*larghezza quanto il contenitore dell'immagine*/
+    height: 100%; /*lunghezza quanto il contenitore dell'immagine*/
+}
+
+
+@media screen and (min-width: 891px) and (max-width: 1024px)/*al di sopra dei 891 pixel*/
+{
+    #corsi div
+    {
+        height: 160px;
+        width: 225px;
+    }
+}
+
+@media screen and (min-width: 360px) and (max-width: 500px) /*al di sopra dei 360 pixel e al di sotto dei 500 pixel*/
+{
+  #corsi div
+  {
+    height: 80px;
+    width: 140px;
+  }
+}

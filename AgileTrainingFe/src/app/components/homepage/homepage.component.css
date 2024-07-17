@@ -1,6 +1,7 @@
 h1
 {
     text-align: center;
+    margin-top: 110px; 
 }
 h3
 {
@@ -10,33 +11,143 @@ h3
 #corsiIscritti
 {
     display: flex;
-    justify-content: center;
     align-items: center;
+    margin: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 #corsiInteressanti
 {
     display: flex;
-    flex-direction: column;
     align-items: center;
+    margin: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
-.riga
+#corsiIscritti div
 {
-    display: flex;
-    margin: 10px;
-}
-.riga div
-{
-    /*padding: 50px 60px 50px 60px;*/
     height: 130px;
     width: 190px;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin: 10px;
     font-size: 20px;
     border: solid 4px black;
 
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+#corsiInteressanti div
+{
+    height: 130px;
+    width: 190px;
+    margin: 10px;
+    font-size: 20px;
+    border: solid 4px black;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttonVedi
+{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+    padding: 5px;
+    background-color: #333;
+    color: white;
+}
+
+#corsiIscritti div.corsoIscritto
+{
+    display: none;
+}
+
+#corsiInteressanti div.corsoInteressante
+{
+    display: none;
+}
+
+#corsiIscritti div.corsoIscritto.active
+{
+    display: flex;
+}
+
+#corsiInteressanti div.corsoInteressante.active
+{
+    display: flex;
+}
+
+img
+{
+    width: 100%; /*larghezza quanto il contenitore dell'immagine*/
+    height: 100%; /*lunghezza quanto il contenitore dell'immagine*/
+}
+
+
+@media screen and (min-width: 891px) and (max-width: 1024px)/*al di sopra dei 891 pixel*/
+{
+    #corsiIscritti div
+    {
+        height: 160px;
+        width: 225px;
+    }
+    #corsiInteressanti div
+    {
+        height: 160px;
+        width: 225px;
+    }
+}
+
+@media screen and (min-width: 360px) and (max-width: 500px) /*al di sopra dei 360 pixel e al di sotto dei 500 pixel*/
+{
+  #corsiIscritti div
+  {
+    height: 80px;
+    width: 140px;
+  }
+  #corsiInteressanti div
+  {
+    height: 80px;
+    width: 140px;
+  }
+}
+
+@media screen and (min-height: 751.18px) /*al di sopra dei 751.18 pixel*/
+{
+    h1
+    {
+        margin: 150px 10px 40px 10px;
+    }
+    h3 
+    {
+        margin: 50px;
+    }
+    .buttonVedi
+    {
+        margin-top: 16px;
+        margin-bottom: 16px;
+    }
+}
+
+@media screen and (min-height: 1200px) /*al di sopra dei 751.18 pixel*/
+{
+    h1
+    {
+        margin: 160px 20px 50px 20px;
+    }
+    h3 
+    {
+        margin: 60px;
+    }
+    .buttonVedi
+    {
+        margin-top: 25px;
+        margin-bottom: 25px;
+    }
 }

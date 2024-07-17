@@ -1,26 +1,42 @@
-
+/* Stili di base per il layout generale */
 .container {
   text-align: center;
   line-height: 20px;
   margin: 0 auto;
+  max-width: 800px; /* Larghezza massima del contenitore */
 }
 
 .intro {
   margin-bottom: 40px;
+  font-size: 24px;
 }
 
 .loremP {
   border: solid black 2px;
   margin-bottom: 60px;
+  padding: 20px;
+  font-size: 18px;
+}
+
+.Login {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.inpBox {
+  margin: 20px;
+  font-size: 20px;
+  text-align: center;
+  position: relative; /* Per posizionare le icone FontAwesome */
 }
 
 .userInp, .passInp {
   border: none;
   border-bottom: 2px solid black;
-  margin: 20px;
+  margin: 12px;
   width: 80%;
   font-size: 18px;
-  padding: 5px;
+  padding: 8px;
   text-align: center;
   outline: none;
   box-shadow: none;
@@ -28,7 +44,9 @@
 
 .btnLogin {
   border: none;
-  padding: 4px 70px;
+  padding: 10px 40px;
+  font-size: 20px;
+  border-radius: 25px;
 }
 
 .btnLogin:hover {
@@ -36,26 +54,38 @@
   background-color: #2d9bf0;
 }
 
-.passIcon {
+.lblUser, .lblPass {
   display: none;
 }
 
-.userIcon {
+.passIcon, .userIcon {
   display: none;
+}
+
+.password-wrapper {
+  position: relative;
+}
+
+.passToggle {
+  position: absolute;
+  right: 10px; /* Posizione a destra rispetto all'input password */
+  top: 50%; /* Allinea verticalmente al centro */
+  transform: translateY(-50%);
+  cursor: pointer;
 }
 
 @media (orientation: portrait) {
-  .loremP {
-    font-size: 20px;
-  }
-
   .container {
-    text-align: center;
-    line-height: 20px;
-    margin: 0 auto;
+    max-width: 600px;
   }
 
   .intro {
+    margin-bottom: 20px;
+    font-size: 25px;
+  }
+
+  .loremP {
+    font-size: 16px;
     margin-bottom: 40px;
   }
 
@@ -64,68 +94,31 @@
   }
 
   .inpBox {
-    margin: 20px;
+    margin: 16px;
     font-size: 25px;
-    text-align: center;
-  }
-
-  .inpBox label {
-    position: absolute;
   }
 
   .userInp, .passInp {
-    border: none;
-    border-bottom: 2px solid black;
-    margin: 20px;
+    margin: 10px;
     width: 90%;
-    font-size: 30px;
-    padding: 5px;
-    text-align: center;
-    outline: none;
-    box-shadow: none;
+    font-size: 22px;
+    padding: 10px;
   }
 
   .btnLogin {
-    border: none;
-    padding: 4px 70px;
-    border-radius: 50px;
-    font-size: 30px;
-  }
-
-  .btnLogin:hover {
-    color: white;
-    background-color: #2d9bf0;
-  }
-
-  .lblUser {
-    display: none;
-  }
-
-  .lblPass {
-    display: none;
-  }
-
-  .passIcon {
-    display: block;
-  }
-
-  .userIcon {
-    display: block;
+    padding: 12px 50px;
+    font-size: 24px;
   }
 }
 
 @media (orientation: landscape) {
   .container {
-    text-align: center;
-    line-height: 15px;
-    margin: 0 auto;
-    width: 100%;
+    max-width: 1000px;
   }
 
   .intro {
-    margin-bottom: 4px;
-    font-size:18px;
-    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 18px;
   }
 
   .loremP {
@@ -134,55 +127,23 @@
   }
 
   .Login {
-    font-size: 20px;
-    font-weight: bold;
-
+    font-size: 19px;
   }
 
   .inpBox {
-    margin: 4px;
-    font-size: 24px;
-    text-align: center;
+    margin: 5px;
+    font-size: 18px;
   }
 
   .userInp, .passInp {
-    border: none;
-    border-bottom: 2px solid black;
-    margin: 10px;
+    margin: 8px;
     width: 70%;
-    font-size: 20px;
-    padding: 5px;
-    text-align: center;
-    outline: none;
-    box-shadow: none;
+    font-size: 16px;
+    padding: 8px;
   }
 
   .btnLogin {
-    border: none;
-    padding: 4px 50px;
-    border-radius: 25px;
-    font-size: 24px;
-  }
-
-  .btnLogin:hover {
-    color: white;
-    background-color: #2d9bf0;
-  }
-
-  .lblUser {
-    display: none;
-  }
-
-  .lblPass {
-    display: none;
-  }
-
-  .passIcon {
-    display: block;
-    
-  }
-
-  .userIcon {
-    display: block;
+    padding: 8px 40px;
+    font-size: 18px;
   }
 }

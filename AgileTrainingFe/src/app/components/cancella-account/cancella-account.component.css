@@ -1,0 +1,113 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+  }
+  .container {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    padding: 20px;
+  
+    border-radius: 8px;
+    max-width: 400px;
+    width: 80%;
+    background-color: white;
+  }
+  .heading {
+    margin-top: 5rem;
+    font-family: serif;
+  }
+  
+  .usernameDiv {
+    margin: 20px;
+    margin-top: 5px;
+  }
+  .usernameDiv input {
+    border: 1px solid black;
+  }
+  .emailDiv {
+    margin: 20px;
+  }
+  
+  .emailDiv input {
+    border: 1px solid black;
+  }
+  
+  .passDiv {
+    margin: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .passDiv input {
+    border: 1px solid black;
+    
+  }
+  
+  #userPass{
+    width: 240px;
+  }
+  
+  #emailPass{
+    width: 240px;
+  }
+  
+  #passDiv{
+    width: 240px;
+  }
+  .usernameDiv label{
+    font-size: 20px;
+  }
+  
+  .emailDiv label{
+    font-size: 20px;
+  }
+  
+  .passDiv label{
+    font-size: 20px;
+  }
+  
+  .btnElimina{
+    padding: 4px 20px;
+    background-color: gray;
+    color: white;
+    border: none;
+  
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 20px;
+    width: 180px;
+  }
+  
+  .btnElimina:hover {
+    background-color: #007acc;
+    border: 4px;
+  }
+  
+  .btnUtente {
+    padding: 4px 20px;
+    background-color: gray;
+    color: white;
+    border: none;
+  
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 180px;
+  }
+  
+  .btnUtente:hover {
+    background-color: #007acc;
+    border: 4px;
+  }
+  
+  input[type=checkbox]
+  {
+    font-size: 4px;
+  }
+  
+  

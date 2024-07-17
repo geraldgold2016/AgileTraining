@@ -1,3 +1,5 @@
+
+
 .profiloDiv {
     width: 100%;
     margin-top: 65px;
@@ -64,62 +66,31 @@
     color: white;
 }
 
-.zonaCertificatiDiv{
-    position: relative;
+
+.form-row {
+    display: flex;
+    justify-content: space-between; 
+    margin-bottom: 10px; 
+
+}
+
+.form-group {
+    flex: 1; 
+    margin-right: 10px; 
+}
+
+label {
+    display: block; 
+    margin-bottom: 5px; 
+}
+
+.app-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
     width: 100%;
-    height: 200px;
-    margin-top: 40px;
-    
-}
-
-.corso {
-    
-    position: absolute;
-    width: calc(50% - 40px); 
-    height: calc(50% - 40px); 
+    background-color: #333;
+    color: white;
     text-align: center;
-    
+    padding: 10px;
   }
-
-.corso1{
-top: 0;
-left: 0;
-
-} 
-
-.corso1 p{
-    border: 2px solid black;
-    padding:25px;
-}
-
-.corso2{
-    top: 0;
-    right: 0
-
-}
-
-.corso2 p{
-    border: 2px solid black;
-    padding:25px;
-}
-.corso3{
-   bottom: 0;
-   left: 0;
-   
-}
-
-.corso3 p{
-    border: 2px solid black;
-    padding:25px;
-}
-.corso4{
-    bottom:0;
-    right: 0;
-}
-
-.corso4 p{
-    border: 2px solid black;
-    padding:25px;
-}
-
-

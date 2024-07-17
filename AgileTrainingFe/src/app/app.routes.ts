@@ -28,6 +28,9 @@ import { PreviewCorsoComponent } from './components/preview-corso/preview-corso.
 import { ProfiloUtenteComponent } from './components/profilo-utente/profilo-utente.component';
 import { ReimpostaUsernameComponent } from './components/reimposta-username/reimposta-username.component';
 import { ReimpostazioneDatiAnagraficiComponent } from './components/reimpostazione-dati-anagrafici/reimpostazione-dati-anagrafici.component';
+import { DatiAnagraficiComponent } from './components/dati-anagrafici/dati-anagrafici.component';
+import { CorsiIscrittiComponent } from './components/corsi-iscritti/corsi-iscritti.component';
+import { FotoProfiloComponent } from './components/foto-profilo/foto-profilo.component';
 
 export const routes: Routes = [
     {path:"",redirectTo:"login",pathMatch:"full"},
@@ -58,7 +61,11 @@ export const routes: Routes = [
     {path:"anteprimaCorso", component:PreviewCorsoComponent},
     {path:"profiloUtente", component:ProfiloUtenteComponent},
     {path:"reimpostaUsername", component:ReimpostaUsernameComponent},
-    {path:"reimpostaDatiAnagrafici", component:ReimpostazioneDatiAnagraficiComponent}
+    {path:"reimpostaDatiAnagrafici", component:ReimpostazioneDatiAnagraficiComponent},
+    {path:"datiAnagrafici", component:DatiAnagraficiComponent},
+    {path:"corsiIscritti", component:CorsiIscrittiComponent},
+    {path:"fotoProfilo",component:FotoProfiloComponent}
+
     
    
    

@@ -3,12 +3,12 @@ import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 
 @Component({
-  selector: 'app-dati-utente',
+  selector: 'app-dati-anagrafici',
   standalone: true,
   imports: [HeaderComponent,FooterComponent],
-  templateUrl: './dati-utente.component.html',
-  styleUrl: './dati-utente.component.css'
+  templateUrl: './dati-anagrafici.component.html',
+  styleUrl: './dati-anagrafici.component.css'
 })
-export class DatiUtenteComponent {
+export class DatiAnagraficiComponent {
 
 }

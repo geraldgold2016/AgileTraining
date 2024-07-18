@@ -1,32 +1,26 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [],
+  imports: [FormsModule,CommonModule],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  styleUrls: ['./header.component.css'] 
 })
-export class HeaderComponent 
-{
-  ngOnInit(): void 
-  {
-    const hamburger = document.querySelector(".hamburger");
-    const navItems = document.querySelectorAll<HTMLElement>(".navbar-item");
+export class HeaderComponent implements OnInit {
+  isExpanded: boolean = false;
+  dropdownOpen: boolean = false;
 
-    if (hamburger && navItems.length > 0) 
-    {
-      hamburger.addEventListener("click", () => {
-        navItems.forEach(navItem => {
-          navItem.classList.toggle('active');
-          // console.log(navItems);
-        });
-      });
-    } 
-    else 
-    {
-      console.error("Gli elementi 'navbar-item' o l'elemento 'hamburger' non sono stati trovati");
-    }
+  ngOnInit(): void {
   }
-  
+
+  toggleNavbar() {
+      this.isExpanded = !this.isExpanded;
+  }
+
+  toggleDropdown() {
+      this.dropdownOpen = !this.dropdownOpen;
+  }
 }

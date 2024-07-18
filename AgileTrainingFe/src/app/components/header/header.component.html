@@ -1,23 +1,45 @@
-<div class="navbar">
-    <ul>
-        <li><a href="/home">Logo(Home)</a></li>
-        <li class="navbar-item"><a href="/corsi">I nostri corsi</a></li>
-        <li class="navbar-item"><a href="/chiSiamo">Chi siamo</a></li>
-        <li class="navbar-item"><input type="text" placeholder="Search.."></li>
-        <li class="navbar-item">
-            <div class="dropdown">
-                <button class="dropbtn">Lingua
-                    <i class="fa fa-caret-down"></i>
-                </button>
-                <div class="dropdown-content">
-                    <a href="#">Italiano</a>
-                    <a href="#">Inglese</a>
+<nav class="navbar">
+    <a class="navbar-brand" href="/home">
+        <img class="logo" src="../../../assets/images/logo.png" alt="Logo" />
+    </a>
+    <button
+        class="navbar-toggler"
+        type="button"
+        aria-label="Toggle navigation"
+        (click)="toggleNavbar()"
+    >
+        <span class="navbar-toggler-icon">&#9776;</span>
+    </button>
+
+    <div
+        class="navbar-collapse"
+        [ngClass]="{ 'collapse': !isExpanded }"
+        id="navbarSupportedContent"
+    >
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/corsi">I nostri corsi</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/chiSiamo">Chi siamo</a>
+            </li>
+            <li class="nav-item dropdown" (click)="toggleDropdown()">
+                <div class="dropdown">
+                    <button class="dropbtn">Lingua
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-content" [ngClass]="{ 'show': dropdownOpen }">
+                        <a href="#">Italiano</a>
+                        <a href="#">Inglese</a>
+                    </div>
                 </div>
-            </div>
-        </li>
-        <li class="navbar-item"><a href="/profiloUtente">Profilo Utente</a></li>
-    </ul>
-</div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/datiAnagrafici">Profilo Utente</a>
+            </li>
+        </ul>
+    </div>
+</nav>
 <div class="hamburger">
     <span class="bar"></span>
     <span class="bar"></span>

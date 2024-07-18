@@ -1,6 +1,6 @@
 .profiloDiv {
     width: 100%;
-    margin-top: 65px;
+    
     text-align: center;
     border: 4px solid black;
     background-color: #f0f0f0;
@@ -10,7 +10,7 @@
 .dueDiv {
     display: flex;
     justify-content: space-between;
-    margin-top: 20px;
+   
     position: relative;
 }
 

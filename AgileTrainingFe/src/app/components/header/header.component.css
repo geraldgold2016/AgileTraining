@@ -98,7 +98,10 @@ input
 }
 
 
-
+.chiudi
+{
+  display: none;
+}
 .hamburger 
 {
   display: none;
@@ -112,7 +115,7 @@ input
   margin-right: 40px;
   margin-left: 40px;
   z-index: 10;
-  right: 0px;
+  left: 0px;
   top: 10px;
 }
 .bar 
@@ -125,8 +128,19 @@ input
   transition: all 0.3s ease-in-out;
   background-color: #ffffff;
 }
-/*Media Query*/
 
+.navbarSopra
+{
+  display: none;
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  background-color: #333;
+}
+
+
+
+/*Media Query*/
 @media screen and (max-width: 1150px) /*al di sotto dei 1150 pixel*/
 {
   .navbar li
@@ -156,13 +170,28 @@ input
 
 @media screen and (max-width: 800px) /*al di sotto dei 800 pixel*/
 {
+  .navbarSopra
+  {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;   
+
+    background-color: #333;
+    height: 66.4px;
+    z-index: 1;
+  }
   .navbar-item
   {
     display: none;
   }
-  .navbar-item.active
+  li.navbar-item.active
   {
     display: block;
+    margin-left: 50px;
+  }
+  .logoNavbar
+  {
+    display: none;
   }
   .hamburger 
   {
@@ -170,14 +199,95 @@ input
   }
   .navbar
   {
+    display: none;
+  }
+  .navbar.active
+  {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: flex-start;
+    flex-direction: row-reverse;    
+    height: 100%;
+    width: 70%;
+    z-index: 2;
+    animation: slideInFromLeft 0.5s ease-out;
   }
   ul
   {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
+    margin-top: 20px;
+  }
+  .logo
+  {
+    color: white;
+    text-decoration: none;
+    padding: 12px 16px;
+
+    margin-right: 40px;
+    margin-left: 40px;
+  }
+  .logo:hover
+  {
+    background-color: rgb(169, 169, 169);
+  }
+  .stratoSemiTrasparente
+  {
+    display: none;
+  }
+  .stratoSemiTrasparente.active
+  {
+    display: block;
+    background: rgba(85, 74, 74, 0.7);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 0;
+    animation: fadeIn 0.5s linear;
+  }
+  .chiudi
+  {
+    display: none;
+  }
+  .chiudi.active
+  {
+    display: block;
+    margin: 20px;
+    cursor: pointer;
+  }
+  input.active
+  {
+    margin-bottom: 50px;
+    width: 300px;
+  }
+  .dropdown.active
+  {
+    margin-top: 200px;
+  }
+
+
+  @keyframes slideInFromLeft 
+  {
+    0% {transform: translateX(-100%);opacity: 0;}
+    100% {transform: translateX(0);opacity: 1;}
+  }
+  @keyframes slideOutToLeft 
+  {
+    0% {transform: translateX(0);opacity: 1;}
+    100% {transform: translateX(-100%);opacity: 0;}
+  }
+
+  @keyframes fadeIn 
+  {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+  }
+  @keyframes fadeOut 
+  {
+    0% {opacity: 1;}
+    100% {opacity: 0;}
   }
 }

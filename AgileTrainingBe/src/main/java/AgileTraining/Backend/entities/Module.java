@@ -13,8 +13,15 @@ public class Module {
 
     private String moduleName;
     private String moduleDescription;
-    private String moduleVideo;
-    private Boolean isCompleted;
+
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_id")
+    private Course course;
+
+
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
@@ -50,19 +57,5 @@ public class Module {
         this.moduleDescription = moduleDescription;
     }
 
-    public String getModuleVideo() {
-        return moduleVideo;
-    }
 
-    public void setModuleVideo(String moduleVideo) {
-        this.moduleVideo = moduleVideo;
-    }
-
-    public Boolean getCompleted() {
-        return isCompleted;
-    }
-
-    public void setCompleted(Boolean completed) {
-        isCompleted = completed;
-    }
 }

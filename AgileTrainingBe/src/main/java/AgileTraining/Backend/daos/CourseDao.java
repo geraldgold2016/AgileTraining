@@ -10,19 +10,6 @@ import java.util.List;
 public interface CourseDao extends JpaRepository<Course, Integer> {
 
 
-    // TODO - Implementare la query per ottenere i corsi completati dall'utente
-    @Query()
-
-    /*
-    *   WHERE username = :username", nativeQuery = true)
-    *
-    *
-    */
-
-
-    List<Object[]> getCompletedCourses(@Param("username") String username);
-
-
     @Query(value="SELECT * FROM courses", nativeQuery = true)
     List<Course> getAllCourses();
 }

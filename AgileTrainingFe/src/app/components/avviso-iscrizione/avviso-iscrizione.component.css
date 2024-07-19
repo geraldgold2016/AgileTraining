@@ -1,56 +1,36 @@
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-  background-color: #f0f0f0;
-}
-.container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.container 
+{
   text-align: center;
   padding: 20px;
+  margin: 170px;
 
-  border-radius: 8px;
-  max-width: 400px;
-  width: 80%;
-  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-.heading {
+.heading 
+{
   font-family: serif;
 }
 
-.btnAnnulla {
-  padding: 4px 20px;
-  margin-bottom: 20px;
-  background-color: gray;
+button
+{
+  padding: 20px;
+  margin: 20px;
+  background-color: black;
   color: white;
-  border: none;
   width: 150px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-.btnAnnulla:hover {
-  background-color: #cc4100;
-  border: 4px;
+button:hover 
+{
+  background-color: #959595;
 }
 
-.btnTornaCorso {
-  padding: 4px 20px;
-  
-  background-color: gray;
-  color: white;
-  border: none;
-  width: 150px;
+a
+{
   cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.btnTornaCorso:hover {
-  background-color: #007acc;
-  border: 4px;
+  width: 150px;
 }

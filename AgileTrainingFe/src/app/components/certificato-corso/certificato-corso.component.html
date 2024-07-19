@@ -2,9 +2,8 @@
 
 <h1>Corso XXXXXX</h1>
 
-<h2>Congratulazioni! Hai superato l'esame.</h2>
-
 <div id="contenitoreCertificato">
+<div id="certificato">
     <h2>Certificato</h2>
     <p>Si certifica che nomeUtente cognomeUtente ha frequentato il corso XXXXXX <br>
         tenuto sul sito di AgileTraining <br>
@@ -21,12 +20,13 @@
     <img src="../../../assets/images/firma direttore agile training.png" class="contenitoreImmagine">
     <img src="../../../assets/images/firma vice direttore agile training.png" class="contenitoreImmagine">
     </div>
-    
-</div>
 
+</div>
+</div>
 <div id="opzioniCertificato">
-    <button class="opzione"><i class="fa-solid fa-download fa-2x"></i>Scarica Attestato</button>
-    <button class="opzione"><i class="fa-solid fa-print fa-2x"></i>Stampa Attestato</button>
+    <button class="opzione" (click)="downloadPDF()"><i class="fa-solid fa-download fa-2x"></i>Scarica
+        Certificato</button>
+    <button class="opzione" (click)="stampaPDF()"><i class="fa-solid fa-print fa-2x"></i>Stampa Certificato</button>
 </div>
 
 <button id="tornaCorso"><a href="corso">Torna al Corso</a></button>

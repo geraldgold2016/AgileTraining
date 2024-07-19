@@ -28,6 +28,9 @@ import { PreviewCorsoComponent } from './components/preview-corso/preview-corso.
 import { ProfiloUtenteComponent } from './components/profilo-utente/profilo-utente.component';
 import { ReimpostaUsernameComponent } from './components/reimposta-username/reimposta-username.component';
 import { ReimpostazioneDatiAnagraficiComponent } from './components/reimpostazione-dati-anagrafici/reimpostazione-dati-anagrafici.component';
+import { CertificatoCorsoComponent } from './components/certificato-corso/certificato-corso.component';
+import { AvvisoSceltaAnnullaIscrizioneComponent } from './components/avviso-scelta-annulla-iscrizione/avviso-scelta-annulla-iscrizione.component';
+import { AvvisoIscrizioneCorsoAnnullatoComponent } from './components/avviso-iscrizione-corso-annullato/avviso-iscrizione-corso-annullato.component';
 
 export const routes: Routes = [
     {path:"",redirectTo:"login",pathMatch:"full"},
@@ -41,9 +44,12 @@ export const routes: Routes = [
     {path:"registrazione", component:RegistrazioneComponent},
     {path:"avvisoRegister", component:AvvisoRegistrazioneComponent},
     {path:"avvisoUsernameSuccess", component:AvvisoUsernameSuccessComponent},
+    {path:"avvisoSceltaAnnulaIscrizione", component:AvvisoSceltaAnnullaIscrizioneComponent},
+    {path:"avvisoIscrizioneCorsoAnnullato", component:AvvisoIscrizioneCorsoAnnullatoComponent},
     {path:"cambioPassword", component:CambiaPasswordComponent},
     {path:"cancellaAccount", component:CancellaAccountComponent},
     {path:"certificati", component:CertificatiComponent},
+    {path:"certificatoCorso", component:CertificatoCorsoComponent},
     {path:"chiSiamo", component:ChiSiamoComponent},
     {path:"corsi", component:CorsiComponent},
     {path:"cercaCorsi", component:CorsiSearchComponent},

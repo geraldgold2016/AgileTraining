@@ -1,0 +1,39 @@
+#avvisoScelta
+{
+    margin-top: 150px;
+}
+#contenitoreScelta
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 100px 0px 110px 0px;
+}
+p
+{
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+button
+{
+    width: 200px;
+    padding: 20px;
+
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover
+{
+    background-color: rgb(68, 68, 68);    
+}
+
+a
+{
+    text-decoration: none;
+    color: white;
+    margin: 20px;
+}

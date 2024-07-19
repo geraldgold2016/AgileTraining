@@ -35,27 +35,6 @@ public class ActivityService {
     @Autowired
     private CourseDao cDao;
 
-//    @Transactional
-//    public Activity addActivity(Integer moduleId, Integer userId, Integer courseId) {
-//        // Recupero il modulo, l'utente e il corso
-//        Module module = mDao.findById(moduleId)
-//                .orElseThrow(() -> new IllegalArgumentException("Invalid module ID: " + moduleId));
-//        User user = uDao.findById(userId)
-//                .orElseThrow(() -> new IllegalArgumentException("Invalid user ID: " + userId));
-//        Course course = cDao.findById(courseId)
-//                .orElseThrow(() -> new IllegalArgumentException("Invalid course ID: " + courseId));
-//
-//        // Creo l'attività
-//        Activity activity = new Activity();
-////      activity.setDuration(duration);
-////      activity.setPrevTime((java.sql.Date) prevTime);
-////        activity.setIsCompleted(isCompleted);
-//        activity.setModule(module);
-//        activity.setUser(user);
-//        activity.setCourse(course);
-//
-//        return aDao.save(activity);
-//    }
 
     @Transactional
     public Activity addActivity(Integer moduleId, Integer userId, Integer courseId) {

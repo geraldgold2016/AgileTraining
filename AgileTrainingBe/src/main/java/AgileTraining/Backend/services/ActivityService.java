@@ -12,7 +12,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.sql.Date;
+import java.sql.Time;
 import java.util.List;
 
 @Service
@@ -74,8 +75,6 @@ public class ActivityService {
     }
 
 
-
-    //
     @Transactional
     public Activity markActivityAsCompleted(Integer activityId) {
         Activity activity = aDao.findById(activityId)
@@ -83,6 +82,15 @@ public class ActivityService {
 
         activity.setIsCompleted(true);
 
+        return aDao.save(activity);
+    }
+
+
+    @Transactional
+    public Activity updateActivity(Integer activityId, Time prevTime){
+        Activity activity = aDao.findById(activityId)
+                .orElseThrow(() -> new IllegalArgumentException("Activity non trovata: " + activityId));
+        activity.setPrevTime(prevTime);
         return aDao.save(activity);
     }
 }

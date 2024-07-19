@@ -3,7 +3,8 @@ package AgileTraining.Backend.entities;
 
 import jakarta.persistence.*;
 
-import java.sql.Date;
+import java.util.Date;
+
 
 @Entity
 @Table(name = "users")
@@ -24,8 +25,15 @@ public class User {
     private String placeOfBirth;
     private Date birthDate;
     private Long phoneNumber;
-    private Boolean isLoggedIn;
+    private String profileImageUrl;
 
+    public String getProfileImageUrl() {
+        return profileImageUrl;
+    }
+
+    public void setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
+    }
 
     public User() {
     }
@@ -109,14 +117,6 @@ public class User {
         return gender;
     }
 
-    public Boolean getLoggedIn() {
-        return isLoggedIn;
-    }
-
-    public void setLoggedIn(Boolean loggedIn) {
-        isLoggedIn = loggedIn;
-    }
-
     public void setGender(String gender) {
         this.gender = gender;
     }
@@ -136,7 +136,6 @@ public class User {
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
-
 
     public Long getPhoneNumber() {
         return phoneNumber;

@@ -1,7 +1,7 @@
 package AgileTraining.Backend.controllers;
 
 
-import AgileTraining.Backend.classes.BackendResponse;
+
 import AgileTraining.Backend.daos.CourseDao;
 
 import AgileTraining.Backend.daos.SubscriptionDao;
@@ -52,36 +52,39 @@ public class SubscriptionController {
         }
     }
 
-    public static class UserIdRequest {
 
-        private Integer userId;
-
-        public Integer getUserId() {
-            return userId;
-        }
-
-        public void setUserId(Integer userId) {
-            this.userId = userId;
-        }
-
-    }
-
-    // endpoint per ottenere i corsi a cui l'utente è iscritto
-    @GetMapping("/subscriptions")
-    public ResponseEntity getCourses(@RequestBody UserIdRequest userIdRequest) {
-        List<Object[]> courses = sDao.getCourses(userIdRequest.getUserId());
+    // endpoint per ottenere i corsi a cui l'utente è iscritto -- TESTATO
+    @GetMapping("/{id}/subscriptions")
+    public ResponseEntity getCourses(@PathVariable Integer id) {
+        List<Object[]> courses = sDao.getCourses(id);
         return ResponseEntity.status(200).body(courses);
     }
 
-    // endpoint per ottenere i corsi a cui l'utente non è iscritto
-    @GetMapping("/coursesAvailable")
-    public ResponseEntity getMoreCourses(@RequestBody UserIdRequest userIdRequest) {
-        List<Object[]> courses = sDao.getMoreCourses(userIdRequest.getUserId());
+    // endpoint per ottenere i corsi a cui l'utente non è iscritto -- TESTATO
+    @GetMapping("/{id}/coursesAvailable")
+    public ResponseEntity getMoreCourses(@PathVariable Integer id) {
+        List<Object[]> courses = sDao.getMoreCourses(id);
         return ResponseEntity.status(200).body(courses);
     }
 
 
-    // endpoint per iscriversi a un corso
+    //end point to mark a certificate as issued -- TESTATO
+    // esempio http://localhost:8080/certificateIssued?userId=1&courseId=1
+    @PostMapping("/certificateIssued")
+    public ResponseEntity<?> certificate(@RequestParam Integer userId, @RequestParam Integer courseId) {
+        Optional<Subscription> subscription = sDao.findByUserIdAndCourseId(userId, courseId);
+        if (subscription.isPresent()) {
+            Subscription s = subscription.get();
+            s.setCertificateIssued(true);
+            sDao.save(s);
+            return ResponseEntity.status(200).body("Certificate issued successfully");
+        } else {
+            return ResponseEntity.badRequest().body("Subscription not found");
+        }
+    }
+
+
+    // endpoint per iscriversi a un corso -- TESTATO
     @PostMapping("/subscribeToCourse")
     public ResponseEntity<?> subscribeToCourse(@RequestBody SubscriptionRequest subscriptionRequest) {
 
@@ -120,13 +123,41 @@ public class SubscriptionController {
             return ResponseEntity.status(200).body("Subscription updated successfully");
 
     }
+
+
+
+    @PostMapping("/newTest")
+    public ResponseEntity<?> newTest (@RequestBody NewTestRequest newTestRequest){
+        return null;
+    }
+
+    public static class NewTestRequest{
+        private Integer userId;
+        private Course courseId;
+
+        public Course getCourseId() {
+            return courseId;
+        }
+
+        public void setCourseId(Course courseId) {
+            this.courseId = courseId;
+        }
+
+        public Integer getUserId() {
+            return userId;
+        }
+
+        public void setUserId(Integer userId) {
+            this.userId = userId;
+        }
+    }
+
+
+
+
+
+
 }
 
-/*
-    @GetMapping("/isSubscriptionValid")
-    public BackendResponse isSubscriptionValid(@RequestBody User user) {
-        Boolean isSubscriptionValid = sDao.isSubscriptionValid(user.getId());
-        return new BackendResponse(isSubscriptionValid);
-    }
-*/
+
 

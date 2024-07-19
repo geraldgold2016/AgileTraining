@@ -12,7 +12,7 @@ public class Subscription {
     private Integer id;
 
     private Date registrationDate;
-    private Boolean isSubValid;
+//    private Boolean isSubValid;
     private Boolean isCertificateIssued;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -57,6 +57,7 @@ public class Subscription {
         this.user = user;
     }
 
+/*
     public Boolean getSubValid() {
         return isSubValid;
     }
@@ -64,6 +65,7 @@ public class Subscription {
     public void setSubValid(Boolean subValid) {
         isSubValid = subValid;
     }
+*/
 
     public Boolean getCertificateIssued() {
         return isCertificateIssued;

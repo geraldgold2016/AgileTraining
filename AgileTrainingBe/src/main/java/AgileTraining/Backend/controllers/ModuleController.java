@@ -17,31 +17,9 @@ public class ModuleController {
     @Autowired
     ModuleDao mDao;
 
-    //  mi sa che non serve
-    public static class request {
-        private Integer userId;
-        private Integer courseId;
 
-        public Integer getUserId() {
-            return userId;
-        }
-
-        public void setUserId(Integer userId) {
-            this.userId = userId;
-        }
-
-        public Integer getCourseId() {
-            return courseId;
-        }
-
-        public void setCourseId(Integer courseId) {
-            this.courseId = courseId;
-        }
-    }
-
-
-    @GetMapping("/allModules")
-    public ResponseEntity<Object> getAllModules(@RequestParam Integer courseId) {
+    @GetMapping("/{courseId}/allModules")  // TESTATO
+    public ResponseEntity<Object> getAllModules(@PathVariable Integer courseId) {
         try {
             // Recupera i moduli dal DAO usando l'ID del corso
             List<Module> modules = mDao.getAllModules(courseId);
@@ -57,8 +35,3 @@ public class ModuleController {
         }
     }
 }
-
-
-
-
-

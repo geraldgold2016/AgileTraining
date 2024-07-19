@@ -13,7 +13,7 @@ public class Module {
 
     private String moduleName;
     private String moduleDescription;
-// private String moduleVideo;
+
 
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -49,14 +49,6 @@ public class Module {
     public void setModuleDescription(String moduleDescription) {
         this.moduleDescription = moduleDescription;
     }
-
-//    public String getModuleVideo() {
-//        return moduleVideo;
-//    }
-//
-//    public void setModuleVideo(String moduleVideo) {
-//        this.moduleVideo = moduleVideo;
-//    }
 
 
 }

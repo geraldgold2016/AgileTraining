@@ -6,6 +6,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.sql.Date;
+import java.sql.Time;
 
 @Entity
 @Table(name = "activities")
@@ -17,15 +18,14 @@ public class Activity {
 
     private Date duration;
 
-    private Date prevTime;
+    private Time prevTime;
 
 
 
     // il suo valore di default dovrebbe essere false.
     // non sono sicura che funzioni...
-    @Column(columnDefinition = "boolean default false")
+    @Column(nullable = false)
     private Boolean isCompleted = false;
-
 
     @ManyToOne
     @JoinColumn(name = "module_id")
@@ -83,11 +83,11 @@ public class Activity {
         this.duration = duration;
     }
 
-    public Date getPrevTime() {
+    public Time getPrevTime() {
         return prevTime;
     }
 
-    public void setPrevTime(Date prevTime) {
+    public void setPrevTime(Time prevTime) {
         this.prevTime = prevTime;
     }
 
@@ -95,6 +95,11 @@ public class Activity {
         this.user = user;
     }
 
+    public Boolean getIsCompleted() {
+        return isCompleted;
+    }
+
     public void setIsCompleted(Boolean isCompleted) {
+        this.isCompleted = isCompleted;
     }
 }

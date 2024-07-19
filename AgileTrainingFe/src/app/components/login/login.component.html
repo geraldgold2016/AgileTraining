@@ -1,24 +1,44 @@
 <div class="container">
-    <h1 class="intro">Introduzione al sito</h1>
-    <div class="loremP">
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus cupiditate hic delectus similique sapiente expedita architecto, amet nesciunt porro quisquam ad quaerat quibusdam neque eos ipsum quo earum nam maxime. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ullam, odio recusandae asperiores aliquam sequi eaque assumenda molestiae doloribus libero. Quod quos maiores officia beatae, assumenda modi voluptatem autem sit odit.</p>
-    </div>
-    <div class="Login">
-        <form action="">
-            <h4>Login</h4>
-            <div class="inpBox">
-                <label for="" class="lblUser">Username</label>
-                <fa-icon class="userIcon" [icon]="['fas', 'user']"></fa-icon>
-                <input class="userInp" type="text" placeholder="inserisci il nome utente">
-            </div>
-            <div class="inpBox">
-                <label class="lblPass"><span></span>Password</label><br>
-                <div class="password-wrapper">
-                    <input type="password" class="passInp" placeholder="inserisci la Password">
-                    <fa-icon class="passToggle" [icon]="showPassword ? ['fas', 'eye-slash'] : ['fas', 'eye']" (click)="togglePasswordVisibility()"></fa-icon>
-                </div>
-            </div>
-            <button class="btnLogin">Login</button>
-        </form>
-    </div>
+  <h1 class="intro">Introduzione al sito</h1>
+  <div class="loremP">
+    <p>
+      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus
+      cupiditate hic delectus similique sapiente expedita architecto, amet
+      nesciunt porro quisquam ad quaerat quibusdam neque eos ipsum quo earum nam
+      maxime. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ullam,
+      odio recusandae asperiores aliquam sequi eaque assumenda molestiae
+      doloribus libero. Quod quos maiores officia beatae, assumenda modi
+      voluptatem autem sit odit.
+    </p>
+  </div>
+  <div class="Login">
+    <form action="">
+      <h4>Login</h4>
+      <div class="inpBox">
+        <label for="" class="lblUser">Username</label>
+        <fa-icon class="userIcon" [icon]="['fas', 'user']"></fa-icon>
+        <input
+          class="userInp"
+          type="text"
+          placeholder="inserisci il nome utente"
+        />
+      </div>
+      <div class="inpBox">
+        <label class="lblPass"><span></span>Password</label><br />
+        <div class="password-wrapper">
+          <input
+            type="password"
+            class="passInp"
+            placeholder="inserisci la Password"
+          />
+          <fa-icon
+            class="passToggle"
+            [icon]="showPassword ? ['fas', 'eye-slash'] : ['fas', 'eye']"
+            (click)="togglePasswordVisibility()"
+          ></fa-icon>
+        </div>
+      </div>
+
+    </form>      <a href="/home"><button class="btnLogin">Login</button></a>
+  </div>
 </div>

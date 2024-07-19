@@ -1,0 +1,88 @@
+
+.profiloDiv {
+    width: 100%;
+   
+    text-align: center;
+    border: 4px solid black;
+    background-color: #f0f0f0;
+    padding: 10px;
+}
+
+.dueDiv {
+    display: flex;
+    justify-content: space-between;
+  
+    position: relative;
+}
+
+.leftDiv, .rightDiv {
+    border-top: none;
+    text-align: center;
+    background-color: #fff;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    line-height: 20px;
+}
+
+.leftDiv {
+    width: 20%;
+}
+
+.rightDiv {
+    width: 80%;
+}
+
+.fotoProfilo {
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    border: 2px solid #333;
+}
+
+.divOpzione {
+    margin-top: 20px;
+}
+
+.divOpzione ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.divOpzione li {
+    margin-bottom: 5px;
+}
+
+.divOpzione li a {
+    text-decoration: none;
+    color: black;
+    padding: 10px;
+    display: block;
+    transition: background-color 0.3s;
+}
+
+.divOpzione li a:hover {
+    background-color: #e0e0e0;
+    color: white;
+}
+
+
+
+.cancBtn{
+   position: absolute;
+   top: 50%;
+   width: 70%;
+
+   
+   
+}
+
+.btnl{
+    padding: 20px 15px;
+    border-radius: 5px;
+}
+
+.btnl:hover{
+    background-color: rgb(23, 94, 170);
+    color: wheat;
+
+}

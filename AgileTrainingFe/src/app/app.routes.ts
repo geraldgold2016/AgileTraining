@@ -31,43 +31,56 @@ import { ReimpostazioneDatiAnagraficiComponent } from './components/reimpostazio
 import { CertificatoCorsoComponent } from './components/certificato-corso/certificato-corso.component';
 import { AvvisoSceltaAnnullaIscrizioneComponent } from './components/avviso-scelta-annulla-iscrizione/avviso-scelta-annulla-iscrizione.component';
 import { AvvisoIscrizioneCorsoAnnullatoComponent } from './components/avviso-iscrizione-corso-annullato/avviso-iscrizione-corso-annullato.component';
+import { DatiAnagraficiComponent } from './components/dati-anagrafici/dati-anagrafici.component';
+import { CorsiIscrittiComponent } from './components/corsi-iscritti/corsi-iscritti.component';
+import { FotoProfiloComponent } from './components/foto-profilo/foto-profilo.component';
+import { LogoutComponent } from './components/logout/logout.component';
+import { CancellaAccComponent } from './components/cancella-acc/cancella-acc.component';
+import { AvvisoLogoutComponent } from './components/avviso-logout/avviso-logout.component';
+import { ModulodatiComponent } from './components/modulodati/modulodati.component';
+
 
 export const routes: Routes = [
-    {path:"",redirectTo:"login",pathMatch:"full"},
-    {path:"login",component:LoginComponent},
-    {path:"sessione", component:SessioneComponent},
-    {path:"avvisoFoto", component:AvvisoCambioFotoComponent},
-    {path:"avvisocancellazione", component:AvvisoCancellazioneComponent},
-    {path:"avvisoDati", component:AvvisoDatiAnagraficiComponent},
-    {path:"avvisoIscrizione", component:AvvisoIscrizioneComponent},
-    {path:"avvisoPass", component:AvvisoPasswordSuccessComponent},
-    {path:"registrazione", component:RegistrazioneComponent},
-    {path:"avvisoRegister", component:AvvisoRegistrazioneComponent},
-    {path:"avvisoUsernameSuccess", component:AvvisoUsernameSuccessComponent},
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'sessione', component: SessioneComponent },
+  { path: 'avvisoFoto', component: AvvisoCambioFotoComponent },
+  { path: 'avvisocancellazione', component: AvvisoCancellazioneComponent },
+  { path: 'avvisoDati', component: AvvisoDatiAnagraficiComponent },
+  { path: 'avvisoIscrizione', component: AvvisoIscrizioneComponent },
+  { path: 'avvisoPass', component: AvvisoPasswordSuccessComponent },
+  { path: 'registrazione', component: RegistrazioneComponent },
+  { path: 'avvisoRegister', component: AvvisoRegistrazioneComponent },
+  { path: 'avvisoUsernameSuccess', component: AvvisoUsernameSuccessComponent },
     {path:"avvisoSceltaAnnulaIscrizione", component:AvvisoSceltaAnnullaIscrizioneComponent},
     {path:"avvisoIscrizioneCorsoAnnullato", component:AvvisoIscrizioneCorsoAnnullatoComponent},
-    {path:"cambioPassword", component:CambiaPasswordComponent},
-    {path:"cancellaAccount", component:CancellaAccountComponent},
-    {path:"certificati", component:CertificatiComponent},
+  { path: 'cambioPassword', component: CambiaPasswordComponent },
+  { path: 'cancellaAccount', component: CancellaAccountComponent },
+  { path: 'certificati', component: CertificatiComponent },
     {path:"certificatoCorso", component:CertificatoCorsoComponent},
-    {path:"chiSiamo", component:ChiSiamoComponent},
-    {path:"corsi", component:CorsiComponent},
-    {path:"cercaCorsi", component:CorsiSearchComponent},
-    {path:"corso", component:CorsoComponent},
-    {path:"datiUtente", component:DatiUtenteComponent},
-    {path:"esame", component:EsameComponent},
-    {path:"esameFail", component:EsameFailedComponent},
-    {path:"esameSuccess", component:EsameSuccessComponent},
-    {path:"home", component:HomepageComponent},
-    {path:"lingua", component:LinguaComponent},
-    {path:"passwordDimenticata", component:PasswordDimenticataComponent},
-    {path:"anteprimaCorso", component:PreviewCorsoComponent},
-    {path:"profiloUtente", component:ProfiloUtenteComponent},
-    {path:"reimpostaUsername", component:ReimpostaUsernameComponent},
-    {path:"reimpostaDatiAnagrafici", component:ReimpostazioneDatiAnagraficiComponent}
-    
-   
-   
-    
-
+  { path: 'chiSiamo', component: ChiSiamoComponent },
+  { path: 'corsi', component: CorsiComponent },
+  { path: 'cercaCorsi', component: CorsiSearchComponent },
+  { path: 'corso', component: CorsoComponent },
+  { path: 'datiUtente', component: DatiUtenteComponent },
+  { path: 'esame', component: EsameComponent },
+  { path: 'esameFail', component: EsameFailedComponent },
+  { path: 'esameSuccess', component: EsameSuccessComponent },
+  { path: 'home', component: HomepageComponent },
+  { path: 'lingua', component: LinguaComponent },
+  { path: 'passwordDimenticata', component: PasswordDimenticataComponent },
+  { path: 'anteprimaCorso', component: PreviewCorsoComponent },
+  { path: 'profiloUtente', component: ProfiloUtenteComponent },
+  { path: 'reimpostaUsername', component: ReimpostaUsernameComponent },
+  {
+    path: 'reimpostaDatiAnagrafici',
+    component: ReimpostazioneDatiAnagraficiComponent,
+  },
+  { path: 'datiAnagrafici', component: DatiAnagraficiComponent },
+  { path: 'corsiIscritti', component: CorsiIscrittiComponent },
+  { path: 'fotoProfilo', component: FotoProfiloComponent },
+  {path: 'logout',component: LogoutComponent},
+  {path: 'cancAcc',component: CancellaAccComponent},
+  {path: 'avvisoLogout',component: AvvisoLogoutComponent},
+  {path: 'modulodati',component: ModulodatiComponent}
 ];

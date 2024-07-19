@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 
+
+
 @Component({
   selector: 'app-header',
   standalone: true,
@@ -121,5 +123,7 @@ export class HeaderComponent
       console.error("Il genitore dell'elemento non è stato trovato.");
     }
   }
+
+ 
   
 }

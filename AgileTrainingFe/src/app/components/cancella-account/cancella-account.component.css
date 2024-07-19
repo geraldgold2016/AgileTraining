@@ -20,7 +20,7 @@ body {
     background-color: white;
   }
   .heading {
-    margin-top: 5rem;
+    margin-top: 20rem;
     font-family: serif;
   }
   
@@ -85,7 +85,7 @@ body {
   }
   
   .btnElimina:hover {
-    background-color: #007acc;
+    background-color: #cc4400;
     border: 4px;
   }
   

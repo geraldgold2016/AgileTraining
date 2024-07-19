@@ -14,69 +14,88 @@
       />
       <h3>Mario Rossi</h3>
     </div>
+
+    <!-- Menu a discesa per mobile -->
+    <div class="mobile-menu">
+      <select id="menuSelect" (change)="handleMenuChange($event)">
+        <option value="/datiAnagrafici">Dati Anagrafici</option>
+        <option value="/datiUtente" id="datiUtenteOption">Dati Utente</option>
+        <option value="/corsiIscritti">Corsi Iscritti</option>
+        <option value="/certificati">Certificati</option>
+        <option value="/fotoProfilo">Foto Profilo</option>
+        <option value="/cancellaAccount">Cancella Account</option>
+        <option value="/logout">Logout</option>
+      </select>
+      
+    </div>
+
     <div class="divOpzione">
       <ul>
         <li><a href="/datiAnagrafici">Dati Anagrafici</a></li>
         <li><a href="/datiUtente" id="datiUtenteLink">Dati Utente</a></li>
         <li><a href="/corsiIscritti">Corsi Iscritti</a></li>
         <li><a href="/certificati">Certificati</a></li>
-        <li><a href="/fotoProfilo">Foto profilo</a></li>
+        <li><a href="/fotoProfilo">Foto Profilo</a></li>
         <li><a href="/cancellaAccount">Cancella Account</a></li>
         <li><a href="/logout">Logout</a></li>
       </ul>
     </div>
   </div>
-  
+
   <div class="rightDiv">
     <div class="inpDiv">
-        <form class="form">
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="nome">Nome</label>
-                    <input name="nome" type="text">
-                </div>
-                <div class="form-group">
-                    <label for="">Cognome</label>
-                    <input type="text">
-                </div>
-            </div>
-            
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="">Codice Fiscale</label>
-                    <input type="text">
-                </div>
-                <div class="form-group">
-                    <label for="">Genere</label>
-                    <input type="text">
-                </div>
-            </div>
-            
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="">Data di Nascita</label>
-                    <input type="text">
-                </div>
-                <div class="form-group">
-                    <label for="">Luogo di nascita</label>
-                    <input type="text">
-                </div>
-            </div>
-            
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="">Indirizzo di Residenza</label>
-                    <input type="text">
-                </div>
-                <div class="form-group">
-                    <label for="">Indirizzo di Domicilio</label>
-                    <input type="text">
-                </div>
-            </div>
-            
-        </form>
-    </div><br>
-    <div><button>Reimposta dati anagrafici</button></div>
+      <form class="form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="nome">Nome</label>
+            <h6>Mario</h6>
+          </div>
+          <div class="form-group">
+            <label for="">Cognome</label>
+            <h6>Rossi</h6>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="">Codice Fiscale</label>
+           <h6>PCGSLC73H65C704Y</h6>
+          </div>
+          <div class="form-group">
+            <label for="">Genere</label>
+            <h6>M</h6>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="">Data di Nascita</label>
+            <h6>01/01/1996</h6>
+          </div>
+          <div class="form-group">
+            <label for="">Luogo di nascita</label>
+            <h6>Roma</h6>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="">Indirizzo di Residenza</label>
+            <h6>Via Donna Olimpia,42</h6>
+          </div>
+          <div class="form-group">
+            <label for="">Indirizzo di Domicilio</label>
+            <h6>Via Portuense,51</h6>
+          </div>
+        </div>
+      </form>
+      <div>
+        <a href="/modulodati">
+          <button class="btnDati">Reimposta dati anagrafici</button>
+        </a>
+      </div>
+    </div>
+    <br />
   </div>
 </div>
 

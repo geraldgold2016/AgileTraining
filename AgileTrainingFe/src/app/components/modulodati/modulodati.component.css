@@ -1,18 +1,17 @@
+.container{
+    text-align: center;
+    margin-top: 20px;
+}
+
 .profiloDiv {
     width: 100%;
-    
+ 
     text-align: center;
     border: 4px solid black;
     background-color: #f0f0f0;
     padding: 10px;
 }
 
-.dueDiv {
-    display: flex;
-    justify-content: space-between;
-   
-    position: relative;
-}
 
 .leftDiv, .rightDiv {
     border-top: none;
@@ -23,12 +22,14 @@
     line-height: 20px;
 }
 
-.leftDiv {
-    width: 20%;
-}
+
 
 .rightDiv {
-    width: 80%;
+padding: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center; 
 }
 
 .fotoProfilo {
@@ -64,65 +65,36 @@
     color: white;
 }
 
-.zonaCertificatiDiv{
-    position: relative;
-    width: 100%;
-    height: 200px;
-    margin-top: 40px;
-    
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px; 
 }
 
-.corso {
-    
-    position: absolute;
-    width: calc(50% - 40px); 
-    height: calc(50% - 40px); 
-    text-align: center;
-    
-  }
-
-
-  
-
-.corso1{
-top: 0;
-left: 0;
-
-} 
-
-.corso1 p{
-    border: 2px solid black;
-    padding:25px;
+.form-group {
+    flex: 1; 
+    margin-right: 10px; 
 }
 
-.corso2{
-    top: 0;
-    right: 0
-
+label {
+    display: block; 
+    margin-bottom: 5px; 
 }
 
-.corso2 p{
-    border: 2px solid black;
-    padding:25px;
-}
-.corso3{
-   bottom: 0;
-   left: 0;
-   
+.btnDati{
+padding: 5px;
+border-radius: 5px;
+width: 170px;
 }
 
-.corso3 p{
-    border: 2px solid black;
-    padding:25px;
-}
-.corso4{
-    bottom:0;
-    right: 0;
+.btnDati:hover,.btnTorna:hover{
+    background-color: lightskyblue;
+    color: #fff;
 }
 
-.corso4 p{
-    border: 2px solid black;
-    padding:25px;
+.btnTorna{
+   padding: 5px;
+   margin: 10px;
+   border-radius: 5px;
 }
-
 

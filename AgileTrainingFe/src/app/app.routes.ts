@@ -34,6 +34,8 @@ import { FotoProfiloComponent } from './components/foto-profilo/foto-profilo.com
 import { LogoutComponent } from './components/logout/logout.component';
 import { CancellaAccComponent } from './components/cancella-acc/cancella-acc.component';
 import { AvvisoLogoutComponent } from './components/avviso-logout/avviso-logout.component';
+import { ModulodatiComponent } from './components/modulodati/modulodati.component';
+
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -73,5 +75,6 @@ export const routes: Routes = [
   { path: 'fotoProfilo', component: FotoProfiloComponent },
   {path: 'logout',component: LogoutComponent},
   {path: 'cancAcc',component: CancellaAccComponent},
-  {path: 'avvisoLogout',component: AvvisoLogoutComponent}
+  {path: 'avvisoLogout',component: AvvisoLogoutComponent},
+  {path: 'modulodati',component: ModulodatiComponent}
 ];

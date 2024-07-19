@@ -1,12 +1,15 @@
-
-
+/* Stili base (per desktop) */
 .profiloDiv {
     width: 100%;
     
     text-align: center;
-    border: 4px solid black;
+    border: 2px solid black;
     background-color: #f0f0f0;
-    padding: 10px;
+    padding: 2px;
+}
+
+.profiloDiv h1 {
+    font-size: 30px;
 }
 
 .dueDiv {
@@ -25,12 +28,19 @@
     line-height: 20px;
 }
 
+.inpDiv {
+    width: 400px;
+    margin-left: 40px;
+}
+
 .leftDiv {
     width: 20%;
 }
 
 .rightDiv {
     width: 80%;
+    padding-top:60px ;
+    
 }
 
 .fotoProfilo {
@@ -66,12 +76,10 @@
     color: white;
 }
 
-
 .form-row {
     display: flex;
     justify-content: space-between; 
     margin-bottom: 10px; 
-
 }
 
 .form-group {
@@ -84,6 +92,17 @@ label {
     margin-bottom: 5px; 
 }
 
+.btnDati {
+    border: none;
+    background-color: rgba(128, 128, 128, 0.219);
+    border: 1px solid black;
+}
+
+.btnDati:hover {
+    background-color: #2d7ed4;
+    color: white;
+}
+
 .app-footer {
     position: fixed;
     bottom: 0;
@@ -93,4 +112,113 @@ label {
     color: white;
     text-align: center;
     padding: 10px;
-  }
+}
+
+
+
+.mobile-menu {
+    display: none;
+    margin: 20px;
+    width: 100%;
+}
+
+.mobile-menu select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+}
+
+
+@media (max-width: 768px) {
+    .dueDiv {
+        flex-direction: column;
+        margin-top: 10px;
+    }
+
+    .leftDiv, .rightDiv {
+        width: 100%;
+        text-align: left;
+    }
+
+    .inpDiv {
+        width: 90%;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .form-row {
+        flex-direction: column;
+    }
+
+    .form-group {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .fotoProfilo {
+        height: 50px;
+        width: 50px;
+    }
+
+    .mobile-menu {
+        display: block;
+    }
+
+    .divOpzione {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .profiloDiv h1 {
+        font-size: 24px;
+    }
+
+    .fotoProfilo {
+        height: 40px;
+        width: 40px;
+    }
+
+    .btnDati {
+        padding: 10px;
+    }
+
+    .divOpzione li a {
+        padding: 8px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 768px) and (orientation: landscape) {
+    .dueDiv {
+        flex-direction: column;
+        margin-top: 10px;
+    }
+
+    .leftDiv, .rightDiv {
+        width: 100%;
+        text-align: center;
+    }
+
+    .inpDiv {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    .form-row {
+        flex-direction: column;
+    }
+
+    .form-group {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .mobile-menu {
+        display: block;
+    }
+
+    .divOpzione {
+        display: none;
+    }
+}

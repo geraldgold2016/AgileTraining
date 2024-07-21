@@ -1,35 +1,35 @@
 <div class="container">
-  <h1 class="intro">Introduzione al sito</h1>
-  <div class="loremP">
-    <p>
-      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus
-      cupiditate hic delectus similique sapiente expedita architecto, amet
-      nesciunt porro quisquam ad quaerat quibusdam neque eos ipsum quo earum nam
-      maxime. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ullam,
-      odio recusandae asperiores aliquam sequi eaque assumenda molestiae
-      doloribus libero. Quod quos maiores officia beatae, assumenda modi
-      voluptatem autem sit odit.
-    </p>
+  <div class="logoDiv">
+    <img class="logo" src="../../../assets/images/logo.png" alt="" />
+
+    <h1 class="intro">{{ "intro" | translate }}</h1>
+    <div class="loremP">
+      <p>{{ "explain" | translate }}</p>
+    </div>
   </div>
   <div class="Login">
     <form action="">
-      <h4>Login</h4>
+      <h4>{{ "login" | translate }}</h4>
       <div class="inpBox">
-        <label for="" class="lblUser">Username</label>
+        <label for="" class="lblUser">{{
+          "username_placeholder" | translate
+        }}</label>
         <fa-icon class="userIcon" [icon]="['fas', 'user']"></fa-icon>
         <input
           class="userInp"
           type="text"
-          placeholder="inserisci il nome utente"
+          [placeholder]="'username_placeholder' | translate"
         />
       </div>
       <div class="inpBox">
-        <label class="lblPass"><span></span>Password</label><br />
+        <label class="lblPass"
+          ><span></span>{{ "password_placeholder" | translate }}</label
+        ><br />
         <div class="password-wrapper">
           <input
             type="password"
             class="passInp"
-            placeholder="inserisci la Password"
+            [placeholder]="'password_placeholder' | translate"
           />
           <fa-icon
             class="passToggle"
@@ -38,7 +38,13 @@
           ></fa-icon>
         </div>
       </div>
-
-    </form>      <a href="/home"><button class="btnLogin">Login</button></a>
+    </form>
+    <a href="/home"
+      ><button class="btnLogin">{{ "login" | translate }}</button></a
+    ><br />
+    <div class="linguaLogin">
+      <button (click)="switchLanguage('it')">Italiano</button>
+      <button (click)="switchLanguage('en')">English</button>
+    </div>
   </div>
 </div>

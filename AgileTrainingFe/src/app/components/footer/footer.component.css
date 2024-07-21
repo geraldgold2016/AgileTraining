@@ -1,29 +1,54 @@
-footer
-{
+/* Stile generale per il footer */
+footer {
   display: flex;
   justify-content: center;
-  align-items: flex-end;
-
+  align-items: center;
   background-color: #333;
-  padding: 10px;
-  
-}
-
-a 
-{
-  float: left;
-  font-size: 16px;
+  padding: 20px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
   color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-
-  padding: 10px;
-  margin-left: 10px;
-  margin-right: 10px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  border-top: 2px solid #444; /* Linea sottile sopra il footer */
 }
 
-a:hover
-{
-  background-color: rgb(169, 169, 169);
+/* Stile per i link nel footer */
+footer a {
+  color: white;
+  text-decoration: none;
+  margin: 0 15px;
+  font-size: 16px;
+  transition: color 0.3s, border-bottom 0.3s; /* Transizione fluida per hover */
+}
+
+/* Effetto hover per i link */
+footer a:hover {
+  color: #ddd;
+  border-bottom: 2px solid #ddd; /* Linea sottile sotto il link al passaggio del mouse */
+}
+
+/* Stile per il logo */
+footer .logoA img {
+  height: 40px; /* Altezza del logo */
+  width: auto;
+  margin-right: 20px; /* Spazio tra il logo e i link */
+}
+
+/* Layout per rendere il footer responsive */
+@media screen and (max-width: 600px) {
+  footer {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  footer a {
+    margin: 10px 0; /* Margine verticale per i link sui dispositivi mobili */
+  }
+
+  footer .logoA {
+    margin-bottom: 10px; /* Spazio tra il logo e i link sui dispositivi mobili */
+  }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 
@@ -7,60 +7,56 @@ import { FooterComponent } from '../footer/footer.component';
   standalone: true,
   imports: [HeaderComponent, FooterComponent],
   templateUrl: './homepage.component.html',
-  styleUrl: './homepage.component.css'
+  styleUrls: ['./homepage.component.css']
 })
-export class HomepageComponent 
-{
-  ngOnInit(): void 
-  {
-    const mostraAltro1 = document.querySelector("#MostraAltro1");
-    const corsoIscritto = document.querySelectorAll<HTMLElement>(".corsoIscritto");
+export class HomepageComponent implements OnInit {
+  constructor() {}
 
-    if (mostraAltro1 && corsoIscritto.length > 0) 
-    {
-      mostraAltro1.addEventListener("click", () => {
-        if (mostraAltro1.innerHTML == "Mostra Altro")
-        {
-          mostraAltro1.innerHTML = "Mostra meno";
-        }
-        else
-        {
-          mostraAltro1.innerHTML = "Mostra Altro"; //cambia il testo del pulsante
-        }
-        
-        corsoIscritto.forEach(corsoIscritto => {
-          corsoIscritto.classList.toggle('active');
-        });
+  ngOnInit(): void {
+    this.initToggle('MostraAltro1', 'corsoIscritto');
+    this.initToggle('MostraAltro2', 'corsoInteressante');
+    this.initCarousel('corsiIscrittiCarousel');
+    this.initCarousel('corsiInteressantiCarousel');
+  }
+
+  private initToggle(buttonId: string, itemClass: string): void {
+    const button = document.querySelector(`#${buttonId}`) as HTMLButtonElement;
+    const items = document.querySelectorAll<HTMLElement>(`.${itemClass}`);
+
+    if (button && items.length > 0) {
+      button.addEventListener('click', () => {
+        const isShowingMore = button.innerHTML === 'Mostra Altro';
+        button.innerHTML = isShowingMore ? 'Mostra meno' : 'Mostra Altro';
+        items.forEach(item => item.classList.toggle('active'));
       });
+    } else {
+      console.error(`Il pulsante con ID ${buttonId} o gli elementi con classe ${itemClass} non sono stati trovati`);
     }
-    else 
-    {
-      console.error("il pulsante o gli elementi con classe corsoIscritto non ci sono");
-    }
+  }
 
-    const mostraAltro2 = document.querySelector("#MostraAltro2");
-    const corsoInteressante = document.querySelectorAll<HTMLElement>(".corsoInteressante");
+  private initCarousel(carouselId: string): void {
+    const container = document.querySelector(`#${carouselId}`);
+    const prevButton = container?.querySelector('.carousel-button.prev');
+    const nextButton = container?.querySelector('.carousel-button.next');
+    const carousel = container?.querySelector('.carousel') as HTMLElement;
 
-    if (mostraAltro2 && corsoInteressante.length > 0) 
-    {
-      mostraAltro2.addEventListener("click", () => {
-        if (mostraAltro2.innerHTML == "Mostra Altro")
-        {
-          mostraAltro2.innerHTML = "Mostra meno";
-        }
-        else
-        {
-          mostraAltro2.innerHTML = "Mostra Altro"; //cambia il testo del pulsante
-        }
-        
-        corsoInteressante.forEach(corsoInteressante => {
-          corsoInteressante.classList.toggle('active');
-        });
+    if (prevButton && nextButton && carousel) {
+      prevButton.addEventListener('click', () => {
+        this.scrollCarousel(carousel, -1);
       });
+
+      nextButton.addEventListener('click', () => {
+        this.scrollCarousel(carousel, 1);
+      });
+    } else {
+      console.error(`Il contenitore del carosello o i pulsanti non sono stati trovati per ${carouselId}`);
     }
-    else 
-    {
-      console.error("il pulsante o gli elementi con classe corsoInteressante non ci sono");
-    }
+  }
+
+  private scrollCarousel(carousel: HTMLElement, direction: number): void {
+    carousel.scrollBy({
+      left: direction * carousel.clientWidth,
+      behavior: 'smooth'
+    });
   }
 }

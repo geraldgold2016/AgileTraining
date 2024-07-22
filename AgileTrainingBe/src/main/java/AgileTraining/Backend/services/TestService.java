@@ -1,11 +1,12 @@
 
 package AgileTraining.Backend.services;
 
-import AgileTraining.Backend.daos.OptionDao;
-import AgileTraining.Backend.daos.QuestionDao;
+import AgileTraining.Backend.daos.*;
 
-import AgileTraining.Backend.entities.Option;
+import AgileTraining.Backend.entities.*;
 
+import AgileTraining.Backend.entities.Module;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,14 @@ public class TestService {
     @Autowired
     private OptionDao oDao;
 
+    @Autowired
+    private UserDao uDao;
+
+    @Autowired
+    private TestDao tDao;
+
+    @Autowired
+    private TestResultDao trDao;
 
 
 //    public Test beginTest(Integer courseId) {
@@ -44,6 +53,33 @@ public class TestService {
         }
         return option.get().equals(correctOption);
     }
+
+    @Transactional
+    public Integer newTest(Integer userId, Integer testId) {
+        User user = uDao.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user ID: " + userId));
+        Test test = tDao.findById(testId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid test ID: " + testId));
+
+        TestResult testResult = new TestResult();
+
+        testResult.setUser(user);
+        testResult.setTest(test);
+
+        return trDao.save(testResult).getId();
+
+    }
+
+
+    @Transactional
+    public void submitTest(Integer testResult, Integer testId) {
+        TestResult completedTest = trDao.findById(testId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid test ID: " + testId));
+        completedTest.setResult(testResult);
+        completedTest.setnAttempts(completedTest.getnAttempts() + 1);
+        trDao.save(completedTest);
+    }
+
 
 }
 

@@ -4,7 +4,8 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "test_results")
-public class TestResults {
+public class TestResult {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -19,15 +20,7 @@ public class TestResults {
     @JoinColumn(name = "test_id")
     private Test test;
 
-    public Test getTest() {
-        return test;
-    }
-
-    public void setTest(Test test) {
-        this.test = test;
-    }
-
-    private Integer testResult;
+    private Integer result;
 
     private Integer nAttempts;
 
@@ -47,12 +40,20 @@ public class TestResults {
         this.nAttempts = nAttempts;
     }
 
-    public Integer getTestResult() {
-        return testResult;
+    public Integer getResult() {
+        return result;
     }
 
-    public void setTestResult(Integer testResult) {
-        this.testResult = testResult;
+    public void setResult(Integer result) {
+        this.result = result;
+    }
+
+    public Test getTest() {
+        return test;
+    }
+
+    public void setTest(Test test) {
+        this.test = test;
     }
 
     public User getUser() {

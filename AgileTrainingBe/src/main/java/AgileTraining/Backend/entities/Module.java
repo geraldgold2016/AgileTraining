@@ -23,12 +23,6 @@ public class Module {
 
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "course_id")
-    private Course course;
-
-
-
 
     public Module() {
     }

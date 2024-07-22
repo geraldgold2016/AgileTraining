@@ -90,6 +90,7 @@ public class JwtUtils {
         }
     }
 
+/*
     public static String generateToken(String nome, String cognome, String username) {
         try {
             return Jwts.builder().claim("nome", nome).claim("cognome", cognome).claim("username", username)
@@ -100,6 +101,23 @@ public class JwtUtils {
             return null;
         }
     }
+*/
+
+    public static String generateToken(String username) {
+        try {
+            return Jwts.builder().claim("username", username)
+                    .setId(UUID.randomUUID().toString()).setIssuedAt(Date.from(Instant.now()))
+                    .setExpiration(Date.from(Instant.now().plus(1, ChronoUnit.HOURS))).signWith(getPrivateKey())
+                    .compact();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+
+
+
+
 
     public static Jws<Claims> verifyToken(String jwt) {
 

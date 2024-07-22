@@ -30,6 +30,7 @@ public class UserController {
     UserService userService;
 
     // TESTATO
+    // TODO : check if the user already exists
     @PostMapping("/signup")
     public ResponseEntity<Object> signUp(@RequestBody User user) {
         System.out.println("Request ricevuta: " + user);
@@ -39,10 +40,9 @@ public class UserController {
         } catch (Exception e) {
             return ResponseEntity.status(500).body(new BackendResponse("Password non hashata"));
         }
-
         try {
             uDao.save(user);
-            System.out.println("user salvato con successo"); // Log per salvataggio
+            System.out.println("user salvato con successo");
         } catch (Exception e) {
             return ResponseEntity.status(500).body(new BackendResponse("user non salvato"));
         }
@@ -80,7 +80,9 @@ public class UserController {
         session.setAttribute(u.getUsername(), true);
 
         // Step 3: Genera il token JWT
-        String userToken = JwtUtils.generateToken(u.getName(), u.getSurname(), u.getUsername());
+        String userToken = JwtUtils.generateToken(u.getUsername());
+
+//      String userToken = JwtUtils.generateToken(u.getName(), u.getSurname(), u.getUsername());
 
         // Step 4: Verifica se l'user ha accesso alla private area usando il token JWT appena generato
         Jws<Claims> claims = JwtUtils.verifyToken(userToken);
@@ -98,7 +100,6 @@ public class UserController {
         // Se tutte le verifiche sono passate, l'user ha accesso alla private area
         return ResponseEntity.status(200).body(new BackendResponse("Puoi accedere ai corsi"));
     }
-
 
     // delete user -- TESTATO
     @DeleteMapping("/{id}/delete")
@@ -233,3 +234,20 @@ public class UserController {
         */
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

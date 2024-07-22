@@ -12,6 +12,15 @@ public class Course {
     private String courseName;
     private String courseDescription;
     private String category;
+    private String courseImageUrl;
+
+    public String getCourseImageUrl() {
+        return courseImageUrl;
+    }
+
+    public void setCourseImageUrl(String courseImageUrl) {
+        this.courseImageUrl = courseImageUrl;
+    }
 
     public Course() {
     }

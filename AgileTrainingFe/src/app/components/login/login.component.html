@@ -1,35 +1,38 @@
 <div class="container">
   <div class="logoDiv">
-    <img class="logo" src="../../../assets/images/logo.png" alt="" />
-
-    <h1 class="intro">{{ "intro" | translate }}</h1>
+    <img class="logo" src="../../../assets/images/logo.png" alt="Logo" />
+    <h1 class="intro">{{ 'intro' | translate }}</h1>
     <div class="loremP">
-      <p>{{ "explain" | translate }}</p>
+      <p>{{ 'explain' | translate }}</p>
     </div>
   </div>
   <div class="Login">
-    <form action="">
-      <h4>{{ "login" | translate }}</h4>
+    <form (ngSubmit)="onSubmit()">
+      <h4>{{ 'login' | translate }}</h4>
       <div class="inpBox">
-        <label for="" class="lblUser">{{
-          "username_placeholder" | translate
-        }}</label>
+        <label for="username" class="lblUser">{{ 'username_placeholder' | translate }}</label>
         <fa-icon class="userIcon" [icon]="['fas', 'user']"></fa-icon>
         <input
+          id="username"
           class="userInp"
           type="text"
+          [(ngModel)]="loginRequest.username"
+          name="username"
           [placeholder]="'username_placeholder' | translate"
+          required
         />
       </div>
       <div class="inpBox">
-        <label class="lblPass"
-          ><span></span>{{ "password_placeholder" | translate }}</label
-        ><br />
+        <label class="lblPass">{{ 'password_placeholder' | translate }}</label><br />
         <div class="password-wrapper">
           <input
+            id="password"
             type="password"
             class="passInp"
+            [(ngModel)]="loginRequest.password"
+            name="password"
             [placeholder]="'password_placeholder' | translate"
+            required
           />
           <fa-icon
             class="passToggle"
@@ -38,10 +41,9 @@
           ></fa-icon>
         </div>
       </div>
+      <button class="btnLogin" type="submit" [disabled]="isSubmitting">{{ 'login' | translate }}</button>
     </form>
-    <a href="/home"
-      ><button class="btnLogin">{{ "login" | translate }}</button></a
-    ><br />
+    <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
     <div class="linguaLogin">
       <button (click)="switchLanguage('it')">Italiano</button>
       <button (click)="switchLanguage('en')">English</button>

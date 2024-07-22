@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
@@ -23,13 +23,19 @@ export class LoginComponent {
   errorMessage: string | null = null;
   isSubmitting = false;
 
+  usernamePattern = '^[a-zA-Z0-9-_]+$';  // Consente lettere, numeri, trattini e underscore
+  passwordPattern = '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%&])[A-Za-z\\d@#$%&]{8,}$'; // Almeno una lettera maiuscola, una minuscola, un numero e un carattere speciale
+
   constructor(
-    library: FaIconLibrary,
+    private library: FaIconLibrary,
     private translate: TranslateService,
     private http: HttpClient,
     private router: Router
   ) {
+    // Aggiungi icone alla libreria
     library.addIconPacks(fas);
+
+    // Configura la traduzione
     this.translate.addLangs(['it', 'en']);
     this.translate.setDefaultLang('it');
     this.translate.use(this.currentLang);
@@ -47,12 +53,20 @@ export class LoginComponent {
   }
 
   onSubmit() {
+    if (!this.loginRequest.username || !this.loginRequest.password) {
+      this.errorMessage = 'Please fill in both fields.';
+      return;
+    }
+
     this.errorMessage = null;
     this.isSubmitting = true;
 
     this.http.post<any>('http://localhost:8080/login', this.loginRequest).subscribe(
       response => {
         console.log('Login successful', response);
+        if (response.token) {
+          localStorage.setItem('authToken', response.token);
+        }
         this.router.navigate(['/home']);
       },
       (error: HttpErrorResponse) => {
@@ -61,5 +75,34 @@ export class LoginComponent {
         this.isSubmitting = false;
       }
     );
+  }
+
+  removeSpaces(event: Event) {
+    const input = event.target as HTMLInputElement;
+    input.value = input.value.replace(/\s+/g, ''); // Rimuove tutti gli spazi
+  }
+
+  validateUsername(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const pattern = new RegExp(this.usernamePattern);
+    if (!pattern.test(input.value)) {
+      input.value = input.value.replace(/[^a-zA-Z0-9-_]/g, ''); // Rimuove i caratteri non accettabili
+    }
+  }
+
+  validatePassword(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const pattern = new RegExp(this.passwordPattern);
+    if (!pattern.test(input.value)) {
+      input.value = input.value.replace(/[^a-zA-Z0-9@#$%&]/g, ''); // Rimuove i caratteri non accettabili
+    }
+  }
+
+  @HostListener('document:copy', ['$event'])
+  onCopy(event: ClipboardEvent): void {
+    const target = event.target as HTMLElement;
+    if (target.closest('input') && (target as HTMLInputElement).type !== 'password') {
+      event.preventDefault();
+    }
   }
 }

@@ -102,6 +102,19 @@
   cursor: pointer;
 }
 
+
+input.userInp, input.passInp {
+  user-select: none; 
+  -webkit-user-select: none; 
+  -moz-user-select: none; 
+  -ms-user-select: none; 
+}
+
+input.userInp::selection, input.passInp::selection {
+  background: transparent; /* Per nascondere l'area selezionata */
+}
+
+
 @media (orientation: portrait) {
   .container {
     max-width: 600px;

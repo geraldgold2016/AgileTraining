@@ -7,7 +7,7 @@
     </div>
   </div>
   <div class="Login">
-    <form (ngSubmit)="onSubmit()">
+    <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
       <h4>{{ 'login' | translate }}</h4>
       <div class="inpBox">
         <label for="username" class="lblUser">{{ 'username_placeholder' | translate }}</label>
@@ -20,7 +20,18 @@
           name="username"
           [placeholder]="'username_placeholder' | translate"
           required
+          [pattern]="usernamePattern"
+          (input)="validateUsername($event)"
+          #usernameInput="ngModel"
         />
+        <div *ngIf="usernameInput.invalid && (usernameInput.dirty || usernameInput.touched)">
+          <div *ngIf="usernameInput.errors?.['required']">
+            Il nome utente è obbligatorio.
+          </div>
+          <div *ngIf="usernameInput.errors?.['pattern']">
+            Il nome utente può contenere solo lettere, numeri, trattini e underscore.
+          </div>
+        </div>
       </div>
       <div class="inpBox">
         <label class="lblPass">{{ 'password_placeholder' | translate }}</label><br />
@@ -33,6 +44,10 @@
             name="password"
             [placeholder]="'password_placeholder' | translate"
             required
+            #passwordInput="ngModel"
+            minlength="8"
+            [pattern]="passwordPattern"
+            (input)="validatePassword($event)"
           />
           <fa-icon
             class="passToggle"
@@ -40,8 +55,18 @@
             (click)="togglePasswordVisibility()"
           ></fa-icon>
         </div>
+        <div *ngIf="passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)">
+          <div *ngIf="passwordInput.errors?.['minlength']">
+            Password deve essere di almeno 8 caratteri.
+          </div>
+          <div *ngIf="passwordInput.errors?.['pattern']">
+            La password deve contenere almeno una lettera maiuscola, una minuscola, un numero e un carattere speciale ("&#64;", #, $, %, &).
+          </div>
+        </div>
       </div>
-      <button class="btnLogin" type="submit" [disabled]="isSubmitting">{{ 'login' | translate }}</button>
+      <button class="btnLogin" type="submit" [disabled]="isSubmitting || !loginForm.form.valid">
+        {{ 'login' | translate }}
+      </button>
     </form>
     <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
     <div class="linguaLogin">

@@ -61,8 +61,7 @@ public class UserController {
         }
     }
 
-    // dà problemi di token
-    @PostMapping("/login")
+    @PostMapping("/login") // TESTATO
     public ResponseEntity<Object> loginAndPrivateArea(@RequestBody LoginRequest loginRequest, HttpSession session) {
 
         // Step 1: Effettua il login dell'user
@@ -82,8 +81,6 @@ public class UserController {
         // Step 3: Genera il token JWT
         String userToken = JwtUtils.generateToken(u.getUsername());
 
-//      String userToken = JwtUtils.generateToken(u.getName(), u.getSurname(), u.getUsername());
-
         // Step 4: Verifica se l'user ha accesso alla private area usando il token JWT appena generato
         Jws<Claims> claims = JwtUtils.verifyToken(userToken);
 
@@ -100,6 +97,7 @@ public class UserController {
         // Se tutte le verifiche sono passate, l'user ha accesso alla private area
         return ResponseEntity.status(200).body(new BackendResponse("Puoi accedere ai corsi"));
     }
+
 
     // delete user -- TESTATO
     @DeleteMapping("/{id}/delete")

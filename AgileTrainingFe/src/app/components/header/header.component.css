@@ -209,15 +209,16 @@ input
     flex-direction: row-reverse;    
     height: 100%;
     width: 70%;
-    z-index: 2;
+    z-index: 3;
     animation: slideInFromLeft 0.5s ease-out;
   }
   ul
   {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
     margin-top: 20px;
+    width: 70%;
   }
   .logo
   {
@@ -239,13 +240,13 @@ input
   .stratoSemiTrasparente.active
   {
     display: block;
-    background: rgba(85, 74, 74, 0.7);
+    background: rgba(115, 115, 115, 0.5);
     width: 100%;
     height: 100%;
     position: fixed;
     top: 0px;
     left: 0px;
-    z-index: 0;
+    z-index: 2;
     animation: fadeIn 0.5s linear;
   }
   .chiudi
@@ -261,7 +262,7 @@ input
   input.active
   {
     margin-bottom: 50px;
-    width: 300px;
+    width: 100%;
   }
   .dropdown.active
   {

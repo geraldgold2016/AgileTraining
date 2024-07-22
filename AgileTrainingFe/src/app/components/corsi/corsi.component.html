@@ -2,33 +2,12 @@
 
     <h1>Tutti i corsi</h1>
 
-    <div id="corsi">
-        <div><a href="anteprimaCorso"><img src="../../../assets/images/html.jpg" alt=""></a></div>
-        <div><a href="anteprimaCorso"><img src="../../../assets/images/css.png" alt=""></a></div>
-        <div><a href="anteprimaCorso"><img src="../../../assets/images/javascript.jpg" alt=""></a></div>
-        <div><a href="anteprimaCorso"><img src="../../../assets/images/angular.jpg" alt=""></a></div>
-        <div><a href="anteprimaCorso"><img src="../../../assets/images/typescript.png" alt=""></a></div>
-        <div><a href="anteprimaCorso"><img src="../../../assets/images/nodejs.jpg" alt=""></a></div>
-        <div><a href="anteprimaCorso"><img src="../../../assets/images/Csharp.png" alt=""></a></div>
-        <div><a href="anteprimaCorso"><img src="../../../assets/images/CPP-Language.png" alt=""></a></div>
-        <div><a href="anteprimaCorso"><img src="../../../assets/images/Cprogramming.png" alt=""></a></div>
-        <div><a href="anteprimaCorso"><img src="../../../assets/images/net6.png" alt=""></a></div>
-        <div><a href="anteprimaCorso"><img src="../../../assets/images/Oracle.png" alt=""></a></div>
-        <div><a href="anteprimaCorso"><img src="../../../assets/images/Python.png" alt=""></a></div>
-        <div><a href="anteprimaCorso"><img src="../../../assets/images/MySQL.jpg" alt=""></a></div>
-        <div><a href="anteprimaCorso"><img src="../../../assets/images/postman.png" alt=""></a></div>
-        <div><a href="anteprimaCorso"><img src="../../../assets/images/swagger.png" alt=""></a></div>
-        <div><a href="anteprimaCorso"><img src="../../../assets/images/SpringBoot.png" alt=""></a></div>
-        <div><a href="anteprimaCorso"><img src="../../../assets/images/Web-Security.jpg" alt=""></a></div>
-        <div><a href="anteprimaCorso"><img src="../../../assets/images/java.png" alt=""></a></div>
-        <div class="corso"><a href="anteprimaCorso"><img src="../../../assets/images/Web-Security.jpg" alt=""></a></div>
-        <div class="corso"><a href="anteprimaCorso"><img src="../../../assets/images/CPP-Language.png" alt=""></a></div>
-        <div class="corso"><a href="anteprimaCorso"><img src="../../../assets/images/nodejs.jpg" alt=""></a></div>
-        <div class="corso"><a href="anteprimaCorso"><img src="../../../assets/images/Python.png" alt=""></a></div>
-        <div class="corso"><a href="anteprimaCorso"><img src="../../../assets/images/SpringBoot.png" alt=""></a></div>
-        <div class="corso"><a href="anteprimaCorso"><img src="../../../assets/images/css.png" alt=""></a></div>
+<div id="corsi">
+    <div *ngFor="let course of courses">
+        <a href="anteprimaCorso">
+            <img [src]="'../../../assets/images/' + course.courseImageUrl" [alt]="course.courseName" >
+        </a>
     </div>
-
-    <button id="MostraAltro" class="buttonVedi">Mostra Altro</button>
+</div>
 
 <app-footer></app-footer>

@@ -50,8 +50,8 @@ h1
 
 img
 {
-    width: 100%; /*larghezza quanto il contenitore dell'immagine*/
-    height: 100%; /*lunghezza quanto il contenitore dell'immagine*/
+    width: 100%;
+    height: 100%; 
 }
 
 a

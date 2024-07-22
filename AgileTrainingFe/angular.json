@@ -13,6 +13,14 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
+            "allowedCommonJsDependencies": [
+              "raf",
+              "rgbcolor",
+              "core-js",
+              "html2canvas",
+              "dompurify",
+              "canvg"
+            ],
             "outputPath": "dist/agile-training-fe",
             "index": "src/index.html",
             "browser": "src/main.ts",

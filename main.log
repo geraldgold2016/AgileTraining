@@ -1,0 +1,14 @@
+16089 [http-nio-8080-exec-1] INFO  infoFile - Received request to get options
+71070 [http-nio-8080-exec-1] INFO  infoFile - Received request to get options
+10626 [http-nio-8080-exec-1] INFO  infoFile - Received request to get options
+8246 [http-nio-8080-exec-1] INFO  infoFile - Received request to get options
+8348 [http-nio-8080-exec-1] ERROR infoFile - Domanda non trovata
+15924 [http-nio-8080-exec-2] INFO  infoFile - Received request to get options
+21478 [http-nio-8080-exec-1] INFO  infoFile - Received request to get options
+15605 [http-nio-8080-exec-1] INFO  infoFile - Received request to get options
+24787 [http-nio-8080-exec-2] INFO  infoFile - Received request to get options
+21289 [http-nio-8080-exec-1] INFO  infoFile - Received request to get options
+14168 [http-nio-8080-exec-1] INFO  infoFile - Received request to get options
+48506 [http-nio-8080-exec-2] INFO  infoFile - Received request to get options
+798992 [http-nio-8080-exec-4] INFO  infoFile - Received request to get options
+866551 [http-nio-8080-exec-9] INFO  infoFile - Received request to check answer

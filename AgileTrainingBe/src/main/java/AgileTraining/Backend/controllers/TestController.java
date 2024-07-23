@@ -75,6 +75,21 @@ public class TestController {
         return ResponseEntity.ok().body(questions);
     }
 
+    // ottiene le opzioni di una domanda
+    // testato
+    @GetMapping("/getOptionsForOneQuestion")
+    public ResponseEntity<?> getOptions(@RequestParam Integer questionId) {
+        logger.info("Received request to get options");
+        return ResponseEntity.ok().body(tService.getOptionsOneQuestion(questionId));
+    }
+
+    // NON TESTABILE DA BE. DA TESTARE DA FE
+    @GetMapping("/getOptions")
+    public ResponseEntity<?> getOptions(@RequestParam List<Question> questions) {
+        logger.info("Received request to get options");
+        return ResponseEntity.ok().body(tService.getOptions(questions));
+    }
+
 
     public static class AnswerRequest {
         public Integer questionId;

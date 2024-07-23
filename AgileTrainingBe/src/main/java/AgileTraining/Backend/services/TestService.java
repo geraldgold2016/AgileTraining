@@ -6,6 +6,7 @@ import AgileTraining.Backend.daos.*;
 
 import AgileTraining.Backend.entities.*;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -126,5 +128,42 @@ public class TestService {
         }
         return questions;
     }
-}
 
+    @Transactional
+    public List<Option> getOptions(List<Question> questions) {
+        List<Option> allOptions = new ArrayList<>();
+
+        logger.info("Inizio recupero opzioni per le domande");
+
+        for (Question question : questions) {
+            List<Option> options = oDao.getOptionsByQuestionId(question.getId());
+            if (options.isEmpty()) {
+                logger.error("Opzioni non trovate per la domanda con ID: " + question.getId());
+            } else {
+                allOptions.addAll(options);
+            }
+        }
+
+        if (allOptions.isEmpty()) {
+            logger.error("Nessuna opzione trovata.");
+            return null;
+        }
+
+        logger.info("Opzioni trovate");
+        return allOptions;
+    }
+
+
+
+    @Transactional
+    public List<Option> getOptionsOneQuestion(Integer questionId) {
+
+        List<Option> options = oDao.getOptionsOneQuestion(questionId);
+
+        if (options.isEmpty()) {
+            logger.error("Opzioni non trovate");
+            return null;
+        }
+        return options;
+    }
+}

@@ -28,7 +28,7 @@ public class TestService {
     private OptionDao oDao;
 
     @Autowired
-    private TestResultsDao trDao;
+    private TestResultDao trDao;
 
     @Autowired
     private TestDao tDao;
@@ -70,7 +70,7 @@ public class TestService {
         User user = uDao.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user ID: " + userId));
 
-        TestResults testResults = new TestResults();
+        TestResult testResults = new TestResult();
 
         testResults.setUser(user);
         testResults.setTest(test);
@@ -89,13 +89,13 @@ public class TestService {
 
     @Transactional
     public ResponseEntity<?> checkAttempts(Integer userId, Integer testId) {
-        TestResults testResults = trDao.getTestResultsByUserIdAndTestId(userId, testId);
-        if (testResults == null) {
+        TestResult testResult = trDao.getTestResultsByUserIdAndTestId(userId, testId);
+        if (testResult == null) {
             logger.error("Test non trovato");
             return ResponseEntity.status(404).body(new BackendResponse("Test non trovato"));
         }
         // Initialize nAttempts to 0 if it is null
-        int nAttempts = Optional.ofNullable(testResults.getnAttempts()).orElse(0);
+        int nAttempts = Optional.ofNullable(testResult.getnAttempts()).orElse(0);
         if (nAttempts >= 3) {
             return ResponseEntity.ok().body(true);
         }
@@ -104,16 +104,16 @@ public class TestService {
 
     @Transactional
     public ResponseEntity<?> getTestResults(Integer userId, Integer testId) {
-        TestResults testResults = trDao.getTestResultsByUserIdAndTestId(userId, testId);
-        if (testResults == null) {
+        TestResult testResult = trDao.getTestResultsByUserIdAndTestId(userId, testId);
+        if (testResult == null) {
             logger.error("Test non trovato");
             return ResponseEntity.status(400).body(new BackendResponse("Test non trovato"));
         }
-        if (userId != testResults.getUser().getId()) {
+        if (userId != testResult.getUser().getId()) {
             return ResponseEntity.status(400).body(new BackendResponse("User non trovato"));
         }
 
-        Integer score = testResults.getTestResult();
+        Integer score = testResult.getTestResult();
         return ResponseEntity.ok().body(score);
     }
 

@@ -3,7 +3,6 @@ package AgileTraining.Backend.controllers;
 
 import AgileTraining.Backend.classes.BackendResponse;
 import AgileTraining.Backend.entities.Question;
-import AgileTraining.Backend.entities.TestResults;
 import AgileTraining.Backend.services.TestService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

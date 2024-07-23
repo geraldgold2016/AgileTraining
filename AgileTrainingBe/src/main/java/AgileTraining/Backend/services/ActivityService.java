@@ -9,6 +9,8 @@ import AgileTraining.Backend.entities.Course;
 import AgileTraining.Backend.entities.Module;
 import AgileTraining.Backend.entities.User;
 import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,10 +24,6 @@ public class ActivityService {
     @Autowired
     private ActivityDao aDao;
 
-    public List<Activity> getCompletedActivitiesByUserId(Integer userId) {
-        return aDao.findCompletedActivitiesByUserId(userId);
-    }
-
     @Autowired
     private ModuleDao mDao;
 
@@ -35,62 +33,66 @@ public class ActivityService {
     @Autowired
     private CourseDao cDao;
 
-//    @Transactional
-//    public Activity addActivity(Integer moduleId, Integer userId, Integer courseId) {
-//        // Recupero il modulo, l'utente e il corso
-//        Module module = mDao.findById(moduleId)
-//                .orElseThrow(() -> new IllegalArgumentException("Invalid module ID: " + moduleId));
-//        User user = uDao.findById(userId)
-//                .orElseThrow(() -> new IllegalArgumentException("Invalid user ID: " + userId));
-//        Course course = cDao.findById(courseId)
-//                .orElseThrow(() -> new IllegalArgumentException("Invalid course ID: " + courseId));
-//
-//        // Creo l'attività
-//        Activity activity = new Activity();
-////      activity.setDuration(duration);
-////      activity.setPrevTime((java.sql.Date) prevTime);
-////        activity.setIsCompleted(isCompleted);
-//        activity.setModule(module);
-//        activity.setUser(user);
-//        activity.setCourse(course);
-//
-//        return aDao.save(activity);
-//    }
+    Logger logger = LoggerFactory.getLogger("infoFile");
+
+    public List<Activity> getCompletedActivitiesByUserId(Integer userId) {
+        return aDao.findCompletedActivitiesByUserId(userId);
+    }
 
     @Transactional
     public Activity addActivity(Integer moduleId, Integer userId, Integer courseId) {
+        logger.info("Starting to add an activity with Module ID: {}, User ID: {}, Course ID: {}", moduleId, userId, courseId);
+
         Module module = mDao.findById(moduleId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid module ID: " + moduleId));
+                .orElseThrow(() -> {
+                    logger.error("Invalid module ID: {}", moduleId);
+                    throw new IllegalArgumentException("Invalid module ID: " + moduleId);
+                });
         User user = uDao.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid user ID: " + userId));
+                .orElseThrow(() -> {
+                    logger.error("Invalid user ID: {}", userId);
+                    throw new IllegalArgumentException("Invalid user ID: " + userId);
+                });
         Course course = cDao.findById(courseId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid course ID: " + courseId));
+                .orElseThrow(() -> {
+                    logger.error("Invalid course ID: {}", courseId);
+                    throw new IllegalArgumentException("Invalid course ID: " + courseId);
+                });
 
         Activity activity = new Activity();
         activity.setModule(module);
         activity.setUser(user);
         activity.setCourse(course);
 
-        return aDao.save(activity);
-    }
+        Activity savedActivity = aDao.save(activity);
+        logger.info("Successfully added activity with ID: {}", savedActivity.getId());
 
+        return savedActivity;
+    }
 
     @Transactional
     public Activity markActivityAsCompleted(Integer activityId) {
         Activity activity = aDao.findById(activityId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid activity ID: " + activityId));
-
+                .orElseThrow(() -> {
+                    String errorMessage = "Activity non trovata: " + activityId;
+                    logger.error(errorMessage);
+                    throw new IllegalArgumentException(errorMessage);
+                });
         activity.setIsCompleted(true);
-
+        logger.info("Activity segnata come completata {}", activityId);
         return aDao.save(activity);
     }
 
-
     @Transactional
-    public Activity updateActivity(Integer activityId, Time prevTime){
+    public Activity updateActivity(Integer activityId, Time prevTime) {
         Activity activity = aDao.findById(activityId)
-                .orElseThrow(() -> new IllegalArgumentException("Activity non trovata: " + activityId));
+                .orElseThrow(() -> {
+                    String errorMessage = "Activity non trovata: " + activityId;
+                    logger.error(errorMessage);
+                    throw new IllegalArgumentException(errorMessage);
+                });
         activity.setPrevTime(prevTime);
+        logger.info("Activity aggiornata con successo: {}", activityId);
         return aDao.save(activity);
     }
 }

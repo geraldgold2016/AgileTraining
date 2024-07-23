@@ -29,7 +29,15 @@ public class TestResults {
 
     private Integer testResult;
 
-    private Integer nAttempts;
+    public Integer getnAttempts() {
+        return nAttempts;
+    }
+
+    public void setnAttempts(Integer nAttempts) {
+        this.nAttempts = nAttempts;
+    }
+
+    private Integer nAttempts = 0;
 
     public Integer getId() {
         return id;
@@ -39,13 +47,6 @@ public class TestResults {
         this.id = id;
     }
 
-    public Integer getnAttempts() {
-        return nAttempts;
-    }
-
-    public void setnAttempts(Integer nAttempts) {
-        this.nAttempts = nAttempts;
-    }
 
     public Integer getTestResult() {
         return testResult;

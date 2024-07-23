@@ -30,8 +30,14 @@ public interface SubscriptionDao extends JpaRepository<Subscription, Integer> {
     List<Object[]> getMoreCourses(@Param("id") Integer userId);
 
 
-    @Query("SELECT s FROM Subscription s WHERE s.user.id = :userId AND s.course.id = :courseId")
-    Optional<Subscription> findByUserIdAndCourseId(Integer userId, Integer courseId);
+
+
+    @Query(value= "SELECT * FROM Subscriptions s WHERE s.course_id = :courseId AND s.user_id = :userId", nativeQuery = true)
+    Subscription findByUserIdAndCourseId(Integer userId, Integer courseId);
+
+
+    @Query(value= "SELECT * FROM Subscriptions s WHERE s.course_id = :courseId AND s.user_id = :userId", nativeQuery = true)
+    Optional<Subscription> optionalFindByUserIdAndCourseId(Integer userId, Integer courseId);
 
 
 /*

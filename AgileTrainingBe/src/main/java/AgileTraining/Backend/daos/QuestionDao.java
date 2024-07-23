@@ -20,4 +20,8 @@ public interface QuestionDao extends JpaRepository<Question, Integer> {
 
     @Query(value = "SELECT * FROM options WHERE options.id = :optionId", nativeQuery = true)
     Option getOptionById(Integer optionId);
+
+
+    @Query(value = "SELECT * FROM questions WHERE questions.test_id = :testId ORDER BY RAND() LIMIT 30", nativeQuery = true)
+    List<Question> getQuestionsByTestId(Integer testId);
 }

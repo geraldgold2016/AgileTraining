@@ -1,14 +1,19 @@
 
 package AgileTraining.Backend.services;
 
-import AgileTraining.Backend.daos.OptionDao;
-import AgileTraining.Backend.daos.QuestionDao;
+import AgileTraining.Backend.classes.BackendResponse;
+import AgileTraining.Backend.daos.*;
 
-import AgileTraining.Backend.entities.Option;
+import AgileTraining.Backend.entities.*;
 
+import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -22,7 +27,16 @@ public class TestService {
     @Autowired
     private OptionDao oDao;
 
+    @Autowired
+    private TestResultsDao trDao;
 
+    @Autowired
+    private TestDao tDao;
+
+    @Autowired
+    private UserDao uDao;
+
+    Logger logger = LoggerFactory.getLogger("infoFile");
 
 //    public Test beginTest(Integer courseId) {
 //            questions = qDao.getQuestionsByCourseId(courseId);
@@ -33,9 +47,11 @@ public class TestService {
 //            return new Test(questions, options);
 //    }
 
+    @Transactional
     public Boolean checkAnswer(Integer questionId, Integer optionId) {
         Optional<Option> option = oDao.findById(optionId);
         if (!option.isPresent()) {
+            logger.error("Invalid option ID: {}", optionId);
             return false;
         }
         Option correctOption = oDao.getCorrectOption(questionId);
@@ -45,5 +61,70 @@ public class TestService {
         return option.get().equals(correctOption);
     }
 
+
+    @Transactional
+    public BackendResponse submitTest(Integer testResult, Integer testId, Integer userId) {
+        Test test = tDao.findById(testId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid test ID: " + testId));
+
+        User user = uDao.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user ID: " + userId));
+
+        TestResults testResults = new TestResults();
+
+        testResults.setUser(user);
+        testResults.setTest(test);
+        testResults.setTestResult(testResult);
+
+        if (testResults.getnAttempts() == null) {
+            testResults.setnAttempts(0);
+        }
+        testResults.setnAttempts(testResults.getnAttempts() + 1);
+
+        trDao.save(testResults);
+
+        return new BackendResponse("Punteggio test salvato con successo");
+    }
+
+
+    @Transactional
+    public ResponseEntity<?> checkAttempts(Integer userId, Integer testId) {
+        TestResults testResults = trDao.getTestResultsByUserIdAndTestId(userId, testId);
+        if (testResults == null) {
+            logger.error("Test non trovato");
+            return ResponseEntity.status(404).body(new BackendResponse("Test non trovato"));
+        }
+        // Initialize nAttempts to 0 if it is null
+        int nAttempts = Optional.ofNullable(testResults.getnAttempts()).orElse(0);
+        if (nAttempts >= 3) {
+            return ResponseEntity.ok().body(true);
+        }
+        return ResponseEntity.ok().body(false);
+    }
+
+    @Transactional
+    public ResponseEntity<?> getTestResults(Integer userId, Integer testId) {
+        TestResults testResults = trDao.getTestResultsByUserIdAndTestId(userId, testId);
+        if (testResults == null) {
+            logger.error("Test non trovato");
+            return ResponseEntity.status(400).body(new BackendResponse("Test non trovato"));
+        }
+        if (userId != testResults.getUser().getId()) {
+            return ResponseEntity.status(400).body(new BackendResponse("User non trovato"));
+        }
+
+        Integer score = testResults.getTestResult();
+        return ResponseEntity.ok().body(score);
+    }
+
+    @Transactional
+    public List<Question> getQuestions(Integer testId) {
+        List<Question> questions = qDao.getQuestionsByTestId(testId);
+        if (questions == null) {
+            logger.error("Test non trovato");
+            return null;
+        }
+        return questions;
+    }
 }
 

@@ -27,8 +27,6 @@ public class Certificate {
     @JoinColumn(name = "course_id")
     private Course course;
 
-    private Boolean isIssued;
-
     private String certificateKey;
 
     public String getCertificateKey() {
@@ -47,13 +45,6 @@ public class Certificate {
         this.course = course;
     }
 
-    public Boolean getIssued() {
-        return isIssued;
-    }
-
-    public void setIssued(Boolean issued) {
-        isIssued = issued;
-    }
 
     public User getUser() {
         return user;
@@ -62,4 +53,6 @@ public class Certificate {
     public void setUser(User user) {
         this.user = user;
     }
-}
+
+
+    }

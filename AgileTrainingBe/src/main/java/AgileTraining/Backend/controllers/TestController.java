@@ -2,12 +2,16 @@ package AgileTraining.Backend.controllers;
 
 
 import AgileTraining.Backend.classes.BackendResponse;
-import AgileTraining.Backend.daos.TestDao;
-import AgileTraining.Backend.daos.TestResultDao;
+import AgileTraining.Backend.entities.Question;
+
 import AgileTraining.Backend.services.TestService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -15,65 +19,61 @@ import org.springframework.web.bind.annotation.*;
 public class TestController {
 
 
-
     @Autowired
     private TestService tService;
 
+    Logger logger = LoggerFactory.getLogger("infoFile");
 
+    // salva il risultato di un test
+    // testato
+    @PostMapping("/submitTest")
+    public ResponseEntity<?> submit(@RequestBody NewTestRequest newTestRequest) {
+        logger.info("Received request to submit test");
+        tService.submitTest(newTestRequest.testResult, newTestRequest.testId, newTestRequest.userId);
+        return ResponseEntity.ok().body(new BackendResponse("Test submitted successfully"));
+    }
 
-    @Autowired
-    private TestResultDao trDao;
-//
-//    @Autowired
-//    private QuestionDao qDao;
-//
-//    @Autowired
-//    private OptionDao oDao;
-
-
-
-//@PostMapping("/submitTest")
-//    public ResponseEntity<?> submit(@RequestParam Integer testResult, @RequestParam Integer testId) {
-//
-//    TestResults completedTest = tDao.getTestById(testId);
-//
-//    if (completedTest == null) {
-//        return ResponseEntity.badRequest().body("Test non trovato");
+//    @GetMapping("/beginTest")
+//    public ResponseEntity<?> beginTest(@RequestParam Integer courseId) {
+//        return ResponseEntity.ok().body(tService.beginTest(courseId));
 //    }
-//    completedTest.setTestResult(testResult);
-//    completedTest.setnAttempts(completedTest.getnAttempts() + 1);
-//    tDao.save(completedTest);
-//    return ResponseEntity.ok().body("Punteggio salvato con successo");
-//
-//}
 
-    @GetMapping("/getAttempts")
-    public ResponseEntity<?> getAttempts(@RequestParam Integer testResultId) {
-        Integer nAttempts = trDao.getAttempts(testResultId);
-        return ResponseEntity.ok().body(new BackendResponse(
-                "Numero di tentativi: " + nAttempts));
-    }
-
-
-    @GetMapping("/submitTest")
-    public ResponseEntity<?> submitTest(@RequestBody SubmitRequest submitRequest) {
-        tService.submitTest(submitRequest.testResult, submitRequest.testId);
-        return ResponseEntity.ok().body(new BackendResponse(
-                "Punteggio salvato con successo"));
-    }
-
-
-    @PostMapping("/beginTest")
-    public ResponseEntity<?> beginTest(@RequestBody TestRequest testRequest) {
-        tService.newTest(testRequest.userId, testRequest.testId);
-        return ResponseEntity.ok().body(new BackendResponse(
-                "Test iniziato con successo"));
-    }
-
+    // controlla se risposta è corretta
+    // testato
     @GetMapping("/checkAnswer")
     public ResponseEntity<Boolean> getCorrect(@RequestBody AnswerRequest answerRequest) {
+        logger.info("Received request to check answer");
         Boolean result = tService.checkAnswer(answerRequest.questionId, answerRequest.optionId);
         return ResponseEntity.ok().body(result);
+    }
+
+    // ottiene i risultati di un test
+    // testato
+    @GetMapping("/{userId}/getTestResults")
+    public ResponseEntity<?> getTestResults(@PathVariable Integer userId, @RequestParam Integer testId) {
+        logger.info("Received request to get test results");
+        return ResponseEntity.ok().body(tService.getTestResults(userId, testId));
+    }
+
+    // controlla se sono stati fatti piu di 3 tentativi
+    // true = sono stati fatti piu di 3 tentativi
+    // testato
+    @GetMapping("/{userId}/checkAttempts")
+    public ResponseEntity<?> checkAttempts(@PathVariable Integer userId, @RequestParam(name = "testId") Integer testId) {
+        logger.info("Received request to check attempts");
+        return ResponseEntity.ok().body(tService.checkAttempts(userId,testId));
+    }
+
+    // ottiene 30 domande random
+    @GetMapping("/getQuestions")
+    public ResponseEntity<?> getQuestions(@RequestParam Integer testId) {
+        logger.info("Received request to get questions");
+        List<Question> questions = tService.getQuestions(testId);
+        if (questions.isEmpty()) {
+            logger.error("No questions found");
+            return ResponseEntity.status(404).body(new BackendResponse("No questions found"));
+        }
+        return ResponseEntity.ok().body(questions);
     }
 
 
@@ -98,30 +98,18 @@ public class TestController {
         }
     }
 
-    public static class TestRequest {
-        public Integer userId;
+    public static class NewTestRequest {
+        public Integer testResult;
         public Integer testId;
+        public Integer userId;
 
         public Integer getUserId() {
             return userId;
         }
 
-        public Integer getTestId() {
-            return testId;
-        }
-
-        public void setTestId(Integer testId) {
-            this.testId = testId;
-        }
-
         public void setUserId(Integer userId) {
             this.userId = userId;
         }
-    }
-
-    public static class SubmitRequest {
-        public Integer testResult;
-        public Integer testId;
 
         public Integer getTestResult() {
             return testResult;

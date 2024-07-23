@@ -23,6 +23,32 @@ import java.util.UUID;
 public class JwtUtils {
 
 
+/*
+    private static PrivateKey getPrivateKey() {
+
+        Properties props = new Properties();
+        try {
+            props.load(new FileInputStream(new File("key.properties")));
+            String privateKeyURL = props.getProperty("private");
+            PemReader reader = new PemReader(new FileReader(privateKeyURL));
+            PemObject pemObject = reader.readPemObject();
+            byte[] content = pemObject.getContent();
+
+            PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(content);
+
+            PrivateKey pk = KeyFactory.getInstance("RSA").generatePrivate(spec);
+
+            return pk;
+
+        } catch (IOException | InvalidKeySpecException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+
+            return null;
+        }
+    }
+*/
+
+
     private static PrivateKey getPrivateKey() {
         Properties props = new Properties();
         try (InputStream is = JwtUtils.class.getClassLoader().getResourceAsStream("key.properties")) {
@@ -45,6 +71,31 @@ public class JwtUtils {
             throw new RuntimeException("Failed to load private key", e);
         }
     }
+
+
+
+
+//    private static PublicKey getPublicKey() {
+//
+//        Properties props = new Properties();
+//        try {
+//    props.load(new FileInputStream(new File("key.properties")));
+//
+//
+//
+//            String publicURL = props.getProperty("public");
+//
+//            PemReader reader = new PemReader(new FileReader(publicURL));
+//            X509EncodedKeySpec spec = new X509EncodedKeySpec(reader.readPemObject().getContent());
+//            return KeyFactory.getInstance("RSA").generatePublic(spec);
+//
+//        } catch (IOException | InvalidKeySpecException | NoSuchAlgorithmException e) {
+//
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
+
 
 
 
@@ -87,5 +138,43 @@ public class JwtUtils {
                 throw new RuntimeException("Failed to load public key", e);
             }
         }
+
+
+
+//    public static String generateToken(String username) {
+//        try {
+//            return Jwts.builder().claim("username", username)
+//                    .setId(UUID.randomUUID().toString()).setIssuedAt(Date.from(Instant.now()))
+//                    .setExpiration(Date.from(Instant.now().plus(1, ChronoUnit.HOURS))).signWith(getPrivateKey())
+//                    .compact();
+//        } catch (Exception e) {
+//            return null;
+//        }
+//    }
+//
+//    public static Jws<Claims> verifyToken(String jwt) {
+//
+//        try {
+//            return Jwts.parserBuilder().setSigningKey(getPublicKey()).build().parseClaimsJws(jwt);
+//        } catch (Exception e) {
+//            return null;
+//        }
+//    }
+
+
+/*
+    public static String genJWT(String nome, String cognome) {
+
+        try {
+            return Jwts.builder().claim("nome", nome).claim("cognome", cognome).setId(UUID.randomUUID().toString())
+                    .setIssuedAt(Date.from(Instant.now()))
+                    .setExpiration(Date.from(Instant.now().plus(1, ChronoUnit.HOURS))).signWith(getPrivateKey())
+                    .compact();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+*/
 
 }

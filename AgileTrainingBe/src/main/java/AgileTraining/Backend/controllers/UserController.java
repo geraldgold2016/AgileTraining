@@ -8,12 +8,14 @@ import AgileTraining.Backend.utils.JwtUtils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import jakarta.servlet.http.HttpSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-
+import java.util.Optional;
 
 
 @RestController
@@ -29,20 +31,23 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    Logger logger = LoggerFactory.getLogger("infoFile");
+
     // TESTATO
-    // TODO : check if the user already exists
     @PostMapping("/signup")
     public ResponseEntity<Object> signUp(@RequestBody User user) {
-        System.out.println("Request ricevuta: " + user);
+        logger.info("Ricevuta richiesta di registrazione per l'utente: " + user.getUsername());
 
         try {
             user.setPassword(encoder.encode(user.getPassword()));
         } catch (Exception e) {
+            logger.error("Password non hashata");
             return ResponseEntity.status(500).body(new BackendResponse("Password non hashata"));
         }
+
         try {
             uDao.save(user);
-            System.out.println("user salvato con successo");
+            logger.info("User salvato con successo");
         } catch (Exception e) {
             return ResponseEntity.status(500).body(new BackendResponse("user non salvato"));
         }
@@ -50,28 +55,33 @@ public class UserController {
         return ResponseEntity.status(200).body(new BackendResponse("user salvato con successo"));
     }
 
-    // get user data by id -- TESTATO
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Integer id) {
-        User u = uDao.getUserById(id);
-        if (u != null) {
-            return ResponseEntity.ok().body(u);
+    public ResponseEntity<?> getUserById(@PathVariable Integer id) {
+        logger.info("Ricevuta richiesta per ottenere l'utente con id: {}", id);
+        Optional<User> u = uDao.findById(id);
+        if (u.isPresent()) {
+            logger.info("User trovato: " + id);
+            return ResponseEntity.ok(u);
         } else {
-            return ResponseEntity.status(400).body(null);
+            logger.error("User non trovato: " + id);
+            return ResponseEntity.status(404).body(new BackendResponse("User non trovato"));
         }
     }
 
     @PostMapping("/login") // TESTATO
     public ResponseEntity<Object> loginAndPrivateArea(@RequestBody LoginRequest loginRequest, HttpSession session) {
 
+        logger.info("Ricevuta richiesta di login per l'utente: " + loginRequest.getUsername());
         // Step 1: Effettua il login dell'user
         User u = uDao.userLogin(loginRequest.getUsername());
 
         if (u == null) {
+            logger.error("User non trovato");
             return ResponseEntity.status(400).body(new BackendResponse("user non trovato!"));
         }
 
         if (!encoder.matches(loginRequest.getPassword(), u.getPassword())) {
+            logger.error("Password non valida");
             return ResponseEntity.status(400).body(new BackendResponse("Password non valida"));
         }
 
@@ -85,40 +95,51 @@ public class UserController {
         Jws<Claims> claims = JwtUtils.verifyToken(userToken);
 
         if (claims == null) {
+            logger.error("Token non valido");
             return ResponseEntity.status(400).body(new BackendResponse("Token non valido"));
         }
 
         Boolean isLoggedIn = (Boolean) session.getAttribute(u.getUsername());
 
         if (isLoggedIn == null || !isLoggedIn) {
+            logger.error("User non loggato");
             return ResponseEntity.status(401).body(new BackendResponse("User non loggato"));
         }
 
         // Se tutte le verifiche sono passate, l'user ha accesso alla private area
-        return ResponseEntity.status(200).body(new BackendResponse("Puoi accedere ai corsi"));
+        logger.info("User loggato con successo");
+        return ResponseEntity.status(200).body(u.getId());
     }
 
 
     // delete user -- TESTATO
     @DeleteMapping("/{id}/delete")
-    public ResponseEntity<BackendResponse>  deleteUser(@PathVariable Integer id) {
+    public ResponseEntity<BackendResponse> deleteUser(@PathVariable Integer id) {
+        if (uDao.findById(id) == null) {
+            logger.error("User {} non trovato", id);
+            return ResponseEntity.status(404).body(new BackendResponse("User non trovato"));
+        }
         userService.deleteUser(id);
+        logger.info("User {} eliminato con successo", id);
         return ResponseEntity.ok().body(new BackendResponse("User eliminato con successo"));
     }
+
     // update user -- TESTATO
     @PutMapping("/{id}/update")
     public ResponseEntity<BackendResponse> updateUser(@PathVariable Integer id, @RequestBody updateRequest updateRequest) {
-        User u = uDao.getUserById(id);
 
-        if (u != null) {
-            u.setEmail(updateRequest.getEmail());
-            u.setPassword(updateRequest.getPassword());
-            u.setProfileImageUrl(updateRequest.getProfileImageUrl());
-            uDao.save(u);
+        logger.info("Ricevuta richiesta di aggiornamento per l'utente: " + id);
+        Optional<User> u = uDao.findById(id);
 
+        if (u.isPresent()) {
+            u.get().setEmail(updateRequest.getEmail());
+            u.get().setPassword(encoder.encode(updateRequest.getPassword()));
+            u.get().setProfileImageUrl(updateRequest.getProfileImageUrl());
+            uDao.save(u.get());
             return ResponseEntity.status(200).body(new BackendResponse("user aggiornato!"));
         } else {
-            return ResponseEntity.status(400).body(new BackendResponse("user non trovato!"));
+            logger.error("User {} non trovato", id);
+            return ResponseEntity.status(404).body(new BackendResponse("user non trovato!"));
         }
     }
 
@@ -126,19 +147,19 @@ public class UserController {
     // update user picture -- TESTATO
     @PutMapping("/{id}/newPicture")
     public ResponseEntity<BackendResponse> updatePicture(@PathVariable Integer id, @RequestParam String newProfileImageUrl) {
-        User u = uDao.getUserById(id);
+        logger.info("Ricevuta richiesta di aggiornamento della foto del profilo per l'utente: " + id);
+        Optional<User> u = uDao.findById(id);
 
         if (u != null) {
-            u.setProfileImageUrl(newProfileImageUrl);
-            uDao.save(u);
+            u.get().setProfileImageUrl(newProfileImageUrl);
+            uDao.save(u.get());
+            logger.info("Foto del profilo aggiornata correttamente per l'utente: {}", id);
             return ResponseEntity.status(200).body(new BackendResponse("Foto del profilo aggiornata correttamente!"));
         } else {
-            return ResponseEntity.status(400).body(new BackendResponse("user non trovato!"));
+            logger.error("User {} non trovato", id);
+            return ResponseEntity.status(404).body(new BackendResponse("user non trovato!"));
         }
     }
-
-
-
 
     public static class updateRequest {
         private String email;
@@ -231,21 +252,5 @@ public class UserController {
         }
         */
 
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

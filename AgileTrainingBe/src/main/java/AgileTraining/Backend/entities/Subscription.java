@@ -12,7 +12,7 @@ public class Subscription {
     private Integer id;
 
     private Date registrationDate;
-//    private Boolean isSubValid;
+    private Boolean isSubValid;
     private Boolean isCertificateIssued;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -23,6 +23,14 @@ public class Subscription {
     @JoinColumn(name = "course_id")
     private Course course;
     public Subscription() {
+    }
+
+    public Boolean getSubValid() {
+        return isSubValid;
+    }
+
+    public void setSubValid(Boolean subValid) {
+        isSubValid = subValid;
     }
 
     public Integer getId() {

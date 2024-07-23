@@ -12,3 +12,4 @@
 48506 [http-nio-8080-exec-2] INFO  infoFile - Received request to get options
 798992 [http-nio-8080-exec-4] INFO  infoFile - Received request to get options
 866551 [http-nio-8080-exec-9] INFO  infoFile - Received request to check answer
+1164845 [http-nio-8080-exec-1] INFO  infoFile - Received request to get questions

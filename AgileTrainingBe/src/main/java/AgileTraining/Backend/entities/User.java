@@ -3,7 +3,8 @@ package AgileTraining.Backend.entities;
 
 import jakarta.persistence.*;
 
-import java.util.Date;
+
+import java.sql.Date;
 import java.util.List;
 
 

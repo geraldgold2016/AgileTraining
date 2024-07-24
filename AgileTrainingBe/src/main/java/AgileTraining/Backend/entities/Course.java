@@ -10,6 +10,8 @@ public class Course {
     private Integer id;
 
     private String courseName;
+
+    @Column(length = 2000)
     private String courseDescription;
     private String category;
     private String courseImageUrl;

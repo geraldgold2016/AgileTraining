@@ -40,9 +40,6 @@ public class Activity {
     @JsonIgnore
     private Course course;
 
-    public Activity(Integer moduleId, Integer userId, Course courseId, java.util.Date prevTime, Boolean isCompleted) {
-    }
-
     public Course getCourse() {
         return course;
     }

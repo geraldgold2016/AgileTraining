@@ -12,8 +12,9 @@ public class Module {
     private Integer id;
 
     private String moduleName;
-    private String moduleDescription;
 
+    @Column(length = 2000)
+    private String moduleDescription;
 
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -47,7 +47,7 @@ public class UserController {
         }
 
         try {
-            if(uDao.existsByUsername(user.getUsername())){
+            if (uDao.existsByUsername(user.getUsername())) {
                 logger.error("Username già esistente");
                 return ResponseEntity.status(400).body(new BackendResponse("Username già esistente"));
             }
@@ -168,14 +168,14 @@ public class UserController {
             uDao.save(u.get());
             return ResponseEntity.status(200).body(new BackendResponse("user aggiornato!"));
         } else {
-            logger.error("User non trovato: "+ id);
+            logger.error("User non trovato: " + id);
             return ResponseEntity.status(404).body(new BackendResponse("user non trovato!"));
         }
     }
 
     // change password -- testato
     @PutMapping("/{id}/changePassword")
-    public ResponseEntity<BackendResponse> updatePassword(@PathVariable Integer id, @RequestBody PasswordRequest passwordRequest){
+    public ResponseEntity<BackendResponse> updatePassword(@PathVariable Integer id, @RequestBody PasswordRequest passwordRequest) {
 
         logger.info("Ricevuta richiesta di aggiornamento della password per l'utente: " + id);
         Optional<User> u = uDao.findById(id);
@@ -220,7 +220,7 @@ public class UserController {
         // Aggiorna l'username
         user.get().setUsername(loginRequest.getUsername());
 
-        if(uDao.existsByUsername(user.get().getUsername())){
+        if (uDao.existsByUsername(user.get().getUsername())) {
             logger.error("Username già esistente");
             return ResponseEntity.status(400).body(new BackendResponse("Username già esistente"));
         }
@@ -320,7 +320,7 @@ public class UserController {
     }
 
 
-    public static class PasswordRequest{
+    public static class PasswordRequest {
         private String oldPassword;
         private String newPassword;
 

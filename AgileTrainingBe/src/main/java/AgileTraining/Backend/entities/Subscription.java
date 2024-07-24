@@ -25,6 +25,14 @@ public class Subscription {
     public Subscription() {
     }
 
+    public Boolean getSubValid() {
+        return isSubValid;
+    }
+
+    public void setSubValid(Boolean subValid) {
+        isSubValid = subValid;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -41,6 +49,23 @@ public class Subscription {
         this.registrationDate = registrationDate;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+/*
     public Boolean getSubValid() {
         return isSubValid;
     }
@@ -48,6 +73,7 @@ public class Subscription {
     public void setSubValid(Boolean subValid) {
         isSubValid = subValid;
     }
+*/
 
     public Boolean getCertificateIssued() {
         return isCertificateIssued;
@@ -56,4 +82,5 @@ public class Subscription {
     public void setCertificateIssued(Boolean certificateIssued) {
         isCertificateIssued = certificateIssued;
     }
+
 }

@@ -3,7 +3,8 @@ package AgileTraining.Backend.entities;
 
 import jakarta.persistence.*;
 
-import java.sql.Date;
+import java.util.Date;
+
 
 @Entity
 @Table(name = "users")
@@ -24,9 +25,20 @@ public class User {
     private String placeOfBirth;
     private Date birthDate;
     private Long phoneNumber;
+    private String profileImageUrl;
 
+    public String getProfileImageUrl() {
+        return profileImageUrl;
+    }
+
+    public void setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
+    }
 
     public User() {
+    }
+
+    public User(Integer userId) {
     }
 
     public Integer getId() {

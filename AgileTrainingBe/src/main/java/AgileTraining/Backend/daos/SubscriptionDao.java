@@ -40,18 +40,5 @@ public interface SubscriptionDao extends JpaRepository<Subscription, Integer> {
     Optional<Subscription> optionalFindByUserIdAndCourseId(Integer userId, Integer courseId);
 
 
-/*
-    SELECT DISTINCT courses.course_name FROM courses
-    JOIN subscriptions ON subscriptions.course_id = courses.id
-    JOIN users ON subscriptions.user_id = users.id
-    WHERE courses.id NOT IN (
-            SELECT courses.id
-            FROM courses
-            JOIN subscriptions ON subscriptions.course_id = courses.id
-            JOIN users ON subscriptions.user_id = users.id
-            WHERE users.username = 'ciccio'
-    );
-*/
-
 
 }

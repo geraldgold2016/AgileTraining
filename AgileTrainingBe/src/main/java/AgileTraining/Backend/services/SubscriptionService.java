@@ -23,7 +23,6 @@ public class SubscriptionService {
         @Transactional
         public boolean isSubscriptionValid(Subscription subscription) {
 
-            // TODO fix
         if (subscription == null) {
             logger.error("Subscription is null");
             return false;

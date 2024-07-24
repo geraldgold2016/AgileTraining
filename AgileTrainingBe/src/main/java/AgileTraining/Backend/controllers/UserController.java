@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -46,6 +47,10 @@ public class UserController {
         }
 
         try {
+            if(uDao.existsByUsername(user.getUsername())){
+                logger.error("Username già esistente");
+                return ResponseEntity.status(400).body(new BackendResponse("Username già esistente"));
+            }
             uDao.save(user);
             logger.info("User salvato con successo");
         } catch (Exception e) {
@@ -55,6 +60,7 @@ public class UserController {
         return ResponseEntity.status(200).body(new BackendResponse("user salvato con successo"));
     }
 
+    // ottiene dati di un utente -- testato
     @GetMapping("/{id}/getDetails")
     public ResponseEntity<?> getUserById(@PathVariable Integer id) {
         logger.info("Ricevuta richiesta per ottenere l'utente con id: {}", id);
@@ -136,7 +142,7 @@ public class UserController {
     @DeleteMapping("/{id}/delete")
     public ResponseEntity<BackendResponse> deleteUser(@PathVariable Integer id) {
         Optional<User> userOptional = uDao.findById(id);
-        if (!userOptional.isPresent()) {
+        if (userOptional.isEmpty()) {
             logger.error("User non trovato: %d".formatted(id));
             return ResponseEntity.status(404).body(new BackendResponse("User non trovato"));
         }
@@ -191,6 +197,38 @@ public class UserController {
 
         return ResponseEntity.status(200).body(new BackendResponse("Password aggiornata correttamente!"));
 
+    }
+
+    @PutMapping("/{id}/updateUsername")
+    public ResponseEntity<BackendResponse> updateUsername(
+            @PathVariable Integer id,
+            @RequestBody LoginRequest loginRequest) {
+
+        // Recupera l'utente dal database
+        Optional<User> user = uDao.findById(id);
+        if (user.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new BackendResponse("Utente non trovato!"));
+        }
+
+        // Verifica la password fornita
+        if (encoder.matches(loginRequest.getPassword(), user.get().getPassword())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new BackendResponse("Password non valida"));
+        }
+
+        // Aggiorna l'username
+        user.get().setUsername(loginRequest.getUsername());
+
+        if(uDao.existsByUsername(user.get().getUsername())){
+            logger.error("Username già esistente");
+            return ResponseEntity.status(400).body(new BackendResponse("Username già esistente"));
+        }
+        uDao.save(user.get());
+
+        // Restituisce una risposta di successo
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new BackendResponse("Username aggiornato con successo!"));
     }
 
 
@@ -303,12 +341,4 @@ public class UserController {
         }
     }
 
-    public static class signUpRequest {
-        private String email;
-        private String profileImageUrl;
-        private String residentialAddress;
-        private String homeAddress;
-    //TODO  DA FINIRE
-
-    }
 }

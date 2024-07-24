@@ -55,7 +55,7 @@ public class UserController {
         return ResponseEntity.status(200).body(new BackendResponse("user salvato con successo"));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}/getDetails")
     public ResponseEntity<?> getUserById(@PathVariable Integer id) {
         logger.info("Ricevuta richiesta per ottenere l'utente con id: {}", id);
         Optional<User> u = uDao.findById(id);
@@ -88,6 +88,9 @@ public class UserController {
         // Step 2: Imposta l'user come loggato nella sessione
         session.setAttribute(u.getUsername(), true);
 
+        u.setIsLoggedIn(true);
+        uDao.save(u);
+
         // Step 3: Genera il token JWT
         String userToken = JwtUtils.generateToken(u.getUsername());
 
@@ -111,12 +114,30 @@ public class UserController {
         return ResponseEntity.status(200).body(u.getId());
     }
 
+    @PostMapping("/{id}/logout")
+    public ResponseEntity<BackendResponse> logout(@PathVariable Integer id, HttpSession session) {
+        logger.info("Ricevuta richiesta di logout per l'utente: " + id);
+        User u = uDao.findById(id).orElse(null);
+
+        if (u == null) {
+            logger.error("User non trovato");
+            return ResponseEntity.status(400).body(new BackendResponse("User non trovato"));
+        }
+
+        session.removeAttribute(u.getUsername());
+        u.setIsLoggedIn(false);
+        uDao.save(u);
+        logger.info("Logout effettuato con successo per l'utente: " + id);
+        return ResponseEntity.status(200).body(new BackendResponse("Logout effettuato con successo per l'utente: " + id));
+    }
+
 
     // delete user -- TESTATO
     @DeleteMapping("/{id}/delete")
     public ResponseEntity<BackendResponse> deleteUser(@PathVariable Integer id) {
-        if (uDao.findById(id) == null) {
-            logger.error("User {} non trovato", id);
+        Optional<User> userOptional = uDao.findById(id);
+        if (!userOptional.isPresent()) {
+            logger.error("User non trovato: %d".formatted(id));
             return ResponseEntity.status(404).body(new BackendResponse("User non trovato"));
         }
         userService.deleteUser(id);
@@ -133,14 +154,43 @@ public class UserController {
 
         if (u.isPresent()) {
             u.get().setEmail(updateRequest.getEmail());
-            u.get().setPassword(encoder.encode(updateRequest.getPassword()));
             u.get().setProfileImageUrl(updateRequest.getProfileImageUrl());
+            u.get().setResidentialAddress(updateRequest.getResidentialAddress());
+            u.get().setHomeAddress(updateRequest.getHomeAddress());
+            u.get().setGender(updateRequest.getGender());
+
             uDao.save(u.get());
             return ResponseEntity.status(200).body(new BackendResponse("user aggiornato!"));
         } else {
-            logger.error("User {} non trovato", id);
+            logger.error("User non trovato: "+ id);
             return ResponseEntity.status(404).body(new BackendResponse("user non trovato!"));
         }
+    }
+
+    // change password -- testato
+    @PutMapping("/{id}/changePassword")
+    public ResponseEntity<BackendResponse> updatePassword(@PathVariable Integer id, @RequestBody PasswordRequest passwordRequest){
+
+        logger.info("Ricevuta richiesta di aggiornamento della password per l'utente: " + id);
+        Optional<User> u = uDao.findById(id);
+
+
+        if (u.isEmpty()) {
+            logger.error("User {} non trovato", id);
+            return ResponseEntity.status(400).body(new BackendResponse("user non trovato!"));
+        }
+
+        if (!encoder.matches(passwordRequest.getOldPassword(), u.get().getPassword())) {
+            logger.error("Password non valida");
+            return ResponseEntity.status(400).body(new BackendResponse("Password non valida"));
+        }
+
+        u.get().setPassword(encoder.encode(passwordRequest.getNewPassword()));
+        uDao.save(u.get());
+        logger.info("Password aggiornata correttamente per l'utente: {}", id);
+
+        return ResponseEntity.status(200).body(new BackendResponse("Password aggiornata correttamente!"));
+
     }
 
 
@@ -150,7 +200,7 @@ public class UserController {
         logger.info("Ricevuta richiesta di aggiornamento della foto del profilo per l'utente: " + id);
         Optional<User> u = uDao.findById(id);
 
-        if (u != null) {
+        if (u.isPresent()) {
             u.get().setProfileImageUrl(newProfileImageUrl);
             uDao.save(u.get());
             logger.info("Foto del profilo aggiornata correttamente per l'utente: {}", id);
@@ -163,8 +213,34 @@ public class UserController {
 
     public static class updateRequest {
         private String email;
-        private String password;
         private String profileImageUrl;
+        private String residentialAddress;
+        private String homeAddress;
+        private String gender;
+
+        public String getGender() {
+            return gender;
+        }
+
+        public void setGender(String gender) {
+            this.gender = gender;
+        }
+
+        public String getHomeAddress() {
+            return homeAddress;
+        }
+
+        public void setHomeAddress(String homeAddress) {
+            this.homeAddress = homeAddress;
+        }
+
+        public String getResidentialAddress() {
+            return residentialAddress;
+        }
+
+        public void setResidentialAddress(String residentialAddress) {
+            this.residentialAddress = residentialAddress;
+        }
 
         public String getEmail() {
             return email;
@@ -172,14 +248,6 @@ public class UserController {
 
         public void setEmail(String email) {
             this.email = email;
-        }
-
-        public String getPassword() {
-            return password;
-        }
-
-        public void setPassword(String password) {
-            this.password = password;
         }
 
         public String getProfileImageUrl() {
@@ -213,44 +281,34 @@ public class UserController {
         }
     }
 
-        /*
-                @PostMapping("/login")
-        public ResponseEntity<Object> loginAndPrivateArea(@RequestBody User user, HttpSession session) {
 
-            // Step 1: Effettua il login dell'user
-            User u = uDao.userLogin(user.getUsername());
+    public static class PasswordRequest{
+        private String oldPassword;
+        private String newPassword;
 
-            if (u == null) {
-                return ResponseEntity.status(400).body(new BackendResponse("user non trovato!"));
-            }
-
-            if (!encoder.matches(user.getPassword(), u.getPassword())) {
-                return ResponseEntity.status(400).body(new BackendResponse("Password non valida"));
-            }
-
-            // Step 2: Imposta l'user come loggato nella sessione
-            session.setAttribute(u.getUsername(), true);
-
-            // Step 3: Genera il token JWT
-            String userToken = JwtUtils.generateToken(u.getName(), u.getSurname(), u.getUsername());
-
-            // Step 4: Verifica se l'user ha accesso alla private area usando il token JWT appena generato
-            Jws<Claims> claims = JwtUtils.verifyToken(userToken);
-
-            if (claims == null) {
-                return ResponseEntity.status(400).body(new BackendResponse("Token non valido"));
-            }
-
-            Boolean isLoggedIn = (Boolean) session.getAttribute(u.getUsername());
-
-            if (isLoggedIn == null || !isLoggedIn) {
-                return ResponseEntity.status(401).body(new BackendResponse("User non loggato"));
-            }
-
-            // Se tutte le verifiche sono passate, l'user ha accesso alla private area
-            return ResponseEntity.status(200).body(new BackendResponse("Puoi accedere ai corsi"));
+        public String getNewPassword() {
+            return newPassword;
         }
-        */
 
+        public void setNewPassword(String newPassword) {
+            this.newPassword = newPassword;
+        }
 
+        public String getOldPassword() {
+            return oldPassword;
+        }
+
+        public void setOldPassword(String oldPassword) {
+            this.oldPassword = oldPassword;
+        }
+    }
+
+    public static class signUpRequest {
+        private String email;
+        private String profileImageUrl;
+        private String residentialAddress;
+        private String homeAddress;
+    //TODO  DA FINIRE
+
+    }
 }

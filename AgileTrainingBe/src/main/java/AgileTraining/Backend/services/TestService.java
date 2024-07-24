@@ -76,7 +76,7 @@ public class TestService {
 
         testResults.setUser(user);
         testResults.setTest(test);
-        testResults.setTestResult(testResult);
+        testResults.setResult(testResult);
 
         if (testResults.getnAttempts() == null) {
             testResults.setnAttempts(0);
@@ -115,7 +115,7 @@ public class TestService {
             return ResponseEntity.status(400).body(new BackendResponse("User non trovato"));
         }
 
-        Integer score = testResult.getTestResult();
+        Integer score = testResult.getResult();
         return ResponseEntity.ok().body(score);
     }
 

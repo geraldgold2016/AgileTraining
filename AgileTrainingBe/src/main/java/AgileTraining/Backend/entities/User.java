@@ -4,6 +4,7 @@ package AgileTraining.Backend.entities;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 
 @Entity
@@ -26,6 +27,38 @@ public class User {
     private Date birthDate;
     private Long phoneNumber;
     private String profileImageUrl;
+    private Boolean isLoggedIn;
+
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Activity> activities;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Subscription> subscriptions;
+
+    public List<Subscription> getSubscriptions() {
+        return subscriptions;
+    }
+
+    public void setSubscriptions(List<Subscription> subscriptions) {
+        this.subscriptions = subscriptions;
+    }
+
+    public List<Activity> getActivities() {
+        return activities;
+    }
+
+    public void setActivities(List<Activity> activities) {
+        this.activities = activities;
+    }
+
+    public Boolean getLoggedIn() {
+        return isLoggedIn;
+    }
+
+    public void setIsLoggedIn(Boolean loggedIn) {
+        this.isLoggedIn = loggedIn;
+    }
 
     public String getProfileImageUrl() {
         return profileImageUrl;

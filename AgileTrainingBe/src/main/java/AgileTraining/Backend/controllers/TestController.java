@@ -3,7 +3,6 @@ package AgileTraining.Backend.controllers;
 
 import AgileTraining.Backend.classes.BackendResponse;
 import AgileTraining.Backend.entities.Question;
-
 import AgileTraining.Backend.services.TestService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,6 +73,21 @@ public class TestController {
             return ResponseEntity.status(404).body(new BackendResponse("No questions found"));
         }
         return ResponseEntity.ok().body(questions);
+    }
+
+    // ottiene le opzioni di una domanda
+    // testato
+    @GetMapping("/getOptionsForOneQuestion")
+    public ResponseEntity<?> getOptions(@RequestParam Integer questionId) {
+        logger.info("Received request to get options");
+        return ResponseEntity.ok().body(tService.getOptionsOneQuestion(questionId));
+    }
+
+    // NON TESTABILE DA BE. DA TESTARE DA FE
+    @GetMapping("/getOptions")
+    public ResponseEntity<?> getOptions(@RequestParam List<Question> questions) {
+        logger.info("Received request to get options");
+        return ResponseEntity.ok().body(tService.getOptions(questions));
     }
 
 

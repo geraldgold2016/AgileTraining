@@ -1,12 +1,88 @@
 <app-header></app-header>
 
-    <h1>Tutti i corsi</h1>
+<h1>Tutti i corsi</h1>
 
-<div id="corsi">
-    <div *ngFor="let course of courses">
-        <a href="anteprimaCorso">
-            <img [src]="'../../../assets/images/' + course.courseImageUrl" [alt]="course.courseName" >
-        </a>
+<button class="TornaIndietro" id="Indietro" (click) = TornaIndietro()>Torna Indietro</button>
+
+<div id="contenitoreCategorie">
+    <div class="categoria">
+        <h2>Corsi FrontEnd</h2>
+        <div class="contenitoriCorsi">
+            <div class="corsi">
+                <div *ngFor="let primi4CorsiFront of primi4CorsiFront">
+                    <a href="anteprimaCorso">
+                        <img [src]="'../../../assets/images/' + primi4CorsiFront.courseImageUrl"
+                            [alt]="primi4CorsiFront.courseName">
+                    </a>
+                </div>
+            </div>
+            <button class="VediCorsi" (click)="VediCorsiFrontEnd()">Clicca qui per vedere i
+                corsi</button>
+        </div>
+    </div>
+    <div class="categoria">
+        <h2>Corsi BackEnd</h2>
+        <div class="contenitoriCorsi">
+            <div class="corsi">
+                <div *ngFor="let primi4CorsiBack of primi4CorsiBack">
+                    <a href="anteprimaCorso">
+                        <img [src]="'../../../assets/images/' + primi4CorsiBack.courseImageUrl"
+                            [alt]="primi4CorsiBack.courseName">
+                    </a>
+                </div>
+            </div>
+            <button class="VediCorsi" (click)="VediCorsiBackEnd()">Clicca qui per vedere i corsi</button>
+        </div>
+    </div>
+    <div class="categoria">
+        <h2>Corsi Database</h2>
+        <div class="contenitoriCorsi">
+            <div class="corsi">
+                <div *ngFor="let primi4CorsiData of primi4CorsiData">
+                    <a href="anteprimaCorso">
+                        <img [src]="'../../../assets/images/' + primi4CorsiData.courseImageUrl"
+                            [alt]="primi4CorsiData.courseName">
+                    </a>
+                </div>
+            </div>
+            <button class="VediCorsi" (click)="VediCorsiDatabase()">Clicca qui per vedere i corsi</button>
+        </div>
+    </div>
+</div>
+
+<!-- Vedi i corsi per categoria -->
+
+<div id="corsiFrontEnd">
+    <div class="corsi">
+        <div *ngFor="let coursesFrontEnd of coursesFrontEnd">
+            <a href="anteprimaCorso">
+                <img [src]="'../../../assets/images/' + coursesFrontEnd.courseImageUrl"
+                    [alt]="coursesFrontEnd.courseName">
+            </a>
+        </div>
+    </div>
+</div>
+
+<div id="corsiBackEnd">
+    <div class="corsi">
+        <div *ngFor="let coursesBackEnd of coursesBackEnd">
+            <a href="anteprimaCorso">
+                <img [src]="'../../../assets/images/' + coursesBackEnd.courseImageUrl"
+                    [alt]="coursesBackEnd.courseName">
+            </a>
+        </div>
+    </div>
+</div>
+
+
+<div id="corsiDatabase">
+    <div class="corsi">
+        <div *ngFor="let coursesDatabase of coursesDatabase">
+            <a href="anteprimaCorso">
+                <img [src]="'../../../assets/images/' + coursesDatabase.courseImageUrl"
+                    [alt]="coursesDatabase.courseName">
+            </a>
+        </div>
     </div>
 </div>
 

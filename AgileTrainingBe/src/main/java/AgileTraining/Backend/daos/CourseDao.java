@@ -12,4 +12,10 @@ public interface CourseDao extends JpaRepository<Course, Integer> {
 
     @Query(value="SELECT * FROM courses", nativeQuery = true)
     List<Course> getAllCourses();
+    
+    @Query(value="SELECT * FROM courses where courses.category = :category", nativeQuery = true)
+    List<Course> getCoursesByCategory(@Param("category") String category);
+    
+    @Query(value="SELECT * FROM courses where courses.id = :id", nativeQuery = true)
+    Course getCoursesById(@Param("id") Integer id);
 }

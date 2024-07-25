@@ -12,24 +12,32 @@
     </p>
   </div>
   <div class="Login">
-    <form action="">
+    <form (ngSubmit)="Login()">
       <h4>Login</h4>
       <div class="inpBox">
-        <label for="" class="lblUser">Username</label>
+        <label for="username" class="lblUser">Username</label>
         <fa-icon class="userIcon" [icon]="['fas', 'user']"></fa-icon>
         <input
+          id="username"
+          name="username"
           class="userInp"
           type="text"
           placeholder="inserisci il nome utente"
+          [(ngModel)]="username"
+          required
         />
       </div>
       <div class="inpBox">
-        <label class="lblPass"><span></span>Password</label><br />
+        <label for="password" class="lblPass"><span></span>Password</label><br />
         <div class="password-wrapper">
           <input
+            id="password"
+            name="password"
             type="password"
             class="passInp"
             placeholder="inserisci la Password"
+            [(ngModel)]="password"
+            required
           />
           <fa-icon
             class="passToggle"
@@ -38,7 +46,7 @@
           ></fa-icon>
         </div>
       </div>
-
-    </form>      <a href="/home"><button class="btnLogin">Login</button></a>
+      <button class="btnLogin" type="submit">Login</button>
+    </form>
   </div>
 </div>

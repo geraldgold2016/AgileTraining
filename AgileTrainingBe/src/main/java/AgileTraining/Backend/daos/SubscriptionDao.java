@@ -12,21 +12,19 @@ import java.util.Optional;
 public interface SubscriptionDao extends JpaRepository<Subscription, Integer> {
 
     @Query(value=
-            "SELECT courses.course_name FROM users " +
+            "SELECT courses.id, courses.category, courses.course_description, courses.course_image_url, courses.course_name " +
+            "FROM users " +
             "JOIN subscriptions ON subscriptions.user_id = users.id " +
             "JOIN courses ON subscriptions.course_id = courses.id " +
             "WHERE users.id = :id", nativeQuery = true)
     List<Object[]> getCourses(@Param("id") Integer userId);
 
     @Query(value=
-            "SELECT DISTINCT courses.course_name FROM courses " +
-            "JOIN subscriptions ON subscriptions.course_id = courses.id " +
-            "JOIN users ON subscriptions.user_id = users.id " +
-            "WHERE courses.id NOT IN (SELECT courses.id " +
-            "FROM courses " +
-            "JOIN subscriptions ON subscriptions.course_id = courses.id " +
-            "JOIN users ON subscriptions.user_id = users.id " +
-            "WHERE users.id = :id);", nativeQuery = true)
+    		"SELECT courses.id, courses.category, courses.course_description, courses.course_image_url, courses.course_name " +
+    		"FROM courses " +
+    		"LEFT JOIN subscriptions ON subscriptions.course_id = courses.id " +
+    		"AND subscriptions.user_id = :id " +
+    		"WHERE subscriptions.user_id IS NULL", nativeQuery = true)
     List<Object[]> getMoreCourses(@Param("id") Integer userId);
 
 

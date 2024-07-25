@@ -1,41 +1,23 @@
 <app-header></app-header>
 
-    <h1>Benvenuto NomeUtente</h1>
+    <h1>Benvenuto {{ usernameUtente  }}</h1>
 
     <h3>Corsi a cui sei iscritto</h3>
     <div id="corsiIscritti">
-        <div><a href="corso"><img src="../../../assets/images/html.jpg" alt=""></a></div>
-        <div><a href="corso"><img src="../../../assets/images/css.png" alt=""></a></div>
-        <div><a href="corso"><img src="../../../assets/images/javascript.jpg" alt=""></a></div>
-        <div><a href="corso"><img src="../../../assets/images/angular.jpg" alt=""></a></div>
-        <div><a href="corso"><img src="../../../assets/images/typescript.png" alt=""></a></div>
-        <div><a href="corso"><img src="../../../assets/images/swagger.png" alt=""></a></div>
-        <div class="corsoIscritto"><a href="corso"><img src="../../../assets/images/CPP-Language.png" alt=""></a></div>
-        <div class="corsoIscritto"><a href="corso"><img src="../../../assets/images/Cprogramming.png" alt=""></a></div>
-        <div class="corsoIscritto"><a href="corso"><img src="../../../assets/images/Csharp.png" alt=""></a></div>
-        <div class="corsoIscritto"><a href="corso"><img src="../../../assets/images/Python.png" alt=""></a></div>
-        <div class="corsoIscritto"><a href="corso"><img src="../../../assets/images/java.png" alt=""></a></div>
-        <div class="corsoIscritto"><a href="corso"><img src="../../../assets/images/net6.png" alt=""></a></div>
+        <div *ngFor="let coursesSubscription of coursesSubscription" [attr.data-course-id]="coursesSubscription[0]" (click)="saveCourseId($event, coursesSubscription[0])">
+            <a href="corso">
+                <img [src]="'../../../assets/images/' + coursesSubscription[3]" [alt]="coursesSubscription[4]" >
+            </a>
+        </div>
     </div>
-
-    <button id="MostraAltro1" class="buttonVedi">Mostra Altro</button>
 
     <h3>Corsi a cui potresti essere interessato</h3>
     <div id="corsiInteressanti">
-        <div><a href="anteprimaCorso"><img src="../../../assets/images/MySQL.jpg" alt=""></a></div>
-        <div><a href="anteprimaCorso"><img src="../../../assets/images/Oracle.png" alt=""></a></div>
-        <div><a href="anteprimaCorso"><img src="../../../assets/images/postman.png" alt=""></a></div>
-        <div><a href="anteprimaCorso"><img src="../../../assets/images/Web-Security.jpg" alt=""></a></div>
-        <div><a href="anteprimaCorso"><img src="../../../assets/images/SpringBoot.png" alt=""></a></div>
-        <div><a href="anteprimaCorso"><img src="../../../assets/images/nodejs.jpg" alt=""></a></div>
-        <div class="corsoInteressante"><a href="anteprimaCorso"><img src="../../../assets/images/angular.jpg" alt=""></a></div>
-        <div class="corsoInteressante"><a href="anteprimaCorso"><img src="../../../assets/images/html.jpg" alt=""></a></div>
-        <div class="corsoInteressante"><a href="anteprimaCorso"><img src="../../../assets/images/css.png" alt=""></a></div>
-        <div class="corsoInteressante"><a href="anteprimaCorso"><img src="../../../assets/images/javascript.jpg" alt=""></a></div>
-        <div class="corsoInteressante"><a href="anteprimaCorso"><img src="../../../assets/images/Python.png" alt=""></a></div>
-        <div class="corsoInteressante"><a href="anteprimaCorso"><img src="../../../assets/images/typescript.png" alt=""></a></div>
+        <div *ngFor="let coursesMore of coursesMore" [attr.data-course-id]="coursesMore[0]" (click)="saveCourseId($event, coursesMore[0])">
+            <a href="anteprimaCorso">
+                <img [src]="'../../../assets/images/' + coursesMore[3]" [alt]="coursesMore[4]" >
+            </a>
+        </div>
     </div>
-
-    <button id="MostraAltro2" class="buttonVedi">Mostra Altro</button>
 
 <app-footer></app-footer>

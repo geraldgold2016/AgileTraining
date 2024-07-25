@@ -4,7 +4,65 @@ h1
     margin-top: 110px;
 }
 
-#corsi
+h2
+{
+    margin: 5px 0px 5px 0px;
+    text-align: center;
+}
+
+.TornaIndietro
+{
+    /* margin-top: 110px; */
+    margin-left: 100px;
+    padding: 10px;
+    cursor: pointer;
+
+    display: none;
+}
+
+#contenitoreCategorie
+{
+    display: flex;
+    justify-content: center;
+}
+
+.categoria
+{
+    margin: 10px;
+    height: 400px;
+    width: 460px;
+    border: solid black 5px;
+    border-radius: 20px;
+}
+
+.contenitoriCorsi
+{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+}
+
+.VediCorsi
+{
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+#corsiFrontEnd
+{
+    display: none;
+}
+#corsiBackEnd
+{
+    display: none;
+}
+#corsiDatabase
+{
+    display: none;
+}
+
+.corsi
 {
     display: flex;
     align-items: center;
@@ -13,7 +71,7 @@ h1
     justify-content: center;
 }
 
-#corsi div
+.corsi div
 {
     height: 130px;
     width: 190px;
@@ -24,28 +82,6 @@ h1
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.buttonVedi
-{
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 30px;
-
-    padding: 5px;
-    background-color: #333;
-    color: white;
-}
-
-#corsi div.corso
-{
-    display: none;
-}
-
-#corsi div.corso.active
-{
-    display: flex;
 }
 
 img

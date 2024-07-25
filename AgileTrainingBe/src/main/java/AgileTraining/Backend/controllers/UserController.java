@@ -8,6 +8,10 @@ import AgileTraining.Backend.utils.JwtUtils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import jakarta.servlet.http.HttpSession;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -98,7 +102,13 @@ public class UserController {
         }
 
         // Se tutte le verifiche sono passate, l'user ha accesso alla private area
-        return ResponseEntity.status(200).body(new BackendResponse("Puoi accedere ai corsi"));
+        //return ResponseEntity.status(200).body(new BackendResponse("Puoi accedere ai corsi"));
+        //return ResponseEntity.status(200).body(u.getId());
+        Map<String, Object> response = new HashMap<>();
+        response.put("token", userToken);
+        response.put("userId", u.getId());
+
+        return ResponseEntity.status(200).body(response);
     }
 
     // delete user -- TESTATO

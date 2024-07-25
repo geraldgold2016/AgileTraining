@@ -1,67 +1,22 @@
 <app-header></app-header>
 
-<h1>Anteprima Corso XXXXXX</h1>
+<h1>Anteprima Corso {{ nomeCorso }}</h1>
 
-<div id="contenitore">
+<div id="contenitore"> 
 
-<h3>Descrizione del Corso</h3>
+<h3>Descrizione</h3>
 
-<div id="descrizioneCorso">Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
-    Architecto nisi dolor temporibus obcaecati sint nihil vitae aut ratione minus alias doloribus, 
-    debitis in ex. Natus exercitationem facere consequatur? Facilis, quidem.
-    Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
-    Architecto nisi dolor temporibus obcaecati sint nihil vitae aut ratione minus alias doloribus, 
-    debitis in ex. Natus exercitationem facere consequatur? Facilis, quidem.
-    Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
-    Architecto nisi dolor temporibus obcaecati sint nihil vitae aut ratione minus alias doloribus, 
-    debitis in ex. Natus exercitationem facere consequatur? Facilis, quidem.
-</div>
+<div id="descrizioneCorso">{{ descrizioneCorso }}</div>
 
 <h3>Capitoli del Corso</h3>
 
-<button class="accordion">Capitolo 1   <i class="fa-solid fa-angle-down"></i></button>
-<div class="panel">
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-    <p><i class="fa-regular fa-circle-play"></i>   Video Capitolo 1</p>
+<button class="accordion" *ngFor="let CapitoliCorso of CapitoliCorso" (click)="toggleAccordion($event)"><i class="fa-solid fa-angle-down"></i>    {{ CapitoliCorso.moduleName }}</button>
+<div class="panel" *ngFor="let CapitoliCorso of CapitoliCorso">
+    <p>{{ CapitoliCorso.moduleDescription }}</p>
+    <p><i class="fa-regular fa-circle-play"></i>   Video {{ CapitoliCorso.moduleName }}</p>
 </div>
 
-<button class="accordion">Capitolo 2   <i class="fa-solid fa-angle-down"></i></button>
-<div class="panel">
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-    <p><i class="fa-regular fa-circle-play"></i>   Video Capitolo 2</p>
-</div>
-
-<button class="accordion">Capitolo 3   <i class="fa-solid fa-angle-down"></i></button>
-<div class="panel">
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-    <p><i class="fa-regular fa-circle-play"></i>   Video Capitolo 3</p>
-</div>
-
-<button class="accordion">Capitolo 4   <i class="fa-solid fa-angle-down"></i></button>
-<div class="panel">
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-    <p><i class="fa-regular fa-circle-play"></i>   Video Capitolo 4</p>
-</div>
-
-<button class="accordion">Capitolo 5   <i class="fa-solid fa-angle-down"></i></button>
-<div class="panel">
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-    <p><i class="fa-regular fa-circle-play"></i>   Video Capitolo 5</p>
-</div>
-
-<button class="accordion">Capitolo 6   <i class="fa-solid fa-angle-down"></i></button>
-<div class="panel">
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-    <p><i class="fa-regular fa-circle-play"></i>   Video Capitolo 6</p>
-</div>
-
-<button class="accordion">Capitolo 7   <i class="fa-solid fa-angle-down"></i></button>
-<div class="panel">
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-    <p><i class="fa-regular fa-circle-play"></i>   Video Capitolo 7</p>
-</div>
-
-<button class="accordion">Esame finale   <i class="fa-solid fa-angle-down"></i></button>
+<button class="accordion"><i class="fa-solid fa-angle-down" (click)="toggleAccordion($event)"></i><span>    Esame finale</span></button>
 <div class="panel">
   <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 </div>

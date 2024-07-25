@@ -13,7 +13,6 @@ import { AvvisoUsernameSuccessComponent } from './components/avviso-username-suc
 import { CambiaPasswordComponent } from './components/cambia-password/cambia-password.component';
 import { CancellaAccountComponent } from './components/cancella-account/cancella-account.component';
 import { CertificatiComponent } from './components/certificati/certificati.component';
-import { ChiSiamoComponent } from './components/chi-siamo/chi-siamo.component';
 import { CorsiComponent } from './components/corsi/corsi.component';
 import { CorsiSearchComponent } from './components/corsi-search/corsi-search.component';
 import { CorsoComponent } from './components/corso/corso.component';
@@ -58,7 +57,6 @@ export const routes: Routes = [
   { path: 'cancellaAccount', component: CancellaAccountComponent },
   { path: 'certificati', component: CertificatiComponent },
   { path: 'certificatoCorso', component:CertificatoCorsoComponent},
-  { path: 'chiSiamo', component: ChiSiamoComponent },
   { path: 'corsi', component: CorsiComponent },
   { path: 'cercaCorsi', component: CorsiSearchComponent },
   { path: 'corso', component: CorsoComponent },

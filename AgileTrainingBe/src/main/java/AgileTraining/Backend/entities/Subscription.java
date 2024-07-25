@@ -65,16 +65,6 @@ public class Subscription {
         this.user = user;
     }
 
-/*
-    public Boolean getSubValid() {
-        return isSubValid;
-    }
-
-    public void setSubValid(Boolean subValid) {
-        isSubValid = subValid;
-    }
-*/
-
     public Boolean getCertificateIssued() {
         return isCertificateIssued;
     }

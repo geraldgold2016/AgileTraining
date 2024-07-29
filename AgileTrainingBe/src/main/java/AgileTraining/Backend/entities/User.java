@@ -25,7 +25,10 @@ public class User {
     private String homeAddress;
     private String gender;
     private String placeOfBirth;
+
+    @Temporal(TemporalType.DATE)
     private Date birthDate;
+
     private Long phoneNumber;
     private String profileImageUrl;
     private Boolean isLoggedIn;

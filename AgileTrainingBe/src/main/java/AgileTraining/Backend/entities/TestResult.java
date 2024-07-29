@@ -30,7 +30,8 @@ public class TestResult {
         this.nAttempts = nAttempts;
     }
 
-    private Integer nAttempts = 0;
+    @Column(columnDefinition = "integer default 0")
+    private Integer nAttempts;
 
     public Integer getId() {
         return id;

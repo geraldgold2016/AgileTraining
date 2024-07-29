@@ -23,8 +23,8 @@ public class Activity {
 
     // il suo valore di default dovrebbe essere false.
     // non sono sicura che funzioni...
-    @Column(nullable = false)
-    private Boolean isCompleted = false;
+    @Column(columnDefinition = "boolean default false")
+    private Boolean isCompleted
 
     @ManyToOne
     @JoinColumn(name = "module_id")

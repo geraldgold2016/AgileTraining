@@ -11,7 +11,9 @@ public class Subscription {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Temporal(TemporalType.DATE)
     private Date registrationDate;
+
     private Boolean isSubValid;
     private Boolean isCertificateIssued;
 

@@ -76,7 +76,17 @@ public class TestService {
         TestResult completedTest = trDao.findById(testId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid test ID: " + testId));
         completedTest.setResult(testResult);
-        completedTest.setnAttempts(completedTest.getnAttempts() + 1);
+        /*
+        Integer numberAttempts = completedTest.getnAttempts();
+        if (numberAttempts == null)
+        {
+            completedTest.setnAttempts(1);
+        }
+        else if (numberAttempts > 0)
+        {
+        	completedTest.setnAttempts(numberAttempts + 1);
+        }
+*/
         trDao.save(completedTest);
     }
 

@@ -124,6 +124,36 @@ public class SubscriptionController {
 
     }
 
+    @DeleteMapping("/unsubscribeFromCourse")
+    public ResponseEntity<?> unsubscribeFromCourse(@RequestBody SubscriptionRequest subscriptionRequest) {
+        // Controllo che l'utente e il corso esistano
+        Optional<Course> courseOptional = cDao.findById(subscriptionRequest.getCourseId());
+        Course course;
+        if (courseOptional.isPresent()) {
+            course = courseOptional.get();
+        } else {
+            return ResponseEntity.badRequest().body("Course not found");
+        }
+        
+        Optional<User> userOptional = uDao.findById(subscriptionRequest.getUserId());
+        User user;
+        if (userOptional.isPresent()) {
+            user = userOptional.get();
+        } else {
+            return ResponseEntity.badRequest().body("User not found");
+        }
+
+        // Controllo se l'utente è iscritto al corso
+        Optional<Subscription> existingSubscription = sDao.findByUserIdAndCourseId(user.getId(), course.getId());
+        if (existingSubscription.isPresent()) {
+            // Se l'iscrizione esiste, la rimuovo
+            sDao.delete(existingSubscription.get());
+            return ResponseEntity.status(200).body("Subscription deleted successfully");
+        } else {
+            return ResponseEntity.badRequest().body("Subscription not found");
+        }
+    }
+
 
 
     @PostMapping("/newTest")

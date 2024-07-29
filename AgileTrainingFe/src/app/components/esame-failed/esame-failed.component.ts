@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HeaderComponent } from '../header/header.component';
-import { FotoProfiloComponent } from '../foto-profilo/foto-profilo.component';
 import { FooterComponent } from '../footer/footer.component';
 
 @Component({
@@ -10,6 +9,15 @@ import { FooterComponent } from '../footer/footer.component';
   templateUrl: './esame-failed.component.html',
   styleUrl: './esame-failed.component.css'
 })
-export class EsameFailedComponent {
-
+export class EsameFailedComponent implements OnInit
+{
+  punteggio: string = '';
+  ngOnInit(): void 
+  {
+    const punteggio= localStorage.getItem('punteggio');
+    if (punteggio)
+    {
+      this.punteggio = punteggio;
+    }
+  }
 }

@@ -101,6 +101,20 @@ h3
     transition: max-height 0.2s ease-out;
 }
 
+/*icona che gira*/
+i
+{
+    transition: 0.2s all;
+}
+
+.rotated 
+{
+    transform: rotate(180deg);
+    transition: 0.2s all;
+}
+
+
+
 #paginaEsame
 {
     display: flex;

@@ -16,11 +16,15 @@ export class PreviewCorsoComponent
   constructor(private dataService: DataService) {}  
   userId: string = '';
   idCorso: string = '';
-  rispostaCorso: any = '';
   nomeCorso: string = '';
   descrizioneCorso: string = '';
-  CapitoliCorso: any[] = [];
-  // descrizioneCapitoliCorso: any[] = [];
+  capitoliCorso: any[] = [];
+  durataTotaleVideoCorso: number = 0;
+  oreTotaliVideoCorso: number = 0;
+  minutiTotaliVideoCorso: number = 0;
+  esameCorso: any = '';
+  descrizioneCapitoliCorso: any[] = [];
+  rispostaIscrizioneCorso: string = '';
   error: string = '';
 
   ngOnInit(): void 
@@ -29,20 +33,24 @@ export class PreviewCorsoComponent
     const storedUserId = localStorage.getItem('userId');
     if (storedUserId != null) {this.userId = storedUserId;} 
     else {this.userId = 'idUtente non trovato';}
-    console.log('User ID:',storedUserId);    
+    // console.log('User ID:',storedUserId);    
 
     //ottengo l'idCorso dal Local Storage
     const storedCorsoId = localStorage.getItem('selectedCourseId');
     if (storedCorsoId != null) {this.idCorso = storedCorsoId;} 
     else {this.idCorso = 'idCorso non trovato';}
-    console.log('Corso ID:',storedCorsoId);   
+    // console.log('Corso ID:',storedCorsoId);   
 
     //Richiamo il metodo getCoursesById per ottenere la descrizione del corso
     this.dataService.getCoursesById(this.idCorso).subscribe({
       next: (data: any) => {
         this.descrizioneCorso = data.courseDescription;
-        this.nomeCorso = data.courseName
-        console.log(this.descrizioneCorso);
+        this.nomeCorso = data.courseName;
+        this.durataTotaleVideoCorso = data.duration;
+
+        //Calcolo Durata ore e minuti
+        this.oreTotaliVideoCorso = Math.floor(this.durataTotaleVideoCorso/60);
+        this.minutiTotaliVideoCorso = this.durataTotaleVideoCorso % 60;
       },
       error: (err: any) => {
         console.error('Errore nel recupero dei corsi', err);
@@ -53,34 +61,57 @@ export class PreviewCorsoComponent
     //Richiamo il metodo getChaptersByIdCourse per ottenere tutti i capitoli del corso
     this.dataService.getChaptersByIdCourse(this.idCorso).subscribe({
       next: (data: any[]) => {
-        this.CapitoliCorso = data;  
-        // this.descrizioneCapitoliCorso = data;  
-        console.log(this.CapitoliCorso);
-        // console.log(this.descrizioneCapitoliCorso);
+        for(var i = 0; i < data.length - 1; i++)  //prendi tutto tranne l'ultimo elemento dell'array
+        {
+          this.capitoliCorso[i] = data[i];  
+        }
+        this.esameCorso = data[data.length -1]; //prendi l'ultimo elemento dell'array
+        //nel file html c'è capitolo.moduleName al posto di CapitoliCorso.moduleName
+        //perchè all'inizio dell'accordion c'è il ciclo *ngFor = "let capitolo of CapitoliCorso"
+        //quindi capitolo rappresenta una riga dell'array CapitoliCorso
       },
       error: (err: any) => {
         console.error('Errore nel recupero dei corsi', err);
         this.error = 'Errore nel recupero dei corsi';
       }
-
     });
+
+
+
   }
 
+  //funzione per vedere il capitolo
   toggleAccordion(event: any): void 
   {
-    const element = event.target;
-    element.classList.toggle("active");
-    const panel = element.nextElementSibling; //seleziona l'elemento prossimo più vicino
-    if (panel.style.maxHeight != "") //se l'altezza massima del panel, sottoforma di stringa, non è vuota
+    const element = event.target as HTMLElement;
+    const accordion = element.closest('.accordion');
+    if (accordion) 
     {
-      panel.style.maxHeight = ""; //allora annulla l'altezza massima
-    } 
-    else 
-    {
-      panel.style.maxHeight = panel.scrollHeight + "px"; //altrimenti mi inserisci l'altezza massima
-    } 
-      
-    const icona = element.querySelector('.fa-angle-down');
-    if (icona) {icona.classList.toggle('rotated');}
+      accordion.classList.toggle("active");
+      const panel = accordion.nextElementSibling as HTMLElement;
+      if (panel.style.maxHeight) {
+        panel.style.maxHeight = "";
+      } else {
+        panel.style.maxHeight = panel.scrollHeight + "px";
+      }
+      const icon = accordion.querySelector('.fa-angle-down');
+      if (icon) {
+        icon.classList.toggle('rotated');
+      }
+    }
+  }
+
+  //Iscrizione al Corso
+  Iscrizione()
+  {
+    this.dataService.subscribeToCourse(this.userId, this.idCorso).subscribe({
+      next: () => {
+        this.rispostaIscrizioneCorso = 'Iscrizione avvenuta con successo!';
+      },
+      error: (err: any) => {
+        this.error = 'Errore durante il login';
+        console.error('Errore:', err);
+      }
+    });
   }
 }

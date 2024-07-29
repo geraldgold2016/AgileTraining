@@ -1,140 +1,22 @@
-<h1>Esame Corso XXXXXX</h1>
+<h1>Esame Corso {{ nomeCorso }}</h1>
 
-<div class="contenitoreEsame">
-    <div class="domanda">
-        <h3>Domanda 1</h3>
-        <label class="container">
-            <input type="radio" name="domanda1">  Risposta 1
-            <span class="checkmark"></span>
-        </label>
-        <label class="container">
-            <input type="radio" name="domanda1">  Risposta 2
-            <span class="checkmark"></span>
-        </label>
-        <label class="container">
-            <input type="radio" name="domanda1">  Risposta 3
-            <span class="checkmark"></span>
-        </label>
-        <label class="container">
-            <input type="radio" name="domanda1">  Risposta 4
-            <span class="checkmark"></span>
-        </label>
-    </div>
-    <div class="domanda">
-        <h3>Domanda 2</h3>
-        <label class="container">
-            <input type="radio" name="domanda2">  Risposta 1
-            <span class="checkmark"></span>
-        </label>
-        <label class="container">
-            <input type="radio" name="domanda2">  Risposta 2
-            <span class="checkmark"></span>
-        </label>
-        <label class="container">
-            <input type="radio" name="domanda2">  Risposta 3
-            <span class="checkmark"></span>
-        </label>
-        <label class="container">
-            <input type="radio" name="domanda2">  Risposta 4
-            <span class="checkmark"></span>
-        </label>
-    </div>
-    <div class="domanda">
-        <h3>Domanda 3</h3>
-        <label class="container">
-            <input type="radio" name="domanda3">  Risposta 1
-            <span class="checkmark"></span>
-        </label>
-        <label class="container">
-            <input type="radio" name="domanda3">  Risposta 2
-            <span class="checkmark"></span>
-        </label>
-        <label class="container">
-            <input type="radio" name="domanda3">  Risposta 3
-            <span class="checkmark"></span>
-        </label>
-        <label class="container">
-            <input type="radio" name="domanda3">  Risposta 4
-            <span class="checkmark"></span>
-        </label>
-    </div>
-    <div class="domanda">
-        <h3>Domanda 4</h3>
-        <label class="container">
-            <input type="radio" name="domanda4">  Risposta 1
-            <span class="checkmark"></span>
-        </label>
-        <label class="container">
-            <input type="radio" name="domanda4">  Risposta 2
-            <span class="checkmark"></span>
-        </label>
-        <label class="container">
-            <input type="radio" name="domanda4">  Risposta 3
-            <span class="checkmark"></span>
-        </label>
-        <label class="container">
-            <input type="radio" name="domanda4">  Risposta 4
-            <span class="checkmark"></span>
-        </label>
-    </div>
-    <div class="domanda">
-        <h3>Domanda 5</h3>
-        <label class="container">
-            <input type="radio" name="domanda5">  Risposta 1
-            <span class="checkmark"></span>
-        </label>
-        <label class="container">
-            <input type="radio" name="domanda5">  Risposta 2
-            <span class="checkmark"></span>
-        </label>
-        <label class="container">
-            <input type="radio" name="domanda5">  Risposta 3
-            <span class="checkmark"></span>
-        </label>
-        <label class="container">
-            <input type="radio" name="domanda5">  Risposta 4
-            <span class="checkmark"></span>
-        </label>
-    </div>
-    <div class="domanda">
-        <h3>Domanda 6</h3>
-        <label class="container">
-            <input type="radio" name="domanda6">  Risposta 1
-            <span class="checkmark"></span>
-        </label>
-        <label class="container">
-            <input type="radio" name="domanda6">  Risposta 2
-            <span class="checkmark"></span>
-        </label>
-        <label class="container">
-            <input type="radio" name="domanda6">  Risposta 3
-            <span class="checkmark"></span>
-        </label>
-        <label class="container">
-            <input type="radio" name="domanda6">  Risposta 4
-            <span class="checkmark"></span>
-        </label>
-    </div>
-    <div class="domanda">
-        <h3>Domanda 7</h3>
-        <label class="container">
-            <input type="radio" name="domanda7">  Risposta 1
-            <span class="checkmark"></span>
-        </label>
-        <label class="container">
-            <input type="radio" name="domanda7">  Risposta 2
-            <span class="checkmark"></span>
-        </label>
-        <label class="container">
-            <input type="radio" name="domanda7">  Risposta 3
-            <span class="checkmark"></span>
-        </label>
-        <label class="container">
-            <input type="radio" name="domanda7">  Risposta 4
-            <span class="checkmark"></span>
-        </label>
-    </div>
+<p class="tempo">Tempo a disposizione: {{ esameCorso.duration }} minuti</p>
 
-    <button id="verificaRisposte">Verifica Risposte</button>
+<div class="contenitoreEsame" *ngIf="domandaCorrente">
+  <div class="domanda">
+    <h3>Domanda {{ domandaCorrenteNumero }}</h3>
+    <p>{{ testoDomandaCorrente }}</p>
+    <label *ngFor="let answer of testoRisposte" class="container">
+      <input type="radio" name="domanda{{ domandaCorrenteNumero }}" (click)="selectAnswer(answer)">
+      {{ answer }}
+      <span class="checkmark"></span>
+    </label>
+  </div>
 
+  <button *ngIf="!ultimaDomanda" id="domandaSuccessiva" (click)="nextQuestion()">Domanda Successiva</button>
+  <button *ngIf="ultimaDomanda" id="finisciEsame" (click)="finishExam()">Finisci Esame</button>
+</div>
+
+<div *ngIf="!domandaCorrente">
+  <p>Caricamento della domanda...</p>
 </div>

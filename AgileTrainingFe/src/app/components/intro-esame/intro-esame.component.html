@@ -1,0 +1,14 @@
+<h1>Esame Corso {{ nomeCorso }}</h1>
+
+<p class="tempo">Tempo a disposizione: {{ esameCorso.duration }} minuti</p>
+
+<div class="infoPreEsame">
+    In questo esame hai a disposizione {{ esameCorso.duration }} minuti per completare l'esame.<br>
+    Allo scadere del tempo la sessione esame si chiude e verranno valutate le risposte date.<br>
+    Ci saranno 30 domande a risposta multipla.<br>
+    Le domande senza risposta saranno conteggiato come nulle.<br>
+    1 punto per ogni risposta corretta.<br>
+    Per ottenere il certificato devi totalizzare almeno 18 punti su 30.<br>
+
+    <button class="iniziaEsame" (click)="startExam()">Inizia Esame</button>
+</div>

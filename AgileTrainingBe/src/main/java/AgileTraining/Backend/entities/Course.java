@@ -15,6 +15,15 @@ public class Course {
     private String courseDescription;
     private String category;
     private String courseImageUrl;
+    private Integer duration;
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+    }
 
     public String getCourseImageUrl() {
         return courseImageUrl;

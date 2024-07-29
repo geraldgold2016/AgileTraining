@@ -21,7 +21,6 @@ import { EsameComponent } from './components/esame/esame.component';
 import { EsameFailedComponent } from './components/esame-failed/esame-failed.component';
 import { EsameSuccessComponent } from './components/esame-success/esame-success.component';
 import { LinguaComponent } from './components/lingua/lingua.component';
-import { LogoutSuccessComponent } from './components/logout-success/logout-success.component';
 import { PasswordDimenticataComponent } from './components/password-dimenticata/password-dimenticata.component';
 import { PreviewCorsoComponent } from './components/preview-corso/preview-corso.component';
 import { ProfiloUtenteComponent } from './components/profilo-utente/profilo-utente.component';
@@ -37,6 +36,7 @@ import { LogoutComponent } from './components/logout/logout.component';
 import { CancellaAccComponent } from './components/cancella-acc/cancella-acc.component';
 import { AvvisoLogoutComponent } from './components/avviso-logout/avviso-logout.component';
 import { ModulodatiComponent } from './components/modulodati/modulodati.component';
+import { IntroEsameComponent } from './components/intro-esame/intro-esame.component';
 
 
 export const routes: Routes = [
@@ -61,7 +61,8 @@ export const routes: Routes = [
   { path: 'cercaCorsi', component: CorsiSearchComponent },
   { path: 'corso', component: CorsoComponent },
   { path: 'datiUtente', component: DatiUtenteComponent },
-  { path: 'esame', component: EsameComponent },
+  { path: 'introEsame', component: IntroEsameComponent },
+  { path: 'esame/:numeroDomanda', component: EsameComponent },
   { path: 'esameFail', component: EsameFailedComponent },
   { path: 'esameSuccess', component: EsameSuccessComponent },
   { path: 'home', component: HomepageComponent },

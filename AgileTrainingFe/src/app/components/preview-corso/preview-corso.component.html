@@ -10,20 +10,28 @@
 
 <h3>Capitoli del Corso</h3>
 
-<button class="accordion" *ngFor="let CapitoliCorso of CapitoliCorso" (click)="toggleAccordion($event)"><i class="fa-solid fa-angle-down"></i>    {{ CapitoliCorso.moduleName }}</button>
-<div class="panel" *ngFor="let CapitoliCorso of CapitoliCorso">
-    <p>{{ CapitoliCorso.moduleDescription }}</p>
-    <p><i class="fa-regular fa-circle-play"></i>   Video {{ CapitoliCorso.moduleName }}</p>
-</div>
+<ng-container *ngFor="let capitolo of capitoliCorso">
+  <button class="accordion" (click)="toggleAccordion($event)">
+    <i class="fa-solid fa-angle-down"></i> {{ capitolo.moduleName }}
+  </button>
+  <div class="panel">
+    <p>{{ capitolo.moduleDescription }}</p>
+    <p><i class="fa-regular fa-circle-play"></i>   Video {{ capitolo.moduleName }}, durata {{ capitolo.duration }} minuti</p>
+  </div>
+</ng-container>
 
-<button class="accordion"><i class="fa-solid fa-angle-down" (click)="toggleAccordion($event)"></i><span>    Esame finale</span></button>
+<button class="accordion" (click)="toggleAccordion($event)">
+  <i class="fa-solid fa-angle-down"></i><span> Esame finale</span>
+</button>
 <div class="panel">
-  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+  <p>{{ esameCorso.moduleDescription }}</p>
+  <p>Durata del test: {{ esameCorso.duration }} minuti</p>
 </div>
 
-<p id="durataVideo">Durata totale video: x ore e x minuti</p>
 
-<a href="avvisoIscrizione"><button id="iscriviti">Iscriviti al Corso XXXXXX</button></a>
+<p id="durataVideo">Durata totale video: {{oreTotaliVideoCorso}} ore e {{minutiTotaliVideoCorso}} minuti</p>
+
+<a href="avvisoIscrizione"><button id="iscriviti" (click) = "Iscrizione()">Iscriviti al Corso {{ nomeCorso }}</button></a>
 
 </div>
 

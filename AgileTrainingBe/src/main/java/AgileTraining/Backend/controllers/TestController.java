@@ -12,40 +12,20 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
-public class TestController {
-
+public class TestController 
+{
 
 
     @Autowired
     private TestService tService;
 
 
-
     @Autowired
     private TestResultDao trDao;
-//
-//    @Autowired
-//    private QuestionDao qDao;
-//
-//    @Autowired
-//    private OptionDao oDao;
+    
+    @Autowired
+    private TestDao tDao;
 
-
-
-//@PostMapping("/submitTest")
-//    public ResponseEntity<?> submit(@RequestParam Integer testResult, @RequestParam Integer testId) {
-//
-//    TestResults completedTest = tDao.getTestById(testId);
-//
-//    if (completedTest == null) {
-//        return ResponseEntity.badRequest().body("Test non trovato");
-//    }
-//    completedTest.setTestResult(testResult);
-//    completedTest.setnAttempts(completedTest.getnAttempts() + 1);
-//    tDao.save(completedTest);
-//    return ResponseEntity.ok().body("Punteggio salvato con successo");
-//
-//}
 
     @GetMapping("/getAttempts")
     public ResponseEntity<?> getAttempts(@RequestParam Integer testResultId) {
@@ -55,7 +35,7 @@ public class TestController {
     }
 
 
-    @GetMapping("/submitTest")
+    @PostMapping("/submitTest")
     public ResponseEntity<?> submitTest(@RequestBody SubmitRequest submitRequest) {
         tService.submitTest(submitRequest.testResult, submitRequest.testId);
         return ResponseEntity.ok().body(new BackendResponse(
@@ -75,7 +55,20 @@ public class TestController {
         Boolean result = tService.checkAnswer(answerRequest.questionId, answerRequest.optionId);
         return ResponseEntity.ok().body(result);
     }
+    
+    @GetMapping("/getTestId/{idCourse}")
+    public ResponseEntity<?> getTestIdByCourseId(@PathVariable Integer idCourse) 
+    {
+        Integer IdTest = tDao.getTestIdByCourseId(idCourse);
+       return ResponseEntity.ok(IdTest);
+    }
 
+    @GetMapping("/latestId/{userId}/{testId}")
+    public ResponseEntity<?> getLatestTestResultId(@PathVariable Integer userId, @PathVariable Integer testId) 
+    {
+        Integer latestId = trDao.findLatestIdByUserIdAndTestId(userId, testId);
+       return ResponseEntity.ok(latestId);
+    }
 
     public static class AnswerRequest {
         public Integer questionId;

@@ -1,12 +1,7 @@
 <div class="container">
-  <div class="logoDiv">
-    <img class="logo" src="../../../assets/images/logo.png" alt="Logo" />
-    <h1 class="intro">{{ 'intro' | translate }}</h1>
-    <div class="loremP">
-      <p>{{ 'explain' | translate }}</p>
-    </div>
-  </div>
+ 
   <div class="Login">
+    <img classe="logo" src="../../../assets/images/LogoIntero.png" alt="logoAzienda">
     <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
       <h4>{{ 'login' | translate }}</h4>
       <div class="inpBox">
@@ -22,6 +17,8 @@
           required
           [pattern]="usernamePattern"
           (input)="validateUsername($event)"
+          (blur)="removeSpaces($event)"
+          autocomplete="username"
           #usernameInput="ngModel"
         />
         <div *ngIf="usernameInput.invalid && (usernameInput.dirty || usernameInput.touched)">
@@ -48,6 +45,8 @@
             minlength="8"
             [pattern]="passwordPattern"
             (input)="validatePassword($event)"
+            (blur)="removeSpaces($event)"
+            autocomplete="current-password"
           />
           <fa-icon
             class="passToggle"
@@ -70,8 +69,8 @@
     </form>
     <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
     <div class="linguaLogin">
-      <button (click)="switchLanguage('it')">Italiano</button>
-      <button (click)="switchLanguage('en')">English</button>
+      <button class="linguaBtn1" (click)="switchLanguage('it')">Italiano</button>
+      <button class="linguaBtn2" (click)="switchLanguage('en')">English</button>
     </div>
   </div>
 </div>

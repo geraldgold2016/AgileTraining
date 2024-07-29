@@ -3,8 +3,6 @@
   line-height: 20px;
   margin: 0 auto;
   max-width: 800px;
-  box-shadow: 10px 10px 2px 30px gray;
-  border-radius: 10px;
 }
 
 .logo {
@@ -42,7 +40,8 @@
   position: relative;
 }
 
-.userInp, .passInp {
+.userInp,
+.passInp {
   border: none;
   border-bottom: 2px solid black;
   margin: 12px;
@@ -72,11 +71,13 @@
   margin-top: 20px;
 }
 
-.lblUser, .lblPass {
+.lblUser,
+.lblPass {
   display: none;
 }
 
-.passIcon, .userIcon {
+.passIcon,
+.userIcon {
   display: none;
 }
 
@@ -102,62 +103,57 @@
   cursor: pointer;
 }
 
-
-input.userInp, input.passInp {
-  user-select: none; 
-  -webkit-user-select: none; 
-  -moz-user-select: none; 
-  -ms-user-select: none; 
+input.userInp,
+input.passInp {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
-input.userInp::selection, input.passInp::selection {
+input.userInp::selection,
+input.passInp::selection {
   background: transparent; /* Per nascondere l'area selezionata */
 }
-
 
 @media (orientation: portrait) {
   .container {
     max-width: 600px;
-    box-shadow: 10px 10px 4px 90px gray;
+   
+   
   }
 
   .logoDiv {
     width: auto;
-    background-color: gray;
+    background-color: lightgray;
     border-radius: 0 0 80px 80px;
     margin: auto;
   }
 
-  .logo {
-    width: 140px;
-    height: 60px;
-    border-radius: 25px;
+ img {
+    width: 45%;
+
+   
   }
 
-  .intro {
-    margin-bottom: 0px;
-    font-size: 25px;
-    color: white;
-  }
+ 
 
-  .loremP {
-    font-size: 16px;
-    margin-bottom: 40px;
-    border: none;
-    color: white;
-    font-size: 18px;
-  }
+  
 
   .Login {
-    font-size: 40px;
+    font-size: 33px;
+    margin-top: 10%;
+    
   }
 
   .inpBox {
     margin: 16px;
     font-size: 25px;
+    
   }
 
-  .userInp, .passInp {
+  .userInp,
+  .passInp {
     margin: 10px;
     width: 90%;
     font-size: 22px;
@@ -168,12 +164,35 @@ input.userInp::selection, input.passInp::selection {
     padding: 12px 50px;
     font-size: 24px;
   }
+
+.linguaLogin {
+  margin-top: 60px;
+  
+
+  .linguaBtn1{
+    margin-top: 20px;
+    margin-top: 2px;
+    padding: 8px;
+    font-size: medium;
+    margin: 5px;
+    border-radius: 5px;
+  }
+   
+  }
+  .linguaBtn2{
+    margin-top: 20px;
+    margin-top: 2px;
+    padding: 8px;
+    font-size: medium;
+    padding-left: 2px;
+    border-radius: 5px;
+  }
+
 }
 
 @media (orientation: landscape) {
   .container {
     max-width: 100%;
-    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.3);
     padding: 20px;
     box-sizing: border-box;
   }
@@ -181,7 +200,7 @@ input.userInp::selection, input.passInp::selection {
   .logoDiv {
     width: 100%;
     background-color: gray;
-    border-radius: 0 0 80px 80px;
+    border-radius:  80px;
     padding: 10px;
     box-sizing: border-box;
     text-align: center;
@@ -195,18 +214,8 @@ input.userInp::selection, input.passInp::selection {
     display: block;
   }
 
-  .intro {
-    margin-bottom: 20px;
-    font-size: 28px;
-    color: white;
-  }
 
-  .loremP {
-    font-size: 18px;
-    margin-bottom: 40px;
-    border: none;
-    color: white;
-  }
+  
 
   .Login {
     font-size: 40px;
@@ -218,7 +227,8 @@ input.userInp::selection, input.passInp::selection {
     text-align: center;
   }
 
-  .userInp, .passInp {
+  .userInp,
+  .passInp {
     margin: 10px auto;
     width: 90%;
     font-size: 22px;
@@ -239,5 +249,13 @@ input.userInp::selection, input.passInp::selection {
 
   .btnLogin:hover {
     background-color: #1a7bb9;
+  }
+
+  .linguaLogin button {
+    margin-top: 60px;
+    padding-bottom: 20px;
+    text-align: center;
+    
+  
   }
 }

@@ -1,133 +1,117 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { HeaderService } from '../../header.service';
 import { CommonModule } from '@angular/common';
 import { LangTranslateModule } from '../../lang-translate/lang-translate.module';
+import { FormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, LangTranslateModule],
+  imports: [CommonModule, LangTranslateModule, FormsModule, FontAwesomeModule],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
   switchLang: string = 'it';
+  isDarkMode: boolean = false;
+  showSidebar: boolean = false;
+  showSearchBox: boolean = false;
+  dropdownOpen: boolean = false; // Aggiungi questa proprietà
 
   constructor(
-    private _header: HeaderService, 
-    private router: Router, 
-    public translate: TranslateService
+    private _header: HeaderService,
+    private router: Router,
+    public translate: TranslateService,
+    private renderer: Renderer2
   ) {
-    // Aggiungi lingue supportate e imposta la lingua predefinita
     translate.addLangs(['it', 'en']);
-    translate.setDefaultLang('it'); // Imposta la lingua predefinita
-
-    this._header.selectedlang.subscribe(lang => {
-      this.switchLang = lang;
-      this.translate.use(this.switchLang); // Usa la lingua selezionata
-    });
+    translate.setDefaultLang('it');
   }
 
   ngOnInit(): void {
-    this.initializeNavbar();
-  }
-
-  initializeNavbar(): void {
-    const navbar = document.querySelector<HTMLElement>('.navbar');
-    const chiudi = document.querySelector<HTMLElement>('.chiudi');
-    const input = document.querySelector<HTMLElement>('.input');
-    const dropdown = document.querySelector<HTMLElement>('.dropdown');
-    const divSemitrasparente = document.querySelector<HTMLElement>('.stratoSemiTrasparente');
-    const hamburger = document.querySelector<HTMLElement>('.hamburger');
-    const navItems = document.querySelectorAll<HTMLElement>('.navbar-item');
-
-    if (
-      hamburger &&
-      navItems.length > 0 &&
-      navbar &&
-      divSemitrasparente &&
-      chiudi &&
-      input &&
-      dropdown
-    ) {
-      hamburger.addEventListener('click', () => {
-        this.toggleNavbarState(navbar, chiudi, input, dropdown, divSemitrasparente, navItems);
-      });
-
-      chiudi.addEventListener('click', () => {
-        this.toggleNavbarState(navbar, chiudi, input, dropdown, divSemitrasparente, navItems);
-      });
-
-      divSemitrasparente.addEventListener('click', () => {
-        this.toggleNavbarState(navbar, chiudi, input, dropdown, divSemitrasparente, navItems);
-      });
-    } else {
-      console.error(
-        "Gli elementi 'navbar-item' o 'hamburger' o 'navbar' o 'stratoSemiTrasparente' non sono stati trovati"
-      );
+    const savedMode = localStorage.getItem('mode');
+    if (savedMode === 'dark-mode') {
+      this.isDarkMode = true;
+      document.body.classList.add('dark');
     }
-  }
 
-  toggleNavbarState(navbar: HTMLElement, chiudi: HTMLElement, input: HTMLElement, dropdown: HTMLElement, divSemitrasparente: HTMLElement, navItems: NodeListOf<HTMLElement>): void {
-    divSemitrasparente.classList.toggle('active');
-    navItems.forEach(navItem => {
-      navItem.classList.toggle('active');
+    this._header.selectedlang.subscribe(lang => {
+      this.switchLang = lang;
+      this.translate.use(this.switchLang);
     });
-    navbar.classList.toggle('active');
-    chiudi.classList.toggle('active');
-    input.classList.toggle('active');
-    dropdown.classList.toggle('active');
-    this.checkAndSwapItems(navbar);
-  }
 
-  checkAndSwapItems(navbar: HTMLElement): void {
-    const ul = document.querySelector<HTMLElement>('.navbar ul');
-    if (navbar && navbar.classList.contains('active')) {
-      if (ul) {
-        const items = ul.querySelectorAll<HTMLElement>('li');
-
-        if (items.length >= 6) {
-          this.swapElements(items[3], items[1]); // 4° elemento (indice 3) e 2° elemento (indice 1)
-          this.swapElements(items[4], items[5]); // 5° elemento (indice 4) e 6° elemento (indice 5)
-        } else {
-          console.error('Non ci sono abbastanza elementi nella lista.');
-        }
-      } else {
-        console.error('Elemento <ul> non trovato.');
+    this.renderer.listen('window', 'click', (event: Event) => {
+      const target = event.target as HTMLElement;
+      if (this.showSidebar && !target.closest('.menu') && !target.closest('.sidebarOpen') && !target.closest('.siderbarClose')) {
+        this.closeSidebar();
       }
-    } else {
-      if (ul) {
-        const items = ul.querySelectorAll<HTMLElement>('li');
-
-        if (items.length >= 6) {
-          this.swapElements(items[1], items[3]); // 2° elemento (indice 1) e 4° elemento (indice 3)
-          this.swapElements(items[5], items[4]); // 6° elemento (indice 5) e 5° elemento (indice 4)
-        } else {
-          console.error('Non ci sono abbastanza elementi nella lista.');
-        }
-      } else {
-        console.error('Elemento <ul> non trovato.');
-      }
-    }
-  }
-
-  swapElements(element1: HTMLElement, element2: HTMLElement): void {
-    const parent = element1.parentNode;
-
-    if (parent) {
-      const nextSibling1 = element1.nextSibling;
-      const nextSibling2 = element2.nextSibling;
-
-      parent.insertBefore(element2, element1);
-      parent.insertBefore(element1, nextSibling2);
-    } else {
-      console.error("Il genitore dell'elemento non è stato trovato.");
-    }
+    });
   }
 
   selectedLanguage(lang: string): void {
-    this._header.setLang(lang); // Usa il metodo setLang per aggiornare la lingua
+    this._header.setLang(lang);
+    this.switchLang = lang;
+    this.translate.use(lang);
+  }
+
+  toggleDarkMode(): void {
+    this.isDarkMode = !this.isDarkMode;
+    document.body.classList.toggle('dark', this.isDarkMode);
+  
+    // Gestisci la visibilità delle icone
+    const logoChiaro = document.querySelector('.logoChiaro') as HTMLElement;
+    const logoNormale = document.querySelector('.logoNormale') as HTMLElement;
+    const luna = document.querySelector('.bx-moon') as HTMLElement;
+    const sole = document.querySelector('.bx-sun') as HTMLElement;
+  
+    if (logoChiaro && logoNormale && luna && sole) {
+      logoChiaro.style.display = this.isDarkMode ? 'block' : 'none';
+      logoNormale.style.display = this.isDarkMode ? 'none' : 'block';
+      luna.style.display = this.isDarkMode ? 'none' : 'block';
+      sole.style.display = this.isDarkMode ? 'block' : 'none';
+    }
+  
+    localStorage.setItem('mode', this.isDarkMode ? 'dark-mode' : 'light-mode');
+  }
+  
+  
+
+  toggleSearchBox(): void {
+    this.showSearchBox = !this.showSearchBox;
+  }
+
+  toggleSidebar(): void {
+    this.showSidebar = !this.showSidebar;
+
+    const menu = document.querySelector('.menu');
+    const overlay = document.querySelector('.menu-overlay');
+    const sidebarOpenIcon = document.querySelector('.sidebarOpen');
+    const sidebarCloseIcon = document.querySelector('.siderbarClose');
+    const logoImg = document.querySelector('.navLogo img');
+
+    if (menu && overlay && sidebarOpenIcon && sidebarCloseIcon && logoImg) {
+      menu.classList.toggle('active', this.showSidebar);
+      overlay.classList.toggle('active', this.showSidebar);
+      sidebarOpenIcon.classList.toggle('d-none', this.showSidebar);
+      sidebarCloseIcon.classList.toggle('d-none', !this.showSidebar);
+      if (this.showSidebar) {
+        logoImg.classList.add('d-none');
+      } else {
+        logoImg.classList.remove('d-none');
+      }
+    }
+  }
+
+  closeSidebar(): void {
+    this.showSidebar = false;
+    document.querySelector('.menu-overlay')?.classList.remove('active');
+    document.querySelector('.menu')?.classList.remove('active');
+  }
+
+  toggleDropdown(): void {
+    this.dropdownOpen = !this.dropdownOpen;
   }
 }

@@ -1,134 +1,185 @@
-/* Allineamento e margini per titoli */
-h1 {
-    text-align: center;
-    margin-top: 110px; 
+/* Sfondo della pagina principale */
+.homepage-background {
+  height: 100vh;
+  background: linear-gradient(to bottom right, var(--background-color), rgba(212,155,50,0.5));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--text-color);
+  overflow: hidden;
+  position: relative;
 }
 
-h3 {
-    margin-left: 50px;
-    font-size: 1.5em; /* Aumenta la dimensione del font per una migliore visibilità */
+/* Contenuto centrale della pagina */
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 60%; /* Utilizzato per mantenere il contenuto centrato */
+  max-width: 800px; /* Limitazione della larghezza massima per evitare che diventi troppo largo */
+  padding: 2%;
+  margin-right: 5%;
+  background-color: transparent; /* Unico background-color per .content */
 }
 
-/* Caroselli */
-.carousel-container {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-    margin: 10px 0;
+/* Sezione di saluto */
+.greeting {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 5%; /* Margine adattabile */
 }
 
-.carousel {
-    display: flex;
-    align-items: center;
-    overflow-x: auto;
-    overflow-y: hidden; /* Nasconde lo scorrimento verticale */
-    scroll-behavior: smooth; /* Scorrimento fluido */
-    scroll-snap-type: x mandatory; /* Scorrimento a scatto orizzontale */
-    gap: 10px; /* Spaziatura tra gli elementi */
-    transition: transform 0.5s ease; /* Transizione fluida per lo scorrimento */
-    white-space: nowrap; /* Impedisce il ritorno a capo degli elementi */
+/* Immagine utente */
+.user-photo {
+  width: 15%; /* Allargata la dimensione dell'immagine come percentuale della larghezza del contenitore */
+  height: auto; /* Mantiene il rapporto di aspetto */
+  border-radius: 50%;
+  margin-right: 2%;
 }
 
-.carousel div {
-    flex: 0 0 auto; /* Mantiene la dimensione degli elementi */
-    scroll-snap-align: center; /* Allinea al centro dello scorrimento */
-    height: 150px; /* Altezza uniforme per le immagini */
-    width: 220px; /* Larghezza uniforme per le immagini */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transizione fluida per l'ingrandimento e l'ombra */
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Ombra leggera per le immagini */
+/* Azioni e pulsanti */
+.actions {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 5%;
 }
 
-.carousel div img {
-    height: 100%;
-    width: 100%;
-    object-fit: cover; /* Adatta l'immagine mantenendo le proporzioni */
-    border-radius: 8px; /* Aggiungi angoli arrotondati alle immagini */
+.actions button {
+  padding: 1% 3%;
+  font-size: 1rem;
+  cursor: pointer;
+  background-color: rgba(212,155,50,1); /* Colore solido per il pulsante */
+  color: white;
+  border-radius: 15px;
+  border: none;
 }
 
-.carousel div:hover {
-    transform: scale(1.7); /* Ingrandisce leggermente l'elemento al passaggio del mouse */
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4); /* Ombra aumentata al passaggio del mouse */
+/* Immagine dell'azienda */
+.company-image {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 30%; /* La larghezza dell'immagine dell'azienda come percentuale della larghezza del contenitore */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  animation: slideIn 2s ease-out;
 }
 
-/* Pulsanti del carosello */
-.carousel-button {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    z-index: 10;
-    transition: background-color 0.3s ease;
+.company-image img {
+  max-height: 90%; /* Mantiene l'immagine dentro il contenitore */
+  width: auto; /* Mantiene il rapporto di aspetto */
+  border: 4px solid rgba(212,155,50,1);
+  border-radius: 120px 0 120px 15px;
+  animation: zoomIn 2s ease-in-out;
 }
 
-.carousel-button.prev {
-    left: 10px;
+/* Animazioni */
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
 
-.carousel-button.next {
-    right: 10px;
+@keyframes zoomIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
-/* Cambia colore dei pulsanti al passaggio del mouse */
-.carousel-button:hover {
-    background-color: rgba(0, 0, 0, 0.8);
+/* Animazione per la modalità responsive */
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
 }
 
-/* Pulsanti "Mostra Altro" */
-.buttonVedi {
-    display: block;
-    margin: 20px auto;
-    padding: 12px;
-    background-color: #333;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    font-family: 'Roboto Mono', monospace; /* Font tecnico */
-}
+/* Responsività */
+@media (max-width: 768px) {
+  .homepage-background {
+    flex-direction: column;
+    align-items: center; /* Centrato per visualizzare meglio su dispositivi più piccoli */
+  }
+  
+  .benvenuto {
+    font-size: 17px;
+    margin-bottom: 5%; /* Margine adattabile */
+  }
 
-.buttonVedi:hover {
-    background-color: #555;
-    transform: scale(1.05); /* Ingrandisce leggermente il pulsante al passaggio del mouse */
-}
-
-/* Media queries per schermi più piccoli */
-@media screen and (max-width: 600px) {
-    .carousel div {
-        height: 100px; /* Riduci l'altezza per i dispositivi mobili */
-        width: 150px; /* Riduci la larghezza per i dispositivi mobili */
-    }
-
-    .buttonVedi {
-        padding: 10px;
-    }
-}
-
-@media screen and (max-width: 360px) {
-    .carousel div {
-        height: 80px; /* Riduci ulteriormente l'altezza per schermi molto piccoli */
-        width: 120px; /* Riduci ulteriormente la larghezza per schermi molto piccoli */
-    }
-
-    .buttonVedi {
-        padding: 8px;
-    }
-}
-
-/* Footer */
-app-footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
+  .content {
     background-color: transparent;
-    color: white;
-    text-align: center;
-    padding: 10px 0;
+    width: 90%; /* Aumenta la larghezza per piccoli schermi */
+    padding: 5%;
+  }
+  
+  .company-image {
+    width: 100%; /* La larghezza dell'immagine dell'azienda al 100% della larghezza del contenitore */
+    height: auto; /* Mantiene l'altezza automatica */
+    position: static; /* Rimuove la posizione assoluta per i piccoli schermi */
+    margin-top: 20px;
+    animation: slideUp 2s ease-out; /* Applica la nuova animazione slideUp */
+  }
+
+  .company-image img {
+    width: 100%; /* L'immagine occupa il 100% della larghezza del contenitore */
+    height: auto; /* Mantiene l'altezza automatica */
+    border-radius: 15px; /* Adatta il bordo per schermi più piccoli */
+  }
+
+  .user-photo {
+    width: 20%; /* Allarga ulteriormente l'immagine utente per schermi più piccoli */
+  }
+
+  .imparaBtn {
+    width: 108%;
+    padding: 5px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1200px) {
+  .content {
+    width: 60%;
+    margin-right: 37%;
+    margin-bottom: 70%;
+    background-color: transparent;
+  }
+
+  .company-image {
+    position: absolute;
+    right: 0px;
+    top: 0;
+    height: 150%;
+    width: 72%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    animation: slideUp 2s ease-out; /* Applica l'animazione slideUp per la modalità desktop */
+  }
+
+  .user-photo {
+    width: 15%;
+    height: auto;
+    border-radius: 50%;
+    margin-right: 2%;
+    position: absolute;
+    bottom: 79%;
+  }
 }

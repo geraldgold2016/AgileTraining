@@ -1,90 +1,71 @@
-import { Component } from '@angular/core';
-import { HttpClient, HttpClientModule, HttpEventType } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { HeaderComponent } from '../header/header.component';
-import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-foto-profilo',
-  standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule, HeaderComponent, FooterComponent],
   templateUrl: './foto-profilo.component.html',
-  styleUrls: ['./foto-profilo.component.css']
+  styleUrls: ['./foto-profilo.component.css'],
+  standalone: true,
+  imports: [CommonModule]
 })
-export class FotoProfiloComponent {
+export class FotoProfiloComponent implements OnInit {
+  userId: number | null = null;
   selectedFile: File | null = null;
-  retrievedImage: any = null;
-  base64Data: any = null;
-  retrieveResonse: any = null;
-  message: string = '';
-  imageName: string = '';
+  previewUrl: string | null = null;
+  profileImageUrl: string | null = null;
+  private apiUrl = 'http://localhost:8080/image/upload';
+  private profileUrl = 'http://localhost:8080/image/profile-picture/';
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  // Gets called when the user selects an image
-  public onFileChanged(event: Event): void {
+  ngOnInit() {
+    // Ottieni l'ID utente dal local storage
+    const userId = localStorage.getItem('userId');
+    this.userId = userId ? parseInt(userId, 10) : null;
+
+    if (this.userId !== null) {
+      this.getProfilePicture(); // Carica l'immagine del profilo esistente
+    }
+  }
+
+  onFileChange(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       this.selectedFile = input.files[0];
-    }
-  }
 
-  // Gets called when the user clicks on submit to upload the image
-  public onUpload(): void {
-    if (this.selectedFile) {
-      console.log(this.selectedFile);
-
-      // FormData API provides methods and properties to allow us easily prepare form data to be sent with POST HTTP requests.
-      const uploadImageData = new FormData();
-      uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);
-
-      // Make a call to the Spring Boot Application to save the image
-      this.httpClient.post('http://localhost:8080/image/upload', uploadImageData, { observe: 'response' })
-        .subscribe((response) => {
-          if (response.status === 200) {
-            this.message = 'Image uploaded successfully';
-            // Update the profile picture
-            this.updateProfilePicture(this.selectedFile?.name);
-          } else {
-            this.message = 'Image not uploaded successfully';
-          }
-        });
+      // Crea un URL per la visualizzazione dell'anteprima
+      const reader = new FileReader();
+      reader.onload = (e: ProgressEvent<FileReader>) => {
+        this.previewUrl = e.target?.result as string;
+      };
+      reader.readAsDataURL(this.selectedFile);
     } else {
-      this.message = 'No file selected';
+      this.previewUrl = null;
     }
   }
 
-  // Function to update the profile picture
-  private updateProfilePicture(imageName: string | undefined): void {
-    if (imageName) {
-      this.httpClient.post('http://localhost:8080/user/updateProfilePicture', { imageName })
-        .subscribe(
-          res => {
-            this.message = 'Profile picture updated successfully';
-          },
-          err => {
-            this.message = 'Error updating profile picture';
-          }
-        );
+  uploadImage() {
+    if (this.userId === null || this.selectedFile === null) {
+      alert('ID utente o file non valido!');
+      return;
     }
+
+    const formData = new FormData();
+    formData.append('file', this.selectedFile);
+
+    this.http.post(`${this.apiUrl}/${this.userId}`, formData).subscribe({
+      next: () => this.getProfilePicture(),  // Aggiorna l'immagine del profilo
+      error: () => alert('Errore durante il caricamento dell\'immagine.')
+    });
   }
 
-  // Gets called when the user clicks on retrieve image button to get the image from backend
-  public getImage(): void {
-    if (this.imageName) {
-      // Make a call to Spring Boot to get the Image Bytes.
-      this.httpClient.get('http://localhost:8080/image/get/' + this.imageName)
-        .subscribe(
-          res => {
-            this.retrieveResonse = 
-            res;
-            this.base64Data = this.retrieveResonse.picByte;
-            this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
-          }
-        );
-    } else {
-      this.message = 'Please enter an image name';
-    }
+  getProfilePicture() {
+    if (this.userId === null) return;
+
+    this.http.get(`${this.profileUrl}${this.userId}`, { responseType: 'text' }).subscribe({
+      next: (response: string) => this.profileImageUrl = response,
+      error: () => this.profileImageUrl = null
+    });
   }
 }

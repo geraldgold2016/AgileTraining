@@ -1,24 +1,24 @@
 <div class="container">
-    <h2 class="heading">Reimposta Username</h2>
+  <h2 class="heading">Reimposta Username</h2>
+  <br />
+  <form (ngSubmit)="reimpostaUsername()">
+    <div class="usernameDiv">
+      <label for="userInp">Nuovo Username</label><br />
+      <input type="text" id="userInp" [(ngModel)]="newUsername" name="username" required autocomplete="username" /><br />
+    </div>
+
+    <div class="passDiv">
+      <label for="passInp">Password</label><br />
+      <input type="password" id="passInp" [(ngModel)]="password" name="password" required autocomplete="current-password" /><br />
+      <input type="checkbox" (click)="passFun()" />vedi password
+    </div>
     <br />
-    <form action="">
-      <div class="usernameDiv">
-        <label>Nuovo Username</label><br />
-        <input type="text" id="userInp"  /><br>
-        
-      </div>
-      
-      <div class="passDiv">
-        <label>Password</label><br />
-        <input type="password" id="passInp" /><br>
-        <input  type="checkbox" (click)="passFun()"  />vedi password
-      </div>
-      <br />
-    </form>
-    <a href="/avvisoUsernameSuccess"><button class="btnUtente">Reimposta</button></a><br>
-    
-    
-   <a href="/datiAnagrafici"><button class="btnUtente1">Torna al profilo Utente</button></a> 
-  </div>
-  
-  
+    <button type="submit" class="btnUtente">Reimposta</button>
+  </form>
+
+  <!-- Mostra i messaggi di errore e successo -->
+  <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+  <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+
+  <a href="/datiAnagrafici"><button class="btnUtente1">Torna al profilo Utente</button></a>
+</div>

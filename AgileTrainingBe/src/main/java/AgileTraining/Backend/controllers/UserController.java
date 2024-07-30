@@ -159,6 +159,11 @@ public class UserController {
         Optional<User> u = uDao.findById(id);
 
         if (u.isPresent()) {
+            Optional<User> existingEmail = uDao.findByEmail(updateRequest.getEmail());
+            if (existingEmail.isPresent() && !existingEmail.get().getId().equals(id)){
+                logger.error("Email già esistente");
+                return ResponseEntity.status(400).body(new BackendResponse("Email già esistente"));
+            }
             u.get().setEmail(updateRequest.getEmail());
             u.get().setProfileImageUrl(updateRequest.getProfileImageUrl());
             u.get().setResidentialAddress(updateRequest.getResidentialAddress());
@@ -203,7 +208,7 @@ public class UserController {
     public ResponseEntity<BackendResponse> updateUsername(
             @PathVariable Integer id,
             @RequestBody LoginRequest loginRequest) {
-
+        logger.info("Ricevuta richiesta di aggiornamento del username per l'utente: " + id);
         // Recupera l'utente dal database
         Optional<User> user = uDao.findById(id);
         if (user.isPresent()) {
@@ -218,12 +223,13 @@ public class UserController {
         }
 
         // Aggiorna l'username
-        user.get().setUsername(loginRequest.getUsername());
+
 
         if (uDao.existsByUsername(user.get().getUsername())) {
             logger.error("Username già esistente");
             return ResponseEntity.status(400).body(new BackendResponse("Username già esistente"));
         }
+        user.get().setUsername(loginRequest.getUsername());
         uDao.save(user.get());
 
         // Restituisce una risposta di successo

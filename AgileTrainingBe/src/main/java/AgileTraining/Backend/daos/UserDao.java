@@ -20,6 +20,8 @@ public interface UserDao extends JpaRepository<User, Integer> {
         @Query(value = "SELECT * FROM users WHERE id = :id", nativeQuery = true)
         Optional<User> findById(@Param("id") @NotNull Integer id);
 
+        @Query(value = "SELECT * FROM users WHERE email = :email", nativeQuery = true)
+        Optional<User> findByEmail(@Param("email") String email);
 
         boolean existsByUsername(String username);}
 

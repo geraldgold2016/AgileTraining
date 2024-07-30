@@ -140,12 +140,19 @@ public class UserController {
 
     // delete user -- TESTATO
     @DeleteMapping("/{id}/delete")
-    public ResponseEntity<BackendResponse> deleteUser(@PathVariable Integer id) {
+    public ResponseEntity<BackendResponse> deleteUser(@PathVariable Integer id, @RequestParam String password) {
+        logger.info("Ricevuta richiesta di eliminazione per l'utente: " + id);
         Optional<User> userOptional = uDao.findById(id);
         if (userOptional.isEmpty()) {
             logger.error("User non trovato: %d".formatted(id));
             return ResponseEntity.status(404).body(new BackendResponse("User non trovato"));
         }
+
+        if (!encoder.matches(password, userOptional.get().getPassword())) {
+            logger.error("Password non valida");
+            return ResponseEntity.status(400).body(new BackendResponse("Password non valida"));
+        }
+
         userService.deleteUser(id);
         logger.info("User {} eliminato con successo", id);
         return ResponseEntity.ok().body(new BackendResponse("User eliminato con successo"));

@@ -1,4 +1,3 @@
-
 package AgileTraining.Backend.services;
 
 import AgileTraining.Backend.classes.BackendResponse;
@@ -23,22 +22,17 @@ import java.util.Optional;
 public class TestService {
 
 
+    Logger logger = LoggerFactory.getLogger("infoFile");
     @Autowired
     private QuestionDao qDao;
-
     @Autowired
     private OptionDao oDao;
-
     @Autowired
     private TestResultDao trDao;
-
     @Autowired
     private TestDao tDao;
-
     @Autowired
     private UserDao uDao;
-
-    Logger logger = LoggerFactory.getLogger("infoFile");
 
 //    public Test beginTest(Integer courseId) {
 //            questions = qDao.getQuestionsByCourseId(courseId);
@@ -61,31 +55,6 @@ public class TestService {
             return false;
         }
         return option.get().equals(correctOption);
-    }
-
-
-    @Transactional
-    public BackendResponse submitTest(Integer testResult, Integer testId, Integer userId) {
-        Test test = tDao.findById(testId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid test ID: " + testId));
-
-        User user = uDao.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid user ID: " + userId));
-
-        TestResult testResults = new TestResult();
-
-        testResults.setUser(user);
-        testResults.setTest(test);
-        testResults.setResult(testResult);
-
-        if (testResults.getnAttempts() == null) {
-            testResults.setnAttempts(0);
-        }
-        testResults.setnAttempts(testResults.getnAttempts() + 1);
-
-        trDao.save(testResults);
-
-        return new BackendResponse("Punteggio test salvato con successo");
     }
 
 
@@ -154,7 +123,6 @@ public class TestService {
     }
 
 
-
     @Transactional
     public List<Option> getOptionsOneQuestion(Integer questionId) {
 
@@ -165,5 +133,47 @@ public class TestService {
             return null;
         }
         return options;
+    }
+
+
+    @Transactional
+    public BackendResponse submitTest(Integer testResult, Integer testId, Integer userId) {
+        Test test = tDao.findById(testId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid test ID: " + testId));
+
+        User user = uDao.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user ID: " + userId));
+
+        TestResult testResults = trDao.getTestResultsByUserIdAndTestId(userId, testId);
+
+        if (testResults == null) {
+            throw new IllegalArgumentException("Test results not found for user ID: " + userId + " and test ID: " + testId);
+        }
+
+        testResults.setResult(testResult);
+        trDao.save(testResults);
+
+        return new BackendResponse("Punteggio test salvato con successo");
+    }
+
+    @Transactional
+    public BackendResponse beginTest(Integer testId, Integer userId) {
+        Test test = tDao.findById(testId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid test ID: " + testId));
+
+        User user = uDao.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user ID: " + userId));
+
+        TestResult testResults = new TestResult();
+        testResults.setUser(user);
+        testResults.setTest(test);
+
+        if (testResults.getnAttempts() == null) {
+            testResults.setnAttempts(0);
+        }
+        testResults.setnAttempts(testResults.getnAttempts() + 1);
+        trDao.save(testResults);
+
+        return new BackendResponse("Test iniziato con successo");
     }
 }

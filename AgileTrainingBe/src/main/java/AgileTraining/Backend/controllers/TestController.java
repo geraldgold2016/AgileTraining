@@ -2,6 +2,7 @@ package AgileTraining.Backend.controllers;
 
 
 import AgileTraining.Backend.classes.BackendResponse;
+import AgileTraining.Backend.daos.TestResultDao;
 import AgileTraining.Backend.entities.Question;
 import AgileTraining.Backend.services.TestService;
 import org.slf4j.Logger;
@@ -21,14 +22,17 @@ public class TestController {
     @Autowired
     private TestService tService;
 
+    @Autowired
+    private TestResultDao trDao;
+
     Logger logger = LoggerFactory.getLogger("infoFile");
 
     // salva il risultato di un test
     // testato
     @PostMapping("/submitTest")
-    public ResponseEntity<?> submit(@RequestBody NewTestRequest newTestRequest) {
+    public ResponseEntity<?> submit(@RequestBody NewTestRequest newTestRequest, @RequestParam Integer testResult) {
         logger.info("Received request to submit test");
-        tService.submitTest(newTestRequest.testResult, newTestRequest.testId, newTestRequest.userId);
+        tService.submitTest(testResult, newTestRequest.testId, newTestRequest.userId);
         return ResponseEntity.ok().body(new BackendResponse("Test submitted successfully"));
     }
 
@@ -61,6 +65,12 @@ public class TestController {
     public ResponseEntity<?> checkAttempts(@PathVariable Integer userId, @RequestParam(name = "testId") Integer testId) {
         logger.info("Received request to check attempts");
         return ResponseEntity.ok().body(tService.checkAttempts(userId,testId));
+    }
+
+    @PostMapping("/beginTest")
+    public ResponseEntity<?> beginTest(@RequestBody NewTestRequest newTestRequest) {
+        logger.info("Received request to begin test.");
+        return ResponseEntity.ok().body(tService.beginTest(newTestRequest.testId, newTestRequest.userId));
     }
 
     // ottiene 30 domande random
@@ -112,8 +122,8 @@ public class TestController {
         }
     }
 
+
     public static class NewTestRequest {
-        public Integer testResult;
         public Integer testId;
         public Integer userId;
 
@@ -123,14 +133,6 @@ public class TestController {
 
         public void setUserId(Integer userId) {
             this.userId = userId;
-        }
-
-        public Integer getTestResult() {
-            return testResult;
-        }
-
-        public void setTestResult(Integer testResult) {
-            this.testResult = testResult;
         }
 
         public Integer getTestId() {

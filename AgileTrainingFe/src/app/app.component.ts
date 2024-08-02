@@ -1,61 +1,79 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { RouterOutlet, Router } from '@angular/router';
+import { Router, NavigationEnd, RouterOutlet } from '@angular/router';
 import { IdleService } from './idle.service';
-import { HomepageComponent } from './components/homepage/homepage.component';
-import { LoginComponent } from './components/login/login.component';
-import { SessionWarningComponent } from './components/session-warning/session-warning.component';
 import { Subscription } from 'rxjs';
+import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { SessionWarningComponent } from './components/session-warning/session-warning.component';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HomepageComponent, LoginComponent, SessionWarningComponent],
+  imports: [RouterOutlet, HeaderComponent, FooterComponent,SessionWarningComponent,FormsModule,CommonModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, OnDestroy {
   private warningSubscription: Subscription | undefined;
   private sessionTimeoutSubscription: Subscription | undefined;
+  isAuthPage: boolean = false;
 
   constructor(private idleService: IdleService, private router: Router) {}
 
   ngOnInit(): void {
-    if (this.router.url !== '/login') {
-      // Avvia il timer per il warning
-      this.idleService.startWarningTimer();
-
-      // Sottoscrivi all'observable per il timeout della sessione
-      this.sessionTimeoutSubscription = this.idleService.getSessionTimeoutObservable().subscribe(() => {
-        this.idleService.resetSession();
-      });
-
-      // Sottoscrivi all'observable per il countdown del warning
-      this.warningSubscription = this.idleService.getWarningObservable().subscribe();
-
-
-      
-        const savedMode = localStorage.getItem('mode');
-        if (savedMode === 'dark-mode') {
-          document.body.classList.add('dark');
+    // Monitor routing events to check if the user is on an auth page
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.isAuthPage = ['/login', '/logout'].includes(event.urlAfterRedirects);
+        if (this.isAuthPage) {
+          // On auth pages, do not start the idle service or add activity listeners
+          this.stopIdleService();
         } else {
-          document.body.classList.remove('dark');
+          // On non-auth pages, start the idle service and add activity listeners
+          this.startIdleService();
         }
-    
-    }
+      }
+    });
 
-    this.addActivityListeners();
+    // Check and apply dark mode
+    const savedMode = localStorage.getItem('mode');
+    if (savedMode === 'dark-mode') {
+      document.body.classList.add('dark');
+    } else {
+      document.body.classList.remove('dark');
+    }
   }
 
-  private addActivityListeners() {
-    if (this.router.url !== '/login') {
-      ['click', 'mousemove', 'keydown'].forEach(event => {
-        window.addEventListener(event, () => this.idleService.updateLastActivityTime());
-      });
-    }
+  private startIdleService() {
+    this.idleService.startWarningTimer();
+
+    // Subscribe to session timeout and warning observables
+    this.sessionTimeoutSubscription = this.idleService.getSessionTimeoutObservable().subscribe(() => {
+      this.idleService.resetSession();
+    });
+
+    this.warningSubscription = this.idleService.getWarningObservable().subscribe();
+
+    // Add activity listeners
+    ['click', 'mousemove', 'keydown'].forEach(event =>
+      window.addEventListener(event, () => this.idleService.updateLastActivityTime())
+    );
+  }
+
+  private stopIdleService() {
+    // Unsubscribe from idle service observables and remove activity listeners
+    this.sessionTimeoutSubscription?.unsubscribe();
+    this.warningSubscription?.unsubscribe();
+
+    // Remove activity listeners
+    ['click', 'mousemove', 'keydown'].forEach(event =>
+      window.removeEventListener(event, () => this.idleService.updateLastActivityTime())
+    );
   }
 
   ngOnDestroy() {
-    this.sessionTimeoutSubscription?.unsubscribe();
-    this.warningSubscription?.unsubscribe();
+    this.stopIdleService(); // Ensure the idle service is stopped on destroy
   }
 }

@@ -401,7 +401,7 @@ nav {
 
   .menu.active {
     left: 0;
-    height: 73%;
+    height: 77%;
     padding-bottom: 528px;
     margin-top: 26px;
     
@@ -492,7 +492,7 @@ nav {
   .nav-bar {
     flex-direction: row; /* Layout a riga per schermi più grandi */
     align-items: center; /* Allineamento degli elementi centrato */
-    height: 60px; /* Altezza maggiore per schermi più grandi */
+    height: 50px; /* Altezza maggiore per schermi più grandi */
   }
 
   .nav-bar .bx-menu {

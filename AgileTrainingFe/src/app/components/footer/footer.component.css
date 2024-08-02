@@ -1,10 +1,10 @@
 /* Stile generale per il footer */
 footer {
   display: flex;
+  flex-wrap: wrap; /* Permette la disposizione dei contenuti su più righe se necessario */
   justify-content: center;
   align-items: center;
-  background-color: rgba(212, 155, 50, 1); /* Opacità corretta */
-  padding: 10px; /* Ridotto per un aspetto più sottile */
+  background-color: var(--header-background);
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -12,45 +12,45 @@ footer {
   color: white;
   font-family: 'Poppins', sans-serif;
   font-size: 14px;
-  border-top: none; /* Rimosso il bordo superiore */
+  padding: 10px; /* Aggiunto padding per migliore spacing */
+  z-index: 1000;
 }
 
 /* Stile per i link nel footer */
 footer a {
   color: white;
   text-decoration: none;
-  margin: 0 10px; /* Ridotto per maggiore compattezza */
-  font-size: 15px; /* Leggermente più piccolo per un look più elegante */
-  transition: color 0.3s; /* Rimosso il bordo sottostante durante l'hover */
+  margin: 0 15px; /* Maggiore spazio tra i link */
+  font-size: 15px;
+  transition: color 0.3s;
 }
 
 /* Effetto hover per i link */
 footer a:hover {
   color: #ddd;
-  /* Rimosso il bordo sottostante durante l'hover */
 }
 
 /* Stile per il logo */
 footer .logoA img {
-  height: 30px; /* Altezza del logo più sottile */
+  height: 40px; /* Altezza maggiore del logo per una migliore visibilità */
   width: auto;
-  margin-right: 15px; /* Spazio ridotto tra il logo e i link */
+  margin-right: 20px; /* Maggiore spazio tra il logo e i link */
 }
 
 /* Layout per rendere il footer responsive */
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 768px) {
   footer {
-    flex-direction: column;
-    padding: 86px 0%;
-    padding-top: 2%;
+    flex-direction: column; /* Disposizione verticale sui dispositivi mobili */
+    align-items: center;
+    padding: 20px;
   }
 
   footer a {
-    margin: 5px 0; /* Margine verticale ridotto per i link sui dispositivi mobili */
-    font-size: 14px; /* Font size più piccolo per dispositivi mobili */
+    margin: 10px 0; /* Maggiore spazio verticale tra i link */
+    font-size: 16px; /* Font size aumentato per i dispositivi mobili */
   }
 
   footer .logoA {
-    margin-bottom: 10px; /* Spazio tra il logo e i link sui dispositivi mobili */
+    margin-bottom: 15px; /* Maggiore spazio sotto il logo */
   }
 }

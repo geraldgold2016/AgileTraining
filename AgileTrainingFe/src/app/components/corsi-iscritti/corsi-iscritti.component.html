@@ -1,13 +1,13 @@
-<app-header></app-header>
+
 <div class="profiloDiv">
   <h1>Profilo Utente</h1>
 </div>
 <div class="dueDiv">
   <div class="leftDiv">
     <div class="fotoDiv">
-      <img
+     <img
         class="fotoProfilo"
-        src="../../../assets/images/profile-pic.jpg"
+        [src]="user?.profileImageUrl || '../../../assets/images/profile-pic.jpg'"
         alt="Foto Profilo"
       />
       <h3>Mario Rossi</h3>
@@ -45,4 +45,4 @@
     </div>
   </div>
 </div>
-<app-footer></app-footer>
+

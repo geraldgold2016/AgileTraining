@@ -1,5 +1,6 @@
 {
     "hom":{
-        
+       "welcomeMessage": "Welcome, {{userName}}!",
+  "startLearningButton": "Start Learning" 
     }
 }

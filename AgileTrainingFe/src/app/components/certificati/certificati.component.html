@@ -1,4 +1,4 @@
-<app-header></app-header>
+
 <div class="profiloDiv">
   <h1>Profilo Utente</h1>
 </div>
@@ -6,10 +6,10 @@
   <div class="leftDiv">
     <div class="fotoDiv">
       <img
-        class="fotoProfilo"
-        src="../../../assets/images/profile-pic.jpg"
-        alt="Foto Profilo"
-      />
+      class="fotoProfilo"
+      [src]="user?.profileImageUrl || '../../../assets/images/profile-pic.jpg'"
+      alt="Foto Profilo"
+    />
       <h3>Mario Rossi</h3>
     </div>
     <div class="divOpzione">
@@ -45,5 +45,5 @@
     </div>
   </div>
 </div>
-<app-footer></app-footer>
+
 

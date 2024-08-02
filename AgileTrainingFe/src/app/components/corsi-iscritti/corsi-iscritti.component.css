@@ -1,125 +1,178 @@
-
-
+/* Stili di base */
 .profiloDiv {
-    width: 100%;
-   
-    text-align: center;
-    border: 4px solid black;
-    background-color: #f0f0f0;
-    padding: 10px;
-}
-
-.dueDiv {
+    /* Aggiungi stili se necessario */
+  }
+  
+  .dueDiv {
     display: flex;
     justify-content: space-between;
-
     position: relative;
-}
-
-.leftDiv, .rightDiv {
+  }
+  
+  .leftDiv, .rightDiv {
     border-top: none;
     text-align: center;
     background-color: #fff;
     padding: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     line-height: 20px;
-}
-
-.leftDiv {
+  }
+  
+  .leftDiv {
     width: 20%;
-}
-
-.rightDiv {
+  }
+  
+  .rightDiv {
     width: 80%;
-}
-
-.fotoProfilo {
+  }
+  
+  .fotoProfilo {
     height: 70px;
     width: 70px;
     border-radius: 50%;
     border: 2px solid #333;
-}
-
-.divOpzione {
+  }
+  
+  .divOpzione {
     margin-top: 20px;
-}
-
-.divOpzione ul {
+  }
+  
+  .divOpzione ul {
     list-style-type: none;
     padding: 0;
-}
-
-.divOpzione li {
+  }
+  
+  .divOpzione li {
     margin-bottom: 5px;
-}
-
-.divOpzione li a {
+  }
+  
+  .divOpzione li a {
     text-decoration: none;
     color: black;
     padding: 10px;
     display: block;
     transition: background-color 0.3s;
-}
-
-.divOpzione li a:hover {
+  }
+  
+  .divOpzione li a:hover {
     background-color: #e0e0e0;
     color: white;
-}
-
-.zonaCertificatiDiv{
+  }
+  
+  .zonaCertificatiDiv {
     position: relative;
     width: 100%;
     height: 200px;
     margin-top: 40px;
-    
-}
-
-.corso {
-    
+  }
+  
+  .corso {
     position: absolute;
     width: calc(50% - 40px); 
     height: calc(50% - 40px); 
     text-align: center;
-    
   }
-
-.corso1{
-top: 0;
-left: 0;
-
-} 
-
-.corso1 p{
-    border: 2px solid black;
-    padding:25px;
-}
-
-.corso2{
+  
+  .corso1 {
     top: 0;
-    right: 0
-
-}
-
-.corso2 p{
+    left: 0;
+  }
+  
+  .corso1 p {
     border: 2px solid black;
-    padding:25px;
-}
-.corso3{
-   bottom: 0;
-   left: 0;
-   
-}
-
-.corso3 p{
-    border: 2px solid black;
-    padding:25px;
-}
-.corso4{
-    bottom:0;
+    padding: 25px;
+  }
+  
+  .corso2 {
+    top: 0;
     right: 0;
-}
-
-.corso4 p{
+  }
+  
+  .corso2 p {
     border: 2px solid black;
-    padding:25px;
-}
+    padding: 25px;
+  }
+  
+  .corso3 {
+    bottom: 0;
+    left: 0;
+  }
+  
+  .corso3 p {
+    border: 2px solid black;
+    padding: 25px;
+  }
+  
+  .corso4 {
+    bottom: 0;
+    right: 0;
+  }
+  
+  .corso4 p {
+    border: 2px solid black;
+    padding: 25px;
+  }
+  
+  /* Media Queries per dispositivi mobili */
+  @media (max-width: 768px) {
+    .dueDiv {
+      flex-direction: column; /* Imposta una colonna per i dispowisitivi mobili */
+     
+    }
+  
+    .leftDiv, .rightDiv {
+      width: 95%; /* Imposta larghezza al 100% per dispositivi mobili */
+    }
+  
+    .leftDiv {
+      margin-bottom: 20px; /* Spazio tra leftDiv e rightDiv */
+    }
+  
+    .fotoProfilo {
+      height: 50px;
+      width: 50px;
+    }
+  
+    .divOpzione li a {
+      padding: 8px;
+    }
+  
+    .zonaCertificatiDiv {
+      height: auto; /* Altezza automatica per schermi più piccoli */
+      margin-top: 20px;
+    }
+  
+    .corso {
+      width: calc(100% - 20px); /* Larghezza adattata */
+      height: auto; /* Altezza automatica */
+      position: relative;
+      margin-bottom: 20px; /* Spazio tra i corsi */
+    }
+  
+    .corso1, .corso2, .corso3, .corso4 {
+      position: relative; /* Cambia la posizione per i dispositivi mobili */
+      width: 100%; /* Larghezza a piena larghezza */
+      height: auto; /* Altezza automatica */
+    }
+  }
+  
+  /* Media Queries per tablet */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .dueDiv {
+      flex-direction: row; /* Mostra la disposizione a riga per i tablet */
+    }
+  
+    .leftDiv, .rightDiv {
+      width: 50%; /* Larghezza del 50% per dispositivi tablet */
+    }
+  
+    .zonaCertificatiDiv {
+      height: auto; /* Altezza automatica per tablet */
+    }
+  
+    .corso {
+      width: calc(50% - 20px); /* Larghezza adattata per tablet */
+      height: auto; /* Altezza automatica */
+    }
+  }
+  

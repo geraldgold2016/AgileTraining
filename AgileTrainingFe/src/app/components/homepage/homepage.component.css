@@ -20,7 +20,7 @@
   width: 60%; /* Utilizzato per mantenere il contenuto centrato */
   max-width: 800px; /* Limitazione della larghezza massima per evitare che diventi troppo largo */
   padding: 2%;
-  margin-right: 5%;
+  margin-right: 10%;
   background-color: transparent; /* Unico background-color per .content */
 }
 
@@ -34,10 +34,10 @@
 
 /* Immagine utente */
 .user-photo {
-  width: 15%; /* Allargata la dimensione dell'immagine come percentuale della larghezza del contenitore */
+  width: 20%; /* Ridotto per mantenere l'immagine proporzionata */
   height: auto; /* Mantiene il rapporto di aspetto */
-  border-radius: 50%;
-  margin-right: 2%;
+  border-radius: 50%; /* Mantiene l'immagine rotonda */
+  margin-right: 1%; /* Ridotto il margine a destra */
 }
 
 /* Azioni e pulsanti */
@@ -75,7 +75,7 @@
 .company-image img {
   max-height: 90%; /* Mantiene l'immagine dentro il contenitore */
   width: auto; /* Mantiene il rapporto di aspetto */
-  border: 4px solid rgba(212,155,50,1);
+  border:none;
   border-radius: 120px 0 120px 15px;
   animation: zoomIn 2s ease-in-out;
 }
@@ -144,7 +144,7 @@
   }
 
   .user-photo {
-    width: 20%; /* Allarga ulteriormente l'immagine utente per schermi più piccoli */
+    width: 15%; /* Dimensione più grande su schermi piccoli, ma non troppo grande */
   }
 
   .imparaBtn {
@@ -175,11 +175,33 @@
   }
 
   .user-photo {
-    width: 15%;
-    height: auto;
+    width: 12%; /* Dimensione intermedia per schermi di dimensioni medie */
+    height: auto; /* Mantiene il rapporto di aspetto */
     border-radius: 50%;
-    margin-right: 2%;
+    margin-right: 1%; /* Ridotto il margine a destra */
     position: absolute;
     bottom: 79%;
   }
 }
+
+/* Nuova animazione per la foto del profilo */
+@keyframes slideInFromLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Applica l'animazione alla foto del profilo */
+.user-photo {
+  width: 20%; /* Ridotto per mantenere l'immagine proporzionata */
+  height: auto; /* Mantiene il rapporto di aspetto */
+  border-radius: 50%; /* Mantiene l'immagine rotonda */
+  margin-right: 1%; /* Ridotto il margine a destra */
+  animation: slideInFromLeft 1s ease-out; /* Aggiungi l'animazione */
+}
+

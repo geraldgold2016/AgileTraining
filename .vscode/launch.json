@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-AgileTrainingBeApplication<AgileTrainingBe>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "AgileTraining.Backend.AgileTrainingBeApplication",
+            "projectName": "AgileTrainingBe",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

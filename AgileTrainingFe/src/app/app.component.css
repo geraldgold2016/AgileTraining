@@ -1,0 +1,28 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+#app {
+  flex: 1; /* Questo farà sì che il contenuto prenda lo spazio rimanente */
+  display: flex;
+  flex-direction: column;
+  max-height: 100vh;
+  overflow-x: auto;
+}
+
+@media (max-width: 790px) {
+  #app {
+    margin: 9% 0%; /* Rimuovere il margine laterale per schermi più piccoli */
+  }
+}
+
+/* Assicurati che l'header e il footer abbiano un'altezza definita */
+app-header, app-footer {
+  height: 60px; /* Adatta questa altezza alle tue esigenze */
+}

@@ -2,15 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../user.service';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
+import { FotoProfiloComponent } from '../foto-profilo/foto-profilo.component';
 
 @Component({
   selector: 'app-dati-utente',
   standalone: true,
-  imports: [HeaderComponent, FooterComponent],
+  imports: [HeaderComponent, FooterComponent,FotoProfiloComponent],
   templateUrl: './dati-utente.component.html',
   styleUrls: ['./dati-utente.component.css']
 })
 export class DatiUtenteComponent implements OnInit {
+  
   user: any = {};  // Oggetto per memorizzare i dati dell'utente
 
   constructor(private userService: UserService) {}

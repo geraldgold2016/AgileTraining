@@ -1,113 +1,126 @@
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #f0f0f0;
+/* Stili base (per desktop) */
+
+
+.leftDiv, .rightDiv {
+  border-top: none;
+  background-color: #fff;
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  line-height: 20px;
+}
+
+.leftDiv {
+  width: 20%;
+  float: left;
+}
+
+.rightDiv {
+  width: 80%;
+  float: left;
+  padding-top: 60px;
+}
+
+.fotoProfilo {
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+  border: 2px solid #333;
+}
+
+.divOpzione {
+  margin-top: 20px;
+}
+
+.divOpzione ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.divOpzione li {
+  margin-bottom: 5px;
+}
+
+.divOpzione li a {
+  text-decoration: none;
+  color: black;
+  padding: 10px;
+  display: block;
+  transition: background-color 0.3s;
+}
+
+.divOpzione li a:hover {
+  background-color: #e0e0e0;
+  color: white;
+}
+
+.mobile-menu {
+  display: none;
+}
+
+.mobile-menu select {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+}
+
+form {
+  margin: 20px 0;
+}
+
+.passDiv {
+  margin-bottom: 10px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.btnElimina {
+  border: none;
+  background-color: #ff4c4c;
+  color: white;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.btnElimina:hover {
+  background-color: #d43f3f;
+}
+
+/* Media Query per dispositivi mobili */
+@media (max-width: 768px) {
+  .leftDiv, .rightDiv {
+      width: 100%;
+      float: none;
+      text-align: left;
   }
-  .container {
-    position: absolute;
-    top: 30%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    padding: 20px;
-  
-    border-radius: 8px;
-    max-width: 400px;
-    width: 80%;
-    background-color: white;
+
+  .rightDiv {
+      padding-top: 0;
   }
-  .heading {
-    margin-top: 20rem;
-    font-family: serif;
+
+  .mobile-menu {
+      display: block;
   }
-  
-  .usernameDiv {
-    margin: 20px;
-    margin-top: 5px;
+
+  .divOpzione {
+      display: none;
   }
-  .usernameDiv input {
-    border: 1px solid black;
+}
+
+@media (max-width: 480px) {
+  .profiloDiv h1 {
+      font-size: 24px;
   }
-  .emailDiv {
-    margin: 20px;
+
+  .fotoProfilo {
+      height: 50px;
+      width: 50px;
   }
-  
-  .emailDiv input {
-    border: 1px solid black;
+
+  .divOpzione li a {
+      padding: 8px;
+      font-size: 14px;
   }
-  
-  .passDiv {
-    margin: 20px;
-    margin-bottom: 10px;
-  }
-  
-  .passDiv input {
-    border: 1px solid black;
-    
-  }
-  
-  #userPass{
-    width: 240px;
-  }
-  
-  #emailPass{
-    width: 240px;
-  }
-  
-  #passDiv{
-    width: 240px;
-  }
-  .usernameDiv label{
-    font-size: 20px;
-  }
-  
-  .emailDiv label{
-    font-size: 20px;
-  }
-  
-  .passDiv label{
-    font-size: 20px;
-  }
-  
-  .btnElimina{
-    padding: 4px 20px;
-    background-color: gray;
-    color: white;
-    border: none;
-  
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-bottom: 20px;
-    width: 180px;
-  }
-  
-  .btnElimina:hover {
-    background-color: #cc4400;
-    border: 4px;
-  }
-  
-  .btnUtente {
-    padding: 4px 20px;
-    background-color: gray;
-    color: white;
-    border: none;
-  
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    width: 180px;
-  }
-  
-  .btnUtente:hover {
-    background-color: #007acc;
-    border: 4px;
-  }
-  
-  input[type=checkbox]
-  {
-    font-size: 4px;
-  }
-  
-  
+}

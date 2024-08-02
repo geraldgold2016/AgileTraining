@@ -1,5 +1,3 @@
-<app-header></app-header>
-
 <div class="profiloDiv">
   <h1>Profilo Utente</h1>
 </div>
@@ -11,6 +9,9 @@
         class="fotoProfilo"
         [src]="user?.profileImageUrl || '../../../assets/images/profile-pic.jpg'"
         alt="Foto Profilo"
+        width="70"
+        height="70"
+        loading="lazy"
       />
       <h3>{{ user?.name }} {{ user?.surname }}</h3>
     </div>
@@ -97,5 +98,3 @@
     <br />
   </div>
 </div>
-
-<app-footer></app-footer>

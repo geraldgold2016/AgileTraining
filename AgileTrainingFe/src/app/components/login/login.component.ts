@@ -6,7 +6,6 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { TranslateModule } from '@ngx-translate/core';
 import { LangTranslateModule } from '../../lang-translate/lang-translate.module';
 import { IdleService } from '../../idle.service'; // Importa il servizio
 import { Subscription } from 'rxjs';
@@ -19,14 +18,15 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  showPassword: boolean = false;
-  currentLang: string = 'it';
+  showPassword = false;
+  currentLang = 'it';
   loginRequest = { username: '', password: '' };
   errorMessage: string | null = null;
   isSubmitting = false;
-  private sessionSubscription!: Subscription;
-  private warningSubscription!: Subscription;
+  private sessionSubscription: Subscription | null = null;
+  private warningSubscription: Subscription | null = null;
 
+  // Regex come stringhe
   usernamePattern = '^[a-zA-Z0-9-_]+$';  // Consente lettere, numeri, trattini e underscore
   passwordPattern = '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%&!])[A-Za-z\\d@#$%&!]{8,}$'; // Almeno una lettera maiuscola, una minuscola, un numero e un carattere speciale
 
@@ -60,17 +60,13 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.sessionSubscription) {
-      this.sessionSubscription.unsubscribe();
-    }
-    if (this.warningSubscription) {
-      this.warningSubscription.unsubscribe();
-    }
+    this.sessionSubscription?.unsubscribe();
+    this.warningSubscription?.unsubscribe();
   }
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
-    const passwordInput = document.querySelector('#password') as HTMLInputElement;
+    const passwordInput = document.querySelector<HTMLInputElement>('#password');
     if (passwordInput) {
       passwordInput.type = this.showPassword ? 'text' : 'password';
     }
@@ -86,10 +82,10 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.errorMessage = 'Please fill in both fields.';
       return;
     }
-  
+
     this.errorMessage = null;
     this.isSubmitting = true;
-  
+
     this.http.post<any>('http://localhost:8080/login', this.loginRequest).subscribe(
       response => {
         console.log('Login successful', response);
@@ -98,13 +94,13 @@ export class LoginComponent implements OnInit, OnDestroy {
         } else {
           console.warn('Token not found in response');
         }
-  
+
         if (response.userId && !isNaN(Number(response.userId))) {
           localStorage.setItem('userId', Number(response.userId).toString());
         } else {
           console.warn('User ID not found or invalid in response');
         }
-  
+
         this.router.navigate(['/datiAnagrafici']); // Redirigi alla pagina dei dati anagrafici
       },
       (error: HttpErrorResponse) => {

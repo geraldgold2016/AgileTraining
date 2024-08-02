@@ -1,5 +1,6 @@
 {
     "hom":{
-        
+       "welcomeMessage": "Benvenuto, {{userName}}!",
+  "startLearningButton": "Inizia ad imparare" 
     }
 }

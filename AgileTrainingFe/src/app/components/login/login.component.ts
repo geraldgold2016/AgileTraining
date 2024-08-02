@@ -66,11 +66,77 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
-    const passwordInput = document.querySelector('.passInp') as HTMLInputElement;
-    if (this.showPassword) {
-      passwordInput.type = 'text';
-    } else {
-      passwordInput.type = 'password';
+    const passwordInput = document.querySelector<HTMLInputElement>('#password');
+    if (passwordInput) {
+      passwordInput.type = this.showPassword ? 'text' : 'password';
+    }
+  }
+
+  switchLanguage(lang: string) {
+    this.currentLang = lang;
+    this.translate.use(lang);
+  }
+
+  onSubmit() {
+    if (!this.loginRequest.username || !this.loginRequest.password) {
+      this.errorMessage = 'Please fill in both fields.';
+      return;
+    }
+
+    this.errorMessage = null;
+    this.isSubmitting = true;
+
+    this.http.post<any>('http://localhost:8080/login', this.loginRequest).subscribe(
+      response => {
+        console.log('Login successful', response);
+        if (response.token) {
+          localStorage.setItem('authToken', response.token);
+        } else {
+          console.warn('Token not found in response');
+        }
+
+        if (response.userId && !isNaN(Number(response.userId))) {
+          localStorage.setItem('userId', Number(response.userId).toString());
+        } else {
+          console.warn('User ID not found or invalid in response');
+        }
+
+        this.router.navigate(['/datiAnagrafici']); // Redirigi alla pagina dei dati anagrafici
+      },
+      (error: HttpErrorResponse) => {
+        console.error('Login failed', error);
+        this.errorMessage = error.error?.message || 'Nome utente o password non corretti.';
+        this.isSubmitting = false;
+      }
+    );
+  }
+
+  removeSpaces(event: Event) {
+    const input = event.target as HTMLInputElement;
+    input.value = input.value.replace(/\s+/g, ''); // Rimuove tutti gli spazi
+  }
+
+  validateUsername(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const pattern = new RegExp(this.usernamePattern);
+    if (!pattern.test(input.value)) {
+      input.value = input.value.replace(/[^a-zA-Z0-9-_]/g, ''); // Rimuove i caratteri non accettabili
+    }
+  }
+
+  validatePassword(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const pattern = new RegExp(this.passwordPattern);
+    if (!pattern.test(input.value)) {
+      input.value = input.value.replace(/[^a-zA-Z0-9@#$%&!]/g, ''); // Rimuove i caratteri non accettabili
+    }
+  }
+
+  @HostListener('document:copy', ['$event'])
+  onCopy(event: ClipboardEvent): void {
+    const target = event.target as HTMLElement;
+    if (target.closest('input') && (target as HTMLInputElement).type !== 'password') {
+      event.preventDefault();
     }
   }
 }

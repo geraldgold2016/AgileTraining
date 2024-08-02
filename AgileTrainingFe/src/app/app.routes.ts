@@ -37,10 +37,11 @@ import { CancellaAccComponent } from './components/cancella-acc/cancella-acc.com
 import { AvvisoLogoutComponent } from './components/avviso-logout/avviso-logout.component';
 import { ModulodatiComponent } from './components/modulodati/modulodati.component';
 import { IntroEsameComponent } from './components/intro-esame/intro-esame.component';
-
+import { authGuardCertificato } from './auth.guardCertificato';
+import { authGuardEsame } from './auth.guardEsame';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' }, //se l'utente non inserisce niente nella url allora si apre la pagina login
   { path: 'login', component: LoginComponent },
   { path: 'sessione', component: SessioneComponent },
   { path: 'avvisoFoto', component: AvvisoCambioFotoComponent },
@@ -51,20 +52,20 @@ export const routes: Routes = [
   { path: 'registrazione', component: RegistrazioneComponent },
   { path: 'avvisoRegister', component: AvvisoRegistrazioneComponent },
   { path: 'avvisoUsernameSuccess', component: AvvisoUsernameSuccessComponent },
-  { path:'avvisoSceltaAnnulaIscrizione', component:AvvisoSceltaAnnullaIscrizioneComponent},
-  { path:'avvisoIscrizioneCorsoAnnullato', component:AvvisoIscrizioneCorsoAnnullatoComponent},
+  { path: 'avvisoSceltaAnnulaIscrizione', component:AvvisoSceltaAnnullaIscrizioneComponent},
+  { path: 'avvisoIscrizioneCorsoAnnullato', component:AvvisoIscrizioneCorsoAnnullatoComponent},
   { path: 'cambioPassword', component: CambiaPasswordComponent },
   { path: 'cancellaAccount', component: CancellaAccountComponent },
   { path: 'certificati', component: CertificatiComponent },
-  { path: 'certificatoCorso', component:CertificatoCorsoComponent},
+  { path: 'certificatoCorso', component:CertificatoCorsoComponent, canActivate: [authGuardCertificato]},
   { path: 'corsi', component: CorsiComponent },
   { path: 'cercaCorsi', component: CorsiSearchComponent },
   { path: 'corso', component: CorsoComponent },
   { path: 'datiUtente', component: DatiUtenteComponent },
   { path: 'introEsame', component: IntroEsameComponent },
-  { path: 'esame/:numeroDomanda', component: EsameComponent },
-  { path: 'esameFail', component: EsameFailedComponent },
-  { path: 'esameSuccess', component: EsameSuccessComponent },
+  { path: 'esame/:numeroDomanda', component: EsameComponent, canActivate: [authGuardEsame] },
+  { path: 'esameFail', component: EsameFailedComponent, canActivate: [authGuardEsame]},
+  { path: 'esameSuccess', component: EsameSuccessComponent, canActivate: [authGuardEsame] },
   { path: 'home', component: HomepageComponent },
   { path: 'lingua', component: LinguaComponent },
   { path: 'passwordDimenticata', component: PasswordDimenticataComponent },

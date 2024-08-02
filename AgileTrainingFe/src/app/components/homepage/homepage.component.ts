@@ -35,8 +35,8 @@ export class HomepageComponent
     else {this.token = 'Token non trovato';}
     console.log('Token:',storedToken);
 
-    //Richiamo il metodo getUtenteId
-    this.dataService.getUtenteId(this.userId).subscribe({
+    //Richiamo il metodo getUtenteById
+    this.dataService.getUtenteById(this.userId).subscribe({
       next: (user: any) => {
         this.usernameUtente = user.username;
       },

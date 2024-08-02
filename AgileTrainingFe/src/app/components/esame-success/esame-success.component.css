@@ -3,64 +3,10 @@ h1
     text-align: center;
     margin-top: 110px; 
 }
-
-
-
-/*Certificato*/
 h2
 {
     text-align: center;
-    margin: 50px;
 }
-
-#contenitoreCertificato
-{
-    display: flex;
-    justify-content: center;
-}
-
-#certificato
-{
-    display: flex;
-    flex-direction: column;
-
-    width: 913px;
-    height: auto;
-    padding: 38px;
-    background-image: url("../../../assets/images/Agile Training riquadro certificato.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-
-p
-{
-    text-align: center;
-    font-size: 20px;
-}
-#dataEsame
-{
-    margin: 50px;
-}
-
-#opzioniCertificato
-{
-    display: flex;
-    justify-content: space-evenly;
-    margin: 20px;
-}
-#contenitoreLogoFirme
-{
-    display: flex;
-    justify-content: center;
-}
-.contenitoreImmagine
-{
-    width: 240px;
-    height: auto;
-}
-
-
-
 
 .opzione
 {
@@ -77,11 +23,17 @@ i
     margin-bottom: 10px;
 }
 
-#tornaCorso
+.contenitorePulsanti
+{
+    display: flex;
+    justify-content: center;
+}
+
+.pulsante
 {
     display: block;
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 50px;
+    margin-right: 50px;
     margin-top: 70px;
     margin-bottom: 70px;
     padding: 10px;
@@ -96,7 +48,7 @@ a
     color: white;
 }
 
-#tornaCorso:hover
+.pulsante:hover
 {
     background-color: rgb(68, 68, 68);    
 }

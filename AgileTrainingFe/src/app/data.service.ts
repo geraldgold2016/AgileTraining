@@ -1,7 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Observable} from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 
@@ -21,7 +20,7 @@ export class DataService
   }
 
   // Ottenere i dati dell'utente per ID
-  getUtenteId(userId: string): Observable<any> 
+  getUtenteById(userId: string): Observable<any> 
   {
     return this.http.get<any>(`${this.baseUrl}/${userId}`);
   }
@@ -94,28 +93,52 @@ export class DataService
     return this.http.get<any[]>(`${this.baseUrl}/${questionId}/getOptions`);
   }
 
-  //creazione nuovo Test
-  beginTest(userId: string, testId: string): Observable<any> 
+  // Inizia un nuovo test
+  beginTest(testId: string, userId: string): Observable<any> 
   {
-    const testRequest = {userId, testId};
+    const testRequest = { userId, testId };
     return this.http.post<any>(`${this.baseUrl}/beginTest`, testRequest);
-  }  
+  }
 
   //fine del test
   submitTest(testResult: string, testResultId: string): Observable<any> 
   {
     const submitRequest = {testResult, testResultId};
-    return this.http.post<any>(`${this.baseUrl}/submitTest`, submitRequest);
+    return this.http.put<any>(`${this.baseUrl}/submitTest`, submitRequest);
   }
 
+  //si ottiene l'id del test della colonna id della tabella tests 
   getTestIdByCourseId(courseId: string): Observable<any> 
   {
     return this.http.get<any[]>(`${this.baseUrl}/getTestId/${courseId}`);
   }
 
-  //prendi l'id dell'ultimo test di un user di un test
-  getLatestTestResultId(userId: string, testId: string): Observable<number> 
+  //si ottiene il numero dei tentativi di un utente nel fare un esame di un corso
+  getAttempts(testId: string, userId: string): Observable<any> 
   {
-    return this.http.get<number>(`${this.baseUrl}/latestId/${userId}/${testId}`);
+    const params = new HttpParams().set('testResultId', testId).set('userId', userId);
+    return this.http.get<any>(`${this.baseUrl}/getAttempts`, { params });
   }
+  
+  //creo un nuovo certificato
+  createCertificate(userId: string, courseId: string, isIssued: boolean, certificateKey: string, testDate: string): Observable<any> 
+  {
+    const certificate = {userId, courseId, isIssued, certificateKey, testDate}
+    return this.http.post<any>(`${this.baseUrl}/createCertificate`, certificate);
+  }
+
+  //si ottiene le informazioni del certificato
+  getCertificate(idCorso: string, idUtente: string): Observable<any> 
+  {
+    const params = new HttpParams().set('idCorso', idCorso).set('idUtente', idUtente);
+    return this.http.get<any>(`${this.baseUrl}/getCertificate`, { params });
+  }
+  
+  //si fa un check se il certificato esiste
+  checkCertificate(idCorso: string, idUtente: string): Observable<any> 
+  {
+    const params = new HttpParams().set('idCorso', idCorso).set('idUtente', idUtente);
+    return this.http.get<any>(`${this.baseUrl}/checkCertificate`, { params });
+  }
+
 }

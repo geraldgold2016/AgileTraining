@@ -1,11 +1,9 @@
 
 package AgileTraining.Backend.services;
 
+import AgileTraining.Backend.classes.BackendResponse;
 import AgileTraining.Backend.daos.*;
-
 import AgileTraining.Backend.entities.*;
-
-import AgileTraining.Backend.entities.Module;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,12 +12,8 @@ import java.util.Optional;
 
 
 @Service
-public class TestService {
-
-
-    @Autowired
-    private QuestionDao qDao;
-
+public class TestService 
+{
     @Autowired
     private OptionDao oDao;
 
@@ -32,17 +26,8 @@ public class TestService {
     @Autowired
     private TestResultDao trDao;
 
-
-//    public Test beginTest(Integer courseId) {
-//            questions = qDao.getQuestionsByCourseId(courseId);
-//            for (Question question : questions) {
-//                Option option = question.getOption();
-//                options.add(option);
-//            }
-//            return new Test(questions, options);
-//    }
-
-    public Boolean checkAnswer(Integer questionId, Integer optionId) {
+    public Boolean checkAnswer(Integer questionId, Integer optionId) 
+    {
         Optional<Option> option = oDao.findById(optionId);
         if (!option.isPresent()) {
             return false;
@@ -55,7 +40,8 @@ public class TestService {
     }
 
     @Transactional
-    public Integer newTest(Integer userId, Integer testId) {
+    public Integer newTest(Integer testId, Integer userId) 
+    {
         User user = uDao.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user ID: " + userId));
         Test test = tDao.findById(testId)
@@ -65,31 +51,38 @@ public class TestService {
 
         testResult.setUser(user);
         testResult.setTest(test);
+        testResult.setResult(0);
+
+        Integer numberAttempts = trDao.getAttempts(testId, userId);
+        
+        if (numberAttempts == null) 
+        {
+            testResult.setnAttempts(1);
+        }
+        else
+        {
+        	testResult.setnAttempts(numberAttempts + 1);        	
+        }
 
         return trDao.save(testResult).getId();
 
     }
 
-
     @Transactional
-    public void submitTest(Integer testResult, Integer testId) {
-        TestResult completedTest = trDao.findById(testId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid test ID: " + testId));
-        completedTest.setResult(testResult);
-        /*
-        Integer numberAttempts = completedTest.getnAttempts();
-        if (numberAttempts == null)
-        {
-            completedTest.setnAttempts(1);
-        }
-        else if (numberAttempts > 0)
-        {
-        	completedTest.setnAttempts(numberAttempts + 1);
-        }
-*/
-        trDao.save(completedTest);
-    }
+    public BackendResponse submitTest(Integer testResult, Integer testResultId) 
+    {
+        // Trova il TestResult esistente tramite il suo ID
+        TestResult testResults = trDao.findById(testResultId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid test result ID: " + testResultId));
+        
+        // Aggiorna i campi dell'oggetto esistente
+        testResults.setResult(testResult);
 
+        // Salva l'oggetto aggiornato nel database
+        trDao.save(testResults);
+
+        return new BackendResponse("Punteggio test salvato con successo");
+    }
 
 }
 

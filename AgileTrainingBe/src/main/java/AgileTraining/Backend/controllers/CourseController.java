@@ -16,8 +16,6 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200")
 public class CourseController 
 {
-
-
     @Autowired
     CourseDao cDao;
 
@@ -44,5 +42,4 @@ public class CourseController
         Course course = cDao.getCoursesById(id);
         return ResponseEntity.status(200).body(course);
     }
-   
 }

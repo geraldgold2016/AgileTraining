@@ -1,14 +1,27 @@
 <h1>Esame Corso {{ nomeCorso }}</h1>
 
-<p class="tempo">Tempo a disposizione: {{ esameCorso.duration }} minuti</p>
+<p class="tentativi" *ngIf="numeroTentativiRimasti > 1">Hai a disposizione {{ numeroTentativiRimasti }} tentativi</p>
+<p class="tentativi" *ngIf="numeroTentativiRimasti == 1">Hai a disposizione {{ numeroTentativiRimasti }} tentativo</p>
+<p class="tentativi" *ngIf="numeroTentativiRimasti == 0">Non puoi fare l'esame perchè hai raggiunto il numero di
+    tentativi massimo di 3</p>
+<p class="tentativi" *ngIf="numeroTentativiRimasti == 0">Riprova tra 2 settimane dall'ultimo tentativo di esame</p>
 
-<div class="infoPreEsame">
-    In questo esame hai a disposizione {{ esameCorso.duration }} minuti per completare l'esame.<br>
-    Allo scadere del tempo la sessione esame si chiude e verranno valutate le risposte date.<br>
-    Ci saranno 30 domande a risposta multipla.<br>
-    Le domande senza risposta saranno conteggiato come nulle.<br>
-    1 punto per ogni risposta corretta.<br>
-    Per ottenere il certificato devi totalizzare almeno 18 punti su 30.<br>
+<div class="contenitorePulsanti" *ngIf="numeroTentativiRimasti == 0">
+    <button class="pulsante" (click)="tornaAlCorso()">Torna al Corso</button>
+    <button class="pulsante" (click)="tornaAllaHome()">Torna alla Home</button>
+</div>
 
-    <button class="iniziaEsame" (click)="startExam()">Inizia Esame</button>
+<div id="contenitoreInfoEsame" *ngIf="numeroTentativiRimasti > 0">
+    <p class="tempo">Tempo a disposizione: {{ esameCorso.duration }} minuti</p>
+
+    <div class="infoPreEsame">
+        In questo esame hai a disposizione {{ esameCorso.duration }} minuti per completare l'esame.<br>
+        Allo scadere del tempo la sessione esame si chiude e verranno valutate le risposte date.<br>
+        Ci saranno 30 domande a risposta multipla.<br>
+        Le domande senza risposta saranno conteggiato come nulle.<br>
+        1 punto per ogni risposta corretta.<br>
+        Per ottenere il certificato devi totalizzare almeno 18 punti su 30.<br>
+
+        <button class="pulsante" (click)="startExam()">Inizia Esame</button>
+    </div>
 </div>

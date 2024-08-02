@@ -1,36 +1,14 @@
 <app-header></app-header>
 
-<h1>Corso XXXXXX</h1>
+<h1>Corso {{nomeCorso}}</h1>
+
+<h2>Il tuo punteggio finale è {{punteggio}}/30</h2>
 
 <h2>Congratulazioni! Hai superato l'esame.</h2>
 
-<div id="contenitoreCertificato">
-    <div id="certificato">
-        <h2>Certificato</h2>
-        <p>Si certifica che nomeUtente cognomeUtente ha frequentato il corso XXXXXX <br>
-            tenuto sul sito di AgileTraining <br>
-            completato al x% con il superamento dell'esame finale</p>
-    
-        <p id="dataEsame">Data esame:<br>
-            xx/xx/xxxx</p>
-    
-        <p id="codiceCorso">Codice corso:<br>
-            JKJD56878DJDH</p>
-    
-        <div id="contenitoreLogoFirme">
-        <img src="../../../assets/images/AgileTraining Logo.jpg" class="contenitoreImmagine">
-        <img src="../../../assets/images/firma direttore agile training.png" class="contenitoreImmagine">
-        <img src="../../../assets/images/firma vice direttore agile training.png" class="contenitoreImmagine">
-        </div>
-    
-    </div>
-    </div>
-
-<div id="opzioniCertificato">
-    <button class="opzione"><i class="fa-solid fa-download fa-2x"></i>Scarica Attestato</button>
-    <button class="opzione"><i class="fa-solid fa-print fa-2x"></i>Stampa Attestato</button>
+<div class="contenitorePulsanti">
+<button class="pulsante" ><a href="certificatoCorso">Vedi Certificato</a></button>
+<button class="pulsante"><a href="corso">Torna al Corso</a></button>
 </div>
-
-<button id="tornaCorso"><a href="corso">Torna al Corso</a></button>
 
 <app-footer></app-footer>

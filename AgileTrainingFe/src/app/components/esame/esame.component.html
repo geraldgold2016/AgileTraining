@@ -1,13 +1,13 @@
 <h1>Esame Corso {{ nomeCorso }}</h1>
 
-<p class="tempo">Tempo a disposizione: {{ esameCorso.duration }} minuti</p>
+<p class="tempo">Tempo a disposizione <span id="timer" class="timer"></span></p>
 
 <div class="contenitoreEsame" *ngIf="domandaCorrente">
-  <div class="domanda">
-    <h3>Domanda {{ domandaCorrenteNumero }}</h3>
-    <p>{{ testoDomandaCorrente }}</p>
-    <label *ngFor="let answer of testoRisposte" class="container">
-      <input type="radio" name="domanda{{ domandaCorrenteNumero }}" (click)="selectAnswer(answer)">
+  <div class="domanda no-select">
+    <h3 class="no-select">Domanda {{ domandaCorrenteNumero }}</h3>
+    <p class="no-select">{{ testoDomandaCorrente }}</p>
+    <label class="no-select" *ngFor="let answer of testoRisposte" class="container">
+      <input class="no-select" type="radio" name="domanda{{ domandaCorrenteNumero }}" (click)="selectAnswer(answer)">
       {{ answer }}
       <span class="checkmark"></span>
     </label>
@@ -20,3 +20,4 @@
 <div *ngIf="!domandaCorrente">
   <p>Caricamento della domanda...</p>
 </div>
+

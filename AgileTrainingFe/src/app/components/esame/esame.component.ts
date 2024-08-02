@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { DataService } from '../../data.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
 })
 export class EsameComponent implements OnInit, OnDestroy {
 
-  constructor(private route: ActivatedRoute, private router: Router, private dataService: DataService) {}
+  constructor(private route: ActivatedRoute, private router: Router, private dataService: DataService) {this.checkForDuplicateTab();}
 
   userId: string = '';
   idCorso: string = '';
@@ -35,23 +35,27 @@ export class EsameComponent implements OnInit, OnDestroy {
   esameIniziato: boolean = false;
   latestTestResultId: any;
   idtest: any;
+  timerInterval: any; 
+  idTestResult: string = '';
 
-  ngOnInit(): void {
+
+  ngOnInit(): void 
+  {
     // Ottengo l'idUtente e il Token dal Local Storage
     const storedUserId = localStorage.getItem('userId');
-    if (storedUserId != null) {
-      this.userId = storedUserId;
-    } else {
-      this.userId = 'idUtente non trovato';
-    }
+    if (storedUserId != null) {this.userId = storedUserId;} 
+    else {this.userId = 'idUtente non trovato';}
 
     // Ottengo l'idCorso dal Local Storage
     const storedCorsoId = localStorage.getItem('selectedCourseId');
-    if (storedCorsoId != null) {
-      this.idCorso = storedCorsoId;
-    } else {
-      this.idCorso = 'idCorso non trovato';
-    }
+    if (storedCorsoId != null) {this.idCorso = storedCorsoId;} 
+    else {this.idCorso = 'idCorso non trovato';}
+
+    // Ottengo l'idTestResult dal Local Storage
+    const idTestResult = localStorage.getItem('idTestResult');
+    if (idTestResult != null) {this.idTestResult = idTestResult;}
+    else {this.idTestResult = 'idTestResult non trovato';}
+    console.log("idTestResult localStorage: " + idTestResult);
 
     // Richiamo il metodo getCoursesById per ottenere la descrizione del corso
     this.dataService.getCoursesById(this.idCorso).subscribe({
@@ -65,9 +69,12 @@ export class EsameComponent implements OnInit, OnDestroy {
     });
 
     // Richiamo il metodo getChaptersByIdCourse per ottenere la durata dell'esame
+    // Poi faccio partire il timer
     this.dataService.getChaptersByIdCourse(this.idCorso).subscribe({
       next: (data: any[]) => {
         this.esameCorso = data[data.length - 1];
+        this.startTimer(this.esameCorso.duration);
+        // this.startTimer(1);
       },
       error: (err: any) => {
         console.error('Errore nel recupero dei corsi', err);
@@ -93,13 +100,11 @@ export class EsameComponent implements OnInit, OnDestroy {
     // Disabilitare il pulsante di refresh (F5), combinazioni di tasti per ricaricare e il menu contestuale (clic destro)
     window.addEventListener('keydown', this.disableRefresh);
     window.addEventListener('contextmenu', this.disableContextMenu);
-  }
 
-  ngOnDestroy(): void {
-    // Rimuovere i listener quando il componente viene distrutto
-    window.removeEventListener('popstate', this.preventBackNavigation);
-    window.removeEventListener('keydown', this.disableRefresh);
-    window.removeEventListener('contextmenu', this.disableContextMenu);
+    // Aggiungere l'evento di chiusura della scheda
+    this.addUnloadEvent();
+
+    console.log("idTestResult: " + this.idTestResult);
   }
 
   preventBackNavigation(event: PopStateEvent): void {
@@ -206,50 +211,110 @@ export class EsameComponent implements OnInit, OnDestroy {
       this.punteggio = 0;
     }
 
-    //chiamata per avere l'id del test
-    this.dataService.getTestIdByCourseId(this.idCorso).subscribe({
+    //chiamata per inserire il punteggio del test
+    this.dataService.submitTest(this.punteggio.toString(), this.idTestResult).subscribe({
       next: (response: any) => {
-        this.idtest = response;
-        console.log("id test: " + this.idtest);
-
-        //chiamata per avere l'id corrente del test
-        this.dataService.getLatestTestResultId(this.userId, this.idtest).subscribe({
-          next: (latestId: any) => {
-            this.latestTestResultId = latestId;
-            console.log("l'ultimo id test: " + this.latestTestResultId);
-
-            console.log(this.punteggio);
-
-            //chiamata per inserire il punteggio del test
-            this.dataService.submitTest(this.punteggio.toString(), this.latestTestResultId).subscribe({
-              next: (response: any) => {
-                console.log('Punteggio salvato con successo:', response);
-                sessionStorage.removeItem('questionIds');
-                localStorage.setItem('punteggio', this.punteggio.toString());
-                if (this.punteggio < 18) {
-                  this.router.navigate(['/esameFail']);
-                } else {
-                  this.router.navigate(['/esameSuccess']);
-                }
-              },
-              error: (err: any) => {
-                console.error('Errore nel salvataggio del punteggio', err);
-                this.error = 'Errore nel salvataggio del punteggio';
-              }
-            });
-          },
-          error: (err: any) => {
-            console.error("Errore nel recupero dell'ID del test più recente", err);
-            this.error = "Errore nel recupero dell'ID del test più recente";
-          }
-        });
+        console.log('Punteggio salvato con successo:', response);
+        sessionStorage.removeItem('questionIds');
+        localStorage.setItem('punteggio', this.punteggio.toString());
+        if (this.punteggio < 18) {
+          this.router.navigate(['/esameFail']);
+        } else {
+          this.router.navigate(['/esameSuccess']);
+        }
       },
       error: (err: any) => {
-        console.error("Errore nell'iniziare il test", err);
-        this.error = "Errore nell'iniziare il test";
+        console.error('Errore nel salvataggio del punteggio', err);
+        this.error = 'Errore nel salvataggio del punteggio';
       }
     });
-
-
   }
+
+  startTimer(duration: number): void 
+  {
+    let timer = this.getRemainingTime();
+    if (timer === 0) 
+    {
+      this.setExpirationTime(duration);
+      timer = duration * 60;
+    }
+  
+    const display = document.getElementById('timer');
+    this.timerInterval = setInterval(() => {
+      const minutes = Math.floor(timer / 60);
+      const seconds = timer % 60;
+  
+      const minutesStr = minutes < 10 ? '0' + minutes : minutes.toString();
+      const secondsStr = seconds < 10 ? '0' + seconds : seconds.toString();
+  
+      if (display) {
+        display.textContent = minutesStr + ':' + secondsStr;
+      }
+  
+      if (--timer < 0) {
+        clearInterval(this.timerInterval);
+        this.finishExam();
+        console.log('Tempo scaduto');
+      }
+    }, 1000);
+  }
+
+  setExpirationTime(minutes: number): void 
+  {
+    const currentTime = Date.now();
+    const expirationTime = currentTime + minutes * 60 * 1000;
+    localStorage.setItem('examExpirationTime', expirationTime.toString());
+  }
+  
+  getRemainingTime(): number 
+  {
+    const expirationTime = parseInt(localStorage.getItem('examExpirationTime') || '0', 10);
+    const currentTime = Date.now();
+    return Math.max(0, Math.floor((expirationTime - currentTime) / 1000));
+  }
+  
+
+
+  private readonly pageIdKey = 'Esame123';
+  private readonly pageIdValue = 'uniquePage321';
+
+  //funzione per impedire la duplicazione della scheda
+  private checkForDuplicateTab() 
+  {
+    const existingPageId = localStorage.getItem(this.pageIdKey);
+
+    if (existingPageId && existingPageId === this.pageIdValue) {
+      // Scheda duplicata rilevata, chiudi la scheda
+      alert("La pagina dell'esame è già aperta in un'altra scheda");
+      window.close();
+    } else {
+      // Imposta l'identificatore unico nel localStorage
+      localStorage.setItem(this.pageIdKey, this.pageIdValue);
+    }
+  }
+
+  //Alla chiusura della scheda il tentativo esame è aumentato di 1
+  addUnloadEvent() 
+  {
+    window.addEventListener('beforeunload', this.handleBeforeUnload.bind(this));
+  }
+
+  handleBeforeUnload() 
+  {
+    localStorage.setItem('esameIniziato', 'false');
+    localStorage.setItem('punteggio', "0");
+    sessionStorage.removeItem('questionIds');
+    localStorage.setItem('examExpirationTime', "0");
+    localStorage.removeItem(this.pageIdKey);
+  }
+
+  ngOnDestroy(): void 
+  {
+    // Rimuovere i listener quando il componente viene distrutto
+    window.removeEventListener('popstate', this.preventBackNavigation);
+    window.removeEventListener('keydown', this.disableRefresh);
+    window.removeEventListener('contextmenu', this.disableContextMenu);
+    window.removeEventListener('beforeunload', this.handleBeforeUnload.bind(this));
+  }
+
 }

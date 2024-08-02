@@ -1,19 +1,19 @@
 <app-header></app-header>
 
-<h1>Corso XXXXXX</h1>
+<h1>Corso {{nomeCorso}}</h1>
 
 <div id="contenitoreCertificato">
 <div id="certificato">
     <h2>Certificato</h2>
-    <p>Si certifica che nomeUtente cognomeUtente ha frequentato il corso XXXXXX <br>
+    <p>Si certifica che {{nomeUtente}} {{cognomeUtente}} ha frequentato il corso {{nomeCorso}} <br>
         tenuto sul sito di AgileTraining <br>
-        completato al x% con il superamento dell'esame finale</p>
+        completato al 100% con il superamento dell'esame finale</p>
 
     <p id="dataEsame">Data esame:<br>
-        xx/xx/xxxx</p>
+        {{testDate}}</p>
 
     <p id="codiceCorso">Codice corso:<br>
-        JKJD56878DJDH</p>
+        {{certificateKey}}</p>
 
     <div id="contenitoreLogoFirme">
     <img src="../../../assets/images/AgileTraining Logo.jpg" class="contenitoreImmagine">

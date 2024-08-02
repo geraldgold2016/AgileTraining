@@ -65,7 +65,6 @@ public class UserController {
         }
     }
 
-    // dà problemi di token
     @PostMapping("/login")
     public ResponseEntity<Object> loginAndPrivateArea(@RequestBody LoginRequest loginRequest, HttpSession session) {
 
@@ -85,8 +84,6 @@ public class UserController {
 
         // Step 3: Genera il token JWT
         String userToken = JwtUtils.generateToken(u.getUsername());
-
-//      String userToken = JwtUtils.generateToken(u.getName(), u.getSurname(), u.getUsername());
 
         // Step 4: Verifica se l'user ha accesso alla private area usando il token JWT appena generato
         Jws<Claims> claims = JwtUtils.verifyToken(userToken);

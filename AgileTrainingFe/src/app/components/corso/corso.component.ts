@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit, ElementRef, ViewChildren, QueryList } from '@angular/core';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 import { CommonModule } from '@angular/common';
 import { DataService } from '../../data.service';
+import Player from '@vimeo/player';
 
 @Component({
   selector: 'app-corso',
@@ -13,6 +14,7 @@ import { DataService } from '../../data.service';
 })
 export class CorsoComponent 
 {
+  @ViewChildren('vimeoPlayer') vimeoPlayers!: QueryList<ElementRef>;
   constructor(private dataService: DataService) {}  
   userId: string = '';
   idCorso: string = '';
@@ -21,7 +23,10 @@ export class CorsoComponent
   capitoliCorso: any[] = [];
   descrizioneCapitoliCorso: any[] = [];
   rispostaIscrizioneCorso: string = '';
+  certificatoEsiste: boolean = false;
   error: string = '';
+
+  playerInstances: Player[] = [];
 
   ngOnInit(): void 
   {
@@ -65,8 +70,73 @@ export class CorsoComponent
         this.error = 'Errore nel recupero dei corsi';
       }
     });
+
+    //Richiamo il metodo checkCertificate per verificare l'esistenza del certificato
+    this.dataService.checkCertificate(this.idCorso, this.userId).subscribe({
+      next: (data: any) => {
+        this.certificatoEsiste = data;
+      },
+      error: (err: any) => {
+        console.error('Errore nel recupero esistenza certificato', err);
+        this.error = 'Errore nel recupero esistenza certificato';
+      }
+    });
   }
 
+  private examWindow: Window | null = null;
+
+  openExamPage(event: Event) 
+  {
+    event.preventDefault(); // Previene il comportamento predefinito del link
+
+    // Controlla se la finestra dell'esame è già aperta
+    const isExamWindowOpen = localStorage.getItem('isExamWindowOpen') === 'true';
+
+    if (isExamWindowOpen) 
+    {
+      alert("La pagina dell'esame è già aperta.");
+      return;
+    }
+    // Apri una nuova finestra per l'esame
+    this.examWindow = window.open('/introEsame', '_blank');
+
+    if (!this.examWindow) 
+    {
+      alert("Impossibile aprire la pagina dell'esame. Per favore, abilita i popup nel tuo browser.");
+    }
+
+    // Salva l'informazione nel storage locale
+    localStorage.setItem('isExamWindowOpen', 'true');
+
+    // Aggiungi un listener per rimuovere l'informazione dallo storage locale quando la finestra è chiusa
+    const interval = setInterval(() => {
+      if (this.examWindow && this.examWindow.closed) 
+      {
+        clearInterval(interval);
+        localStorage.removeItem('isExamWindowOpen');
+      }
+    }, 1000);
+  }
+
+  ngAfterViewInit(): void 
+  {
+    this.vimeoPlayers.forEach((playerElement, index) => {
+      const iframe = playerElement.nativeElement;
+      const player = new Player(iframe);
+
+      let lastTime = 0;
+
+      player.on('timeupdate', function(data) {
+        if (data.seconds > lastTime) {
+          player.setCurrentTime(lastTime);
+        } else {
+          lastTime = data.seconds;
+        }
+      });
+
+      this.playerInstances[index] = player;
+    });
+  }
     //funzione per vedere il capitolo
     toggleAccordion(event: any): void 
     {

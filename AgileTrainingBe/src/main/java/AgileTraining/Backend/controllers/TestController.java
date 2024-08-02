@@ -5,6 +5,10 @@ import AgileTraining.Backend.classes.BackendResponse;
 import AgileTraining.Backend.daos.TestDao;
 import AgileTraining.Backend.daos.TestResultDao;
 import AgileTraining.Backend.services.TestService;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,8 +18,6 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "http://localhost:4200")
 public class TestController 
 {
-
-
     @Autowired
     private TestService tService;
 
@@ -27,31 +29,46 @@ public class TestController
     private TestDao tDao;
 
 
+    //http://localhost:8080/getAttempts?testResultId=1&userId=2
     @GetMapping("/getAttempts")
-    public ResponseEntity<?> getAttempts(@RequestParam Integer testResultId) {
-        Integer nAttempts = trDao.getAttempts(testResultId);
-        return ResponseEntity.ok().body(new BackendResponse(
-                "Numero di tentativi: " + nAttempts));
+    public ResponseEntity<?> getAttempts(@RequestParam Integer testResultId, @RequestParam Integer userId) 
+    {
+        Integer nAttempts = trDao.getAttempts(testResultId, userId);
+        return ResponseEntity.ok().body(nAttempts);
     }
+    
+    @PutMapping("/submitTest")
+    public ResponseEntity<?> submit(@RequestBody SubmitRequest submitRequest) 
+    {
+        try 
+        {
+            Integer testResult = Integer.valueOf(submitRequest.getTestResult());
+            Integer testResultId = Integer.valueOf(submitRequest.getTestResultId());
 
-
-    @PostMapping("/submitTest")
-    public ResponseEntity<?> submitTest(@RequestBody SubmitRequest submitRequest) {
-        tService.submitTest(submitRequest.testResult, submitRequest.testId);
-        return ResponseEntity.ok().body(new BackendResponse(
-                "Punteggio salvato con successo"));
+            tService.submitTest(testResult, testResultId);
+            return ResponseEntity.ok().body(new BackendResponse("Test submitted successfully"));
+        } 
+        catch (NumberFormatException e) 
+        {
+            return ResponseEntity.badRequest().body(new BackendResponse("Invalid number format"));
+        }
     }
-
 
     @PostMapping("/beginTest")
-    public ResponseEntity<?> beginTest(@RequestBody TestRequest testRequest) {
-        tService.newTest(testRequest.userId, testRequest.testId);
-        return ResponseEntity.ok().body(new BackendResponse(
-                "Test iniziato con successo"));
+    public ResponseEntity<Map<String, Object>> beginTest(@RequestBody TestRequest testRequest) 
+    {
+        Integer testResultId = tService.newTest(testRequest.testId, testRequest.userId);
+        
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Test iniziato con successo");
+        response.put("testResultId", testResultId);
+        
+        return ResponseEntity.ok().body(response);
     }
 
     @GetMapping("/checkAnswer")
-    public ResponseEntity<Boolean> getCorrect(@RequestBody AnswerRequest answerRequest) {
+    public ResponseEntity<Boolean> getCorrect(@RequestBody AnswerRequest answerRequest) 
+    {
         Boolean result = tService.checkAnswer(answerRequest.questionId, answerRequest.optionId);
         return ResponseEntity.ok().body(result);
     }
@@ -63,14 +80,9 @@ public class TestController
        return ResponseEntity.ok(IdTest);
     }
 
-    @GetMapping("/latestId/{userId}/{testId}")
-    public ResponseEntity<?> getLatestTestResultId(@PathVariable Integer userId, @PathVariable Integer testId) 
-    {
-        Integer latestId = trDao.findLatestIdByUserIdAndTestId(userId, testId);
-       return ResponseEntity.ok(latestId);
-    }
 
-    public static class AnswerRequest {
+    public static class AnswerRequest 
+    {
         public Integer questionId;
         public Integer optionId;
 
@@ -91,9 +103,10 @@ public class TestController
         }
     }
 
-    public static class TestRequest {
-        public Integer userId;
+    public static class TestRequest 
+    {
         public Integer testId;
+        public Integer userId;
 
         public Integer getUserId() {
             return userId;
@@ -112,9 +125,10 @@ public class TestController
         }
     }
 
-    public static class SubmitRequest {
+    public static class SubmitRequest 
+    {
         public Integer testResult;
-        public Integer testId;
+        public Integer testResultId;
 
         public Integer getTestResult() {
             return testResult;
@@ -124,13 +138,13 @@ public class TestController
             this.testResult = testResult;
         }
 
-        public Integer getTestId() {
-            return testId;
-        }
+		public Integer getTestResultId() {
+			return testResultId;
+		}
 
-        public void setTestId(Integer testId) {
-            this.testId = testId;
-        }
+		public void setTestResultId(Integer testResultId) {
+			this.testResultId = testResultId;
+		}
+        
     }
-
 }

@@ -7,9 +7,8 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface CourseDao extends JpaRepository<Course, Integer> {
-
-
+public interface CourseDao extends JpaRepository<Course, Integer> 
+{
     @Query(value="SELECT * FROM courses", nativeQuery = true)
     List<Course> getAllCourses();
     
@@ -18,4 +17,7 @@ public interface CourseDao extends JpaRepository<Course, Integer> {
     
     @Query(value="SELECT * FROM courses where courses.id = :id", nativeQuery = true)
     Course getCoursesById(@Param("id") Integer id);
+    
+    @Query(value="SELECT * FROM courses where courses.course_name = :name", nativeQuery = true)
+    List<Course> getCoursesByName(@Param("name") String name);
 }

@@ -1,43 +1,51 @@
 <div class="container">
-  <h1 class="intro">Introduzione al sito</h1>
-  <div class="loremP">
-    <p>
-      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus
-      cupiditate hic delectus similique sapiente expedita architecto, amet
-      nesciunt porro quisquam ad quaerat quibusdam neque eos ipsum quo earum nam
-      maxime. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ullam,
-      odio recusandae asperiores aliquam sequi eaque assumenda molestiae
-      doloribus libero. Quod quos maiores officia beatae, assumenda modi
-      voluptatem autem sit odit.
-    </p>
-  </div>
   <div class="Login">
-    <form (ngSubmit)="Login()">
-      <h4>Login</h4>
+    <img class="logo" src="../../../assets/images/LogoIntero.png" alt="logoAzienda">
+    <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+      <h4>{{ 'login' | translate }}</h4>
+
       <div class="inpBox">
-        <label for="username" class="lblUser">Username</label>
+        <label for="username" class="lblUser">{{ 'username_placeholder' | translate }}</label>
         <fa-icon class="userIcon" [icon]="['fas', 'user']"></fa-icon>
         <input
           id="username"
-          name="username"
           class="userInp"
           type="text"
-          placeholder="inserisci il nome utente"
-          [(ngModel)]="username"
+          [(ngModel)]="loginRequest.username"
+          name="username"
+          [placeholder]="'username_placeholder' | translate"
           required
+          (input)="validateUsername($event)"
+          (blur)="removeSpaces($event)"
+          autocomplete="username"
+          #usernameInput="ngModel"
         />
+        <div *ngIf="usernameInput.invalid && (usernameInput.dirty || usernameInput.touched)">
+          <div *ngIf="usernameInput.errors?.['required']">
+            Il nome utente è obbligatorio.
+          </div>
+          <div *ngIf="usernameInput.errors?.['pattern']">
+            Il nome utente può contenere solo lettere, numeri, trattini e underscore.
+          </div>
+        </div>
       </div>
+
       <div class="inpBox">
-        <label for="password" class="lblPass"><span></span>Password</label><br />
+        <label class="lblPass">{{ 'password_placeholder' | translate }}</label><br />
         <div class="password-wrapper">
           <input
             id="password"
-            name="password"
             type="password"
             class="passInp"
-            placeholder="inserisci la Password"
-            [(ngModel)]="password"
+            [(ngModel)]="loginRequest.password"
+            name="password"
+            [placeholder]="'password_placeholder' | translate"
             required
+            #passwordInput="ngModel"
+            minlength="8"
+            (input)="validatePassword($event)"
+            (blur)="removeSpaces($event)"
+            autocomplete="current-password"
           />
           <fa-icon
             class="passToggle"
@@ -45,8 +53,26 @@
             (click)="togglePasswordVisibility()"
           ></fa-icon>
         </div>
+        <div *ngIf="passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)">
+          <div *ngIf="passwordInput.errors?.['minlength']">
+            Password deve essere di almeno 8 caratteri.
+          </div>
+          <div *ngIf="passwordInput.errors?.['pattern']">
+            La password deve contenere almeno una lettera maiuscola, una minuscola, un numero e un carattere speciale ("&#64;", #, $, %, &).
+          </div>
+        </div>
       </div>
-      <button class="btnLogin" type="submit">Login</button>
+
+      <button class="btnLogin" type="submit" [disabled]="isSubmitting || !loginForm.form.valid">
+        {{ 'login' | translate }}
+      </button>
     </form>
+
+    <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+    <div class="linguaLogin">
+      <button class="linguaBtn1" (click)="switchLanguage('it')">Italiano</button>
+      <button class="linguaBtn2" (click)="switchLanguage('en')">English</button>
+    </div>
   </div>
 </div>

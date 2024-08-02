@@ -1,0 +1,7 @@
+<div *ngIf="showWarning" class="modal-overlay">
+    <div class="modal-content">
+      <p>La tua sessione terminerà tra {{ countdown }} secondi.</p>
+      <button (click)="closeWarning()">OK</button>
+    </div>
+  </div>
+  

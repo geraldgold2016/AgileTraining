@@ -1,118 +1,165 @@
 
-.app-header{
 
-}
 .profiloDiv {
-    width: 100%;
+  
+}
 
-    text-align: center;
-    border: 4px solid black;
-    background-color: #f0f0f0;
-    padding: 10px;
-  }
 
-  .dueDiv {
-    display: flex;
-    justify-content: space-between;
-   
-    position: relative;
-  }
 
-  .leftDiv, .rightDiv {
-    border-top: none;
-    text-align: center;
-    background-color: #fff;
-    padding: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    line-height: 20px;
-  }
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
 
-  .leftDiv {
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #3498db;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+.caricaFoto {
+  font-size: 20px;
+}
+
+.leftDiv, .rightDiv {
+  border-top: none;
+  text-align: center;
+  background-color: #fff;
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  line-height: 20px;
+}
+
+.leftDiv {
     width: 20%;
-  }
+}
 
-  .rightDiv {
+.rightDiv {
     width: 80%;
-  }
+}
 
-  .fotoProfilo {
+.fotoProfilo {
     height: 70px;
     width: 70px;
     border-radius: 50%;
     border: 2px solid #333;
-  }
+}
 
-  .divOpzione {
-    margin-top: 20px;
-  }
+.divOpzione {
+  margin-top: 20px;
+}
 
-  .divOpzione ul {
-    list-style-type: none;
-    padding: 0;
-  }
+.divOpzione ul {
+  list-style-type: none;
+  padding: 0;
+}
 
-  .divOpzione li {
-    margin-bottom: 5px;
-  }
+.divOpzione li {
+  margin-bottom: 5px;
+}
 
-  .divOpzione li a {
-    text-decoration: none;
-    color: black;
-    padding: 10px;
-    display: block;
-    transition: background-color 0.3s;
-  }
+.divOpzione li a {
+  text-decoration: none;
+  color: black;
+  padding: 10px;
+  display: block;
+  transition: background-color 0.3s;
+}
 
-  .divOpzione li a:hover {
-    background-color: #e0e0e0;
-    color: white;
+.divOpzione li a:hover {
+  background-color: #e0e0e0;
+  color: white;
+}
+  
+  input[type="file"] {
+    margin-bottom: 15px;
   }
-
-  .upload-section {
-    margin-top: 20px;
-    padding: 20px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-
-  .upload-section h1 {
-    font-size: 18px;
-    margin-bottom: 10px;
-  }
-
-  .upload-section input[type="file"] {
-    margin-bottom: 10px;
-  }
-
-  .upload-section input[type="button"] {
-    padding: 8px 20px;
+  
+  button {
     background-color: #007bff;
-    color: #fff;
+    color: white;
     border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
   }
-
-  .upload-section input[type="button"]:hover {
+  
+  button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  button:hover:not(:disabled) {
     background-color: #0056b3;
   }
-
-  .upload-section hr {
-    margin: 20px 0;
-    border: none;
-    border-top: 1px solid #ccc;
+  
+  img[alt="Anteprima Immagine"],
+  img[alt="Profile Picture"] {
+   
+      height: 70px;
+      width: 70px;
+      border-radius: 50%;
+      border: 2px solid #333;
   }
-
-  .upload-section input[type="text"] {
-    padding: 8px;
-    width: calc(100% - 16px);
-    margin-bottom: 10px;
+  
+  
+  /* Media Query per Tablet (max-width: 768px) */
+  @media screen and (max-width: 768px) {
+    .dueDiv {
+      flex-direction: column;
+      margin-bottom: 1;
+    }
+    
+    .leftDiv, .rightDiv {
+      width: 100%;
+      margin: 0;
+      box-shadow: none;
+    }
+  
+    .leftDiv {
+      margin-bottom: 20px;
+    }
+    
+    .rightDiv {
+      padding: 10px;
+    }
   }
-
-  .upload-section img {
-    max-width: 100%;
-    margin-top: 10px;
+  
+  /* Media Query per Mobile (max-width: 480px) */
+  @media screen and (max-width: 480px) {
+    .profiloDiv {
+      padding: 10px;
+    }
+  
+    .fotoDiv img {
+      width: 100px;
+      height: 100px;
+    }
+  
+    .divOpzione li a {
+      font-size: 14px;
+      padding: 8px;
+    }
+    
+    button {
+      padding: 8px 16px;
+    }
+    
+    img[alt="Anteprima Immagine"] {
+      width: 100%;
+      height: auto;
+    }
   }
-
   

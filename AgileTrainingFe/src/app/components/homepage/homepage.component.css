@@ -1,159 +1,207 @@
-h1
-{
-    text-align: center;
-    margin-top: 110px; 
-}
-h3
-{
-    margin-left: 50px;
-}
-
-#corsiIscritti
-{
-    display: flex;
-    align-items: center;
-    margin: 10px;
-    flex-wrap: wrap;
-    justify-content: center;
+/* Sfondo della pagina principale */
+.homepage-background {
+  height: 100vh;
+  background: linear-gradient(to bottom right, var(--background-color), rgba(212,155,50,0.5));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--text-color);
+  overflow: hidden;
+  position: relative;
 }
 
-#corsiInteressanti
-{
-    display: flex;
-    align-items: center;
-    margin: 10px;
-    flex-wrap: wrap;
-    justify-content: center;
+/* Contenuto centrale della pagina */
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 60%; /* Utilizzato per mantenere il contenuto centrato */
+  max-width: 800px; /* Limitazione della larghezza massima per evitare che diventi troppo largo */
+  padding: 2%;
+  margin-right: 10%;
+  background-color: transparent; /* Unico background-color per .content */
 }
 
-#corsiIscritti div
-{
-    height: 130px;
-    width: 190px;
-    margin: 10px;
-    font-size: 20px;
-    border: solid 4px black;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* Sezione di saluto */
+.greeting {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 5%; /* Margine adattabile */
 }
 
-#corsiInteressanti div
-{
-    height: 130px;
-    width: 190px;
-    margin: 10px;
-    font-size: 20px;
-    border: solid 4px black;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* Immagine utente */
+.user-photo {
+  width: 20%; /* Ridotto per mantenere l'immagine proporzionata */
+  height: auto; /* Mantiene il rapporto di aspetto */
+  border-radius: 50%; /* Mantiene l'immagine rotonda */
+  margin-right: 1%; /* Ridotto il margine a destra */
 }
 
-.buttonVedi
-{
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 30px;
+/* Azioni e pulsanti */
+.actions {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 5%;
+}
 
+.actions button {
+  padding: 1% 3%;
+  font-size: 1rem;
+  cursor: pointer;
+  background-color: rgba(212,155,50,1); /* Colore solido per il pulsante */
+  color: white;
+  border-radius: 15px;
+  border: none;
+}
+
+/* Immagine dell'azienda */
+.company-image {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 30%; /* La larghezza dell'immagine dell'azienda come percentuale della larghezza del contenitore */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  animation: slideIn 2s ease-out;
+}
+
+.company-image img {
+  max-height: 90%; /* Mantiene l'immagine dentro il contenitore */
+  width: auto; /* Mantiene il rapporto di aspetto */
+  border:none;
+  border-radius: 120px 0 120px 15px;
+  animation: zoomIn 2s ease-in-out;
+}
+
+/* Animazioni */
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Animazione per la modalità responsive */
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Responsività */
+@media (max-width: 768px) {
+  .homepage-background {
+    flex-direction: column;
+    align-items: center; /* Centrato per visualizzare meglio su dispositivi più piccoli */
+  }
+  
+  .benvenuto {
+    font-size: 17px;
+    margin-bottom: 5%; /* Margine adattabile */
+  }
+
+  .content {
+    background-color: transparent;
+    width: 90%; /* Aumenta la larghezza per piccoli schermi */
+    padding: 5%;
+  }
+  
+  .company-image {
+    width: 100%; /* La larghezza dell'immagine dell'azienda al 100% della larghezza del contenitore */
+    height: auto; /* Mantiene l'altezza automatica */
+    position: static; /* Rimuove la posizione assoluta per i piccoli schermi */
+    margin-top: 20px;
+    animation: slideUp 2s ease-out; /* Applica la nuova animazione slideUp */
+  }
+
+  .company-image img {
+    width: 100%; /* L'immagine occupa il 100% della larghezza del contenitore */
+    height: auto; /* Mantiene l'altezza automatica */
+    border-radius: 15px; /* Adatta il bordo per schermi più piccoli */
+  }
+
+  .user-photo {
+    width: 15%; /* Dimensione più grande su schermi piccoli, ma non troppo grande */
+  }
+
+  .imparaBtn {
+    width: 108%;
     padding: 5px;
-    background-color: #333;
-    color: white;
-}
-
-#corsiIscritti div.corsoIscritto
-{
-    display: none;
-}
-
-#corsiInteressanti div.corsoInteressante
-{
-    display: none;
-}
-
-#corsiIscritti div.corsoIscritto.active
-{
-    display: flex;
-}
-
-#corsiInteressanti div.corsoInteressante.active
-{
-    display: flex;
-}
-
-img
-{
-    width: 100%; /*larghezza quanto il contenitore dell'immagine*/
-    height: 100%; /*lunghezza quanto il contenitore dell'immagine*/
-}
-
-a
-{
-    height: 100%;
-    width: 100%;
-}
-
-@media screen and (min-width: 891px) and (max-width: 1024px)/*al di sopra dei 891 pixel*/
-{
-    #corsiIscritti div
-    {
-        height: 160px;
-        width: 225px;
-    }
-    #corsiInteressanti div
-    {
-        height: 160px;
-        width: 225px;
-    }
-}
-
-@media screen and (min-width: 360px) and (max-width: 500px) /*al di sopra dei 360 pixel e al di sotto dei 500 pixel*/
-{
-  #corsiIscritti div
-  {
-    height: 160px;
-    width: 250px;
-  }
-  #corsiInteressanti div
-  {
-    height: 160px;
-    width: 250px;
   }
 }
 
-@media screen and (min-height: 751.18px) /*al di sopra dei 751.18 pixel*/
-{
-    h1
-    {
-        margin: 150px 10px 40px 10px;
-    }
-    h3 
-    {
-        margin: 50px;
-    }
-    .buttonVedi
-    {
-        margin-top: 16px;
-        margin-bottom: 16px;
-    }
+@media (min-width: 768px) and (max-width: 1200px) {
+  .content {
+    width: 60%;
+    margin-right: 37%;
+    margin-bottom: 70%;
+    background-color: transparent;
+  }
+
+  .company-image {
+    position: absolute;
+    right: 0px;
+    top: 0;
+    height: 150%;
+    width: 72%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    animation: slideUp 2s ease-out; /* Applica l'animazione slideUp per la modalità desktop */
+  }
+
+  .user-photo {
+    width: 12%; /* Dimensione intermedia per schermi di dimensioni medie */
+    height: auto; /* Mantiene il rapporto di aspetto */
+    border-radius: 50%;
+    margin-right: 1%; /* Ridotto il margine a destra */
+    position: absolute;
+    bottom: 79%;
+  }
 }
 
-@media screen and (min-height: 1200px) /*al di sopra dei 751.18 pixel*/
-{
-    h1
-    {
-        margin: 160px 20px 50px 20px;
-    }
-    h3 
-    {
-        margin: 60px;
-    }
-    .buttonVedi
-    {
-        margin-top: 25px;
-        margin-bottom: 25px;
-    }
+/* Nuova animazione per la foto del profilo */
+@keyframes slideInFromLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
+
+/* Applica l'animazione alla foto del profilo */
+.user-photo {
+  width: 20%; /* Ridotto per mantenere l'immagine proporzionata */
+  height: auto; /* Mantiene il rapporto di aspetto */
+  border-radius: 50%; /* Mantiene l'immagine rotonda */
+  margin-right: 1%; /* Ridotto il margine a destra */
+  animation: slideInFromLeft 1s ease-out; /* Aggiungi l'animazione */
+}
+

@@ -1,294 +1,648 @@
-.navbar
-{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    top: 0px;
-    width: 100%;
-    padding: 10px;
-    background-color: #333;
-    z-index: 3;
-}
-.navbar-item
-{
-  display: block;
-}
-ul
-{
-  display: flex;
-  margin: 0px;
-  padding: 0px;
-}
-  
-input
-{
-  padding: 10px;
+/* Import dei font */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
 
-}
-
-.navbar a 
-{
-  float: left;
-  font-size: 16px;
-  color: white;
-  text-align: center;
-  text-decoration: none;
-  padding: 14px 16px;
-}
-
-.navbar li
-{
-  margin-left: 30px;
-  margin-right: 30px;
-  list-style-type: none; /*Toglie i puntini dalla lista*/
-}
-
-.dropdown 
-{
-  float: left;
-  overflow: hidden;
-}
-  
-.dropdown .dropbtn 
-{
-  font-size: 16px;  
-  border: none;
-  outline: none;
-  color: white;
-  padding: 14px 16px;
-  background-color: inherit;
-  font-family: inherit;
+/* Reset del margine e del padding */
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  transition: all 0.4s ease;
 }
 
-.navbar a:hover, .dropdown:hover .dropbtn 
-{
-  background-color: rgb(169, 169, 169);
-}
-  
-.dropdown-content 
-{
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
+/* Logo Chiaro - Visibile solo in modalità scura */
+.logoChiaro {
+  display: none; /* Nascondi per impostazione predefinita */
 }
 
-.dropdown-content a 
-{
-  float: none;
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  text-align: left;
-}
-  
-.dropdown-content a:hover 
-{
-  background-color: #ddd;
+body.dark .logoChiaro {
+  display: block; /* Mostra in modalità scura */
 }
 
-.dropdown:hover .dropdown-content 
-{
-  display: block;
+/* Logo Scuro - Visibile solo in modalità chiara */
+.navLogo img:not(.logoChiaro) {
+  display: block; /* Mostra il logo scuro per impostazione predefinita */
+}
+
+body.dark .navLogo img:not(.logoChiaro) {
+  display: none; /* Nascondi il logo scuro in modalità scura */
 }
 
 
-.chiudi
-{
-  display: none;
-}
-.hamburger 
-{
-  display: none;
+/* Stile Navbar */
+nav {
   position: fixed;
-  cursor: pointer;
-
-  padding: 7px 10px 7px 10px;
-  border: white solid 2px;
-  border-radius: 7px;
-
-  margin-right: 40px;
-  margin-left: 40px;
-  z-index: 10;
-  left: 0px;
-  top: 10px;
-}
-.bar 
-{
-  display: block;
-  width: 25px;
-  height: 3px;
-  margin: 5px auto;
-  -webkit-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
-  background-color: #ffffff;
-}
-
-.navbarSopra
-{
-  display: none;
-  position: fixed;
-  top: 0px;
+  top: 0;
+  left: 0;
   width: 100%;
-  background-color: #333;
+  background-color: var(--nav-color);
+  z-index: 100;
+  min-height: 40px;
+}
+
+/* Stile Navbar per il contenuto principale */
+main {
+  margin-top: 40px; /* Spazio per la navbar fissa */
+  margin-bottom: 50px; /* Spazio per il footer */
+}
+
+/* Navbar Bar */
+.nav-bar {
+  display: flex;
+  justify-content: space-between; /* Sposta il logo a sinistra e gli altri elementi a destra */
+  align-items: center;
+  background-color: rgba(212, 155, 50, 1); /* Opacità corretta */
+  color: white;
+  height: 100%; /* Altezza della navbar uguale all'altezza minima */
+  background-color: var(--header-background);
+}
+
+/* Logo nella Navbar */
+.navLogo {
+  flex: 1; /* Allinea il logo a sinistra e occupa spazio flessibile */
+}
+
+.navLogo img {
+  max-height: 40px; /* Altezza ridotta */
+  width: auto;
+}
+
+/* Icone del menu */
+.nav-bar .bx-menu {
+  display: none;
+}
+
+.dropdown-content {
+  display: none; /* Nascondi il contenuto del dropdown per impostazione predefinita */
+  position: absolute;
+  background-color: var(--nav-color);
+  border-radius: 6px;
+
+  box-shadow: 0 5px 5px rgba(212, 155, 50, 1);
+  transition: opacity 0.3s ease;
+  opacity: 0;
+}
+
+.dropdown.active .dropdown-content {
+  display: block; /* Mostra il contenuto del dropdown quando attivo */
+  opacity: 1;
+  cursor: pointer;
+  background-color: rgba(212, 155, 50, 1);
+}
+
+.dropdown-content a:hover {
+  background-color: lightgray; /* Opacità corretta */
+  color: white;
+  border-radius: 15px;
+  margin-top: 2px;
+}
+
+.dropbtn {
+  cursor: pointer;
+  margin-right: 5px;
+  background-color: rgba(212, 155, 50, 1);
+  border: none;
+  padding: 5px;
+}
+
+/* Menu e Overlay */
+.menu {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-left: auto; /* Sposta il menu a destra */
+  transition: all 0.4s ease;
+}
+
+.menu .logo-toggle {
+  display: none;
+}
+
+.nav-bar .nav-links {
+  display: flex;
+  align-items: center;
+  margin: 0; /* Rimuove margini non necessari */
+}
+
+.nav-bar .nav-links li {
+  margin: 0; /* Rimuove margini non necessari */
+  list-style: none;
+}
+
+.nav-links li a {
+  font-size: 14px;
+  color: var(--text-color);
+  text-decoration: none;
+  padding: 8px;
+  position: relative;
+}
+
+.nav-links li a img {
+  display: none;
+}
+
+.nav-links li a::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  height: 4px;
+  width: 4px;
+  border-radius: 50%;
+  background-color: var(--text-color);
+  opacity: 0;
+  transition: all 0.3s ease;
 }
 
 
 
-/*Media Query*/
-@media screen and (max-width: 1150px) /*al di sotto dei 1150 pixel*/
-{
-  .navbar li
-  {
-    margin-left: 20px;
-    margin-right: 20px;
-  }
+.nav-links li:hover a::before {
+  opacity: 1;
 }
 
-@media screen and (max-width: 1050px) /*al di sotto dei 1050 pixel*/
-{
-  .navbar li
-  {
-    margin-left: 10px;
-    margin-right: 10px;
-  }
+/* Ricerca e toggles */
+.darkLight-searchBox {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Spazio tra gli elementi */
 }
 
-@media screen and (max-width: 900px) /*al di sotto dei 900 pixel*/
-{
-  .navbar li
-  {
-    margin-left: 0px;
-    margin-right: 0px;
-  }
+.darkLight-searchBox .dark-light,
+.darkLight-searchBox .searchToggle {
+  height: 30px;
+  width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
-@media screen and (max-width: 800px) /*al di sotto dei 800 pixel*/
-{
-  .navbarSopra
-  {
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: center;   
+.searchToggle i {
+  color: var(--text-color);
+  font-size: 18px;
+  transition: all 0.3s ease;
+}
 
-    background-color: #333;
-    height: 66.4px;
-    z-index: 1;
+.bx-moon {
+  color: rgb(0, 0, 32);
+
+}
+
+.bx-sun {
+  display: none;
+  color: yellow;
+}
+
+.dark-light i.sun {
+
+  opacity: 0;
+  pointer-events: none;
+}
+
+.dark-light.active i.sun {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.dark-light.active i.moon {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.searchToggle i.cancel {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.searchToggle.active i.cancel {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.searchToggle.active i.search {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.searchBox {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background-color: var(--nav-color);
+  padding: 3px;
+  border-radius: 6px;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  display: flex;
+  align-items: center;
+}
+
+.searchBox.active {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.search-field {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  height: 40px;
+  width: 250px;
+  background-color: var(--nav-color);
+  padding: 3px;
+  border-radius: 6px;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  display: flex;
+  align-items: center;
+  pointer-events: none; /* Impedisce di interagire con l'elemento */
+}
+
+.searchToggle.active ~ .search-field {
+  opacity: 1;
+  transform: scaleX(1);
+  pointer-events: auto; /* Permette l'interazione con l'elemento */
+}
+
+.search-field input {
+  height: 100%;
+  width: 100%;
+  padding: 0 45px 0 15px;
+  outline: none;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--search-text);
+  background-color: var(--search-bar);
+}
+
+body.dark .search-field input {
+  color: var(--text-color);
+}
+
+.searchBox i.cancel {
+  position: absolute;
+  color: var(--text-color);
+  right: 15px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+body.dark .searchBox input {
+  color: var(--text-color);
+}
+
+.search-field i {
+  position: absolute;
+  color: var(--nav-color);
+  right: 15px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+body.dark .search-field i {
+  color: var(--text-color);
+}
+
+
+
+/* Overlay per la barra laterale */
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 90;
+  display: none;
+  transition: opacity 0.3s ease;
+}
+
+.menu.active{
+  background-color: var(--header-background);
+}
+
+
+.menu-overlay.active {
+  display: block;
+ 
+}
+
+/* Nasconde l'elemento */
+.d-none {
+  display: none !important;
+}
+
+nav {
+  background-color: var(--header-background);
+}
+
+.nav-links a {
+  color: var(--text-color);
+}
+
+
+/* Media Queries */
+@media (max-width: 790px) {
+  nav {
+    height: auto; /* Altezza dinamica per il menu */
   }
-  .navbar-item
-  {
-    display: none;
-  }
-  li.navbar-item.active
-  {
-    display: block;
-    margin-left: 50px;
-  }
-  .logoNavbar
-  {
-    display: none;
-  }
-  .hamburger 
-  {
-    display: block;
-  }
-  .navbar
-  {
-    display: none;
-  }
-  .navbar.active
-  {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    flex-direction: row-reverse;    
-    height: 100%;
-    width: 70%;
-    z-index: 3;
-    animation: slideInFromLeft 0.5s ease-out;
-  }
-  ul
-  {
-    display: flex;
+
+  .nav-bar {
     flex-direction: column;
-    align-items: stretch;
-    margin-top: 20px;
-    width: 70%;
-  }
-  .logo
-  {
-    color: white;
-    text-decoration: none;
-    padding: 12px 16px;
-
-    margin-right: 40px;
-    margin-left: 40px;
-  }
-  .logo:hover
-  {
-    background-color: rgb(169, 169, 169);
-  }
-  .stratoSemiTrasparente
-  {
-    display: none;
-  }
-  .stratoSemiTrasparente.active
-  {
-    display: block;
-    background: rgba(115, 115, 115, 0.5);
+    align-items: flex-start;
+    height: 68px;
     width: 100%;
-    height: 100%;
-    position: fixed;
+  }
+
+  .nav-bar .bx-menu {
+    display: block; /* Mostra l'icona del menu */
+    position: absolute; /* Posizionamento assoluto */
+    top: 10px; /* Spazio dalla parte superiore */
+    left: 10px; /* Spazio dalla parte sinistra */
+  }
+
+  .navLogo {
+    flex: 0 1 auto; /* Permette al logo di adattarsi senza spazio extra */
+    margin-right: 0; /* Rimuove il margine a destra per il logo in schermi piccoli */
+  }
+
+  .navLogo img {
+    max-height: 79px;
+    width: auto;
+    margin-left: 139px;
+    position: absolute;
     top: 0px;
-    left: 0px;
-    z-index: 2;
-    animation: fadeIn 0.5s linear;
   }
-  .chiudi
-  {
+
+  .menu {
+    position: fixed;
+    height: calc(
+      100% - 40px
+    ); /* Altezza dinamica, sottrai l'altezza della navbar */
+    width: 280px;
+    top: 40px; /* Posizionamento sotto la navbar */
+    left: -280px;
+    padding: 20px;
+    background-color: rgba(212, 155, 50, 1);
+    z-index: 100;
+    transition: left 0.4s ease;
+    color: rgba(0, 74, 173, 5);
+  }
+
+  .menu.active {
+    left: 0;
+    height: 77%;
+    padding-bottom: 528px;
+    margin-top: 26px;
+    
+  }
+
+  .menu .logo-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .nav-bar .nav-links {
+    flex-direction: column;
+    padding-top: 20px;
+    padding-bottom: 20px; /* Spazio per non sovrapporsi al footer */
+    margin: 0; /* Rimuove margini non necessari */
+  }
+
+  .nav-links li a {
+    margin: 5px 0; /* Ridotto il margine tra i link */
+    display: block;
+    font-size: 21px; /* Aumenta leggermente la dimensione del carattere per schermi piccoli */
+  }
+
+  .nav-links li a img {
+    height: 20px; /* Imposta l’altezza delle immagini per schermi piccoli */
+  }
+
+  .darkLight-searchBox {
+    position: absolute;
+    top: 22px;
+    right: 10px;
+    gap: 29px;
+    margin-right: 30px;
+    right: 11px;
+  }
+
+  .searchToggle {
+    margin: 0;
+  }
+
+  .searchToggle i {
+    margin-right: 18px;
+  }
+
+  .dropbtn {
+    font-size: 21px;
+    margin-top: 14px;
+    background-color: rgba(212, 155, 50, 1);
+    color: rgba(0, 74, 173, 5);
+    border: none;
+    border-radius: 8px;
+     background-color: var(--header-background);
+  }
+
+  .bx-menu::before {
+    position: absolute;
+    top: 22px;
+    left: 10px;
+  }
+
+  .logout {
+    position: absolute;
+    bottom: 29px;
+    right: 10px;
+    margin-right: 30px;
+    right: 100px;
+    font-size: 21px;
+    margin-top: 14px;
+    background-color: rgba(212, 155, 50, 1);
+    color: rgba(0, 74, 173, 5);
+  }
+
+  .siderbarClose {
     display: none;
   }
-  .chiudi.active
-  {
-    display: block;
-    margin: 20px;
-    cursor: pointer;
+}
+/* Media Query per schermi tra 790px e 1200px (ad esempio, tablet e piccoli desktop) */
+@media (min-width: 790px) and (max-width: 1200px) {
+  nav {
+    height: auto; /* Altezza dinamica per il menu */
   }
-  input.active
-  {
-    margin-bottom: 50px;
-    width: 100%;
+
+  .siderbarClose {
+    display: none;
   }
-  .dropdown.active
-  {
-    margin-top: 200px;
+  .nav-bar {
+    flex-direction: row; /* Layout a riga per schermi più grandi */
+    align-items: center; /* Allineamento degli elementi centrato */
+    height: 50px; /* Altezza maggiore per schermi più grandi */
+  }
+
+  .nav-bar .bx-menu {
+    display: none; /* Nascondi l'icona del menu su schermi più grandi */
+  }
+
+  .navLogo img {
+    max-height: 60px; /* Altezza dell'immagine del logo per schermi più grandi */
+    margin-left: 20px; /* Margine sinistro ridotto per il logo */
+  }
+
+  .menu {
+    position: static; /* Menu statico invece di fisso */
+    height: auto; /* Altezza automatica */
+    width: auto; /* Larghezza automatica */
+    padding: 0; /* Rimuovi il padding extra */
+    background-color: transparent; /* Rimuovi il colore di sfondo */
+    display: flex; /* Mostra il menu come flex */
+    align-items: center; /* Allinea gli elementi al centro */
+    justify-content: space-between; /* Spazio tra gli elementi */
+    color: var(--text-color); /* Colore del testo per schermi più grandi */
+  }
+
+  .menu.active {
+    position: static; /* Menu statico quando attivo */
+    left: auto; /* Larghezza automatica quando attivo */
+    
+  }
+
+  .menu .logo-toggle {
+    display: none; /* Nascondi l'icona di toggling */
+  }
+
+  .nav-bar .nav-links {
+    flex-direction: row; /* Layout orizzontale per i link */
+    padding: 0; /* Rimuovi il padding extra */
+  }
+
+  .nav-links li {
+    margin: 0 10px; /* Margine orizzontale tra i link */
+  }
+
+  .nav-links li a {
+    font-size: 14px; /* Dimensione del font per schermi più grandi */
+  }
+
+  .nav-links li a img {
+    height: 24px; /* Altezza dell'immagine dei link */
+  }
+
+  .darkLight-searchBox {
+    position: static; /* Posizionamento statico per la ricerca */
+    display: flex; /* Mostra la ricerca come flex */
+    gap: 10px; /* Spazio tra gli elementi */
+    margin: 0; /* Rimuovi il margine extra */
+  }
+
+  .searchToggle {
+    margin: 0;
+  }
+
+  .dropbtn {
+    font-size: 14px; /* Dimensione del font per il pulsante dropdown */
+    margin: 0; /* Rimuovi il margine extra */
+    background-color: rgba(212, 155, 50, 1); /* Colore di sfondo */
+    color: var(--text-color); /* Colore del testo */
+    border: none;
+    border-radius: 4px; /* Border radius per il pulsante */
+  }
+}
+
+/* Media Query per schermi superiori a 1200px (desktop) */
+@media (min-width: 1200px) {
+  nav {
+    height: auto; /* Altezza dinamica per il menu */
+  }
+
+  .nav-bar {
+    flex-direction: row; /* Layout a riga per schermi desktop */
+    align-items: center; /* Allineamento degli elementi centrato */
+    height: 70px; /* Altezza maggiore per schermi desktop */
+  }
+
+  .nav-bar .bx-menu {
+    display: none; /* Nascondi l'icona del menu su desktop */
+  }
+
+  .navLogo img {
+    max-height: 130px; /* Altezza dell'immagine del logo per desktop */
+    margin-left: 30px; /* Margine sinistro per il logo */
+  }
+
+  .menu {
+    position: static; /* Menu statico */
+    height: auto; /* Altezza automatica */
+    width: auto; /* Larghezza automatica */
+    padding: 0; /* Rimuovi il padding extra */
+    background-color: transparent; /* Rimuovi il colore di sfondo */
+    display: flex; /* Mostra il menu come flex */
+    align-items: center; /* Allinea gli elementi al centro */
+    justify-content: space-between; /* Spazio tra gli elementi */
+    color: var(--text-color); /* Colore del testo per schermi desktop */
+  }
+
+  .menu.active {
+    position: static; /* Menu statico quando attivo */
+    left: auto; /* Larghezza automatica quando attivo */
+  }
+
+  .menu .logo-toggle {
+    display: none; /* Nascondi l'icona di toggling */
+  }
+
+  .nav-bar .nav-links {
+    flex-direction: row; /* Layout orizzontale per i link */
+    padding: 0; /* Rimuovi il padding extra */
+  }
+
+  .nav-links li {
+    margin: 0 20px; /* Margine orizzontale tra i link */
+  }
+
+  .nav-links li a {
+    font-size: 16px; /* Dimensione del font per schermi desktop */
+  }
+
+  .nav-links li a img {
+    height: 30px; /* Altezza dell'immagine dei link */
   }
 
 
-  @keyframes slideInFromLeft 
-  {
-    0% {transform: translateX(-100%);opacity: 0;}
-    100% {transform: translateX(0);opacity: 1;}
-  }
-  @keyframes slideOutToLeft 
-  {
-    0% {transform: translateX(0);opacity: 1;}
-    100% {transform: translateX(-100%);opacity: 0;}
+
+  .darkLight-searchBox {
+    position: static; /* Posizionamento statico per la ricerca */
+    display: flex; /* Mostra la ricerca come flex */
+    gap: 20px; /* Spazio tra gli elementi */
+    margin: 0; /* Rimuovi il margine extra */
   }
 
-  @keyframes fadeIn 
-  {
-    0% {opacity: 0;}
-    100% {opacity: 1;}
+  .searchToggle {
+    margin: 0;
   }
-  @keyframes fadeOut 
-  {
-    0% {opacity: 1;}
-    100% {opacity: 0;}
+
+  .dropbtn {
+    font-size: 16px; /* Dimensione del font per il pulsante dropdown */
+    margin: 0; /* Rimuovi il margine extra */
+    background-color: rgba(212, 155, 50, 1); /* Colore di sfondo */
+    background-color: var(--header-background);
+    color: var(--text-color); /* Colore del testo */
+    border: none;
+    border-radius: 4px; /* Border radius per il pulsante */
   }
 }

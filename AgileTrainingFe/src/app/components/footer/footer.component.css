@@ -1,29 +1,56 @@
-footer
-{
+/* Stile generale per il footer */
+footer {
   display: flex;
+  flex-wrap: wrap; /* Permette la disposizione dei contenuti su più righe se necessario */
   justify-content: center;
-  align-items: flex-end;
-
-  background-color: #333;
-  padding: 10px;
-  
-}
-
-a 
-{
-  float: left;
-  font-size: 16px;
+  align-items: center;
+  background-color: var(--header-background);
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
   color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-
-  padding: 10px;
-  margin-left: 10px;
-  margin-right: 10px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  padding: 10px; /* Aggiunto padding per migliore spacing */
+  z-index: 1000;
 }
 
-a:hover
-{
-  background-color: rgb(169, 169, 169);
+/* Stile per i link nel footer */
+footer a {
+  color: white;
+  text-decoration: none;
+  margin: 0 15px; /* Maggiore spazio tra i link */
+  font-size: 15px;
+  transition: color 0.3s;
+}
+
+/* Effetto hover per i link */
+footer a:hover {
+  color: #ddd;
+}
+
+/* Stile per il logo */
+footer .logoA img {
+  height: 40px; /* Altezza maggiore del logo per una migliore visibilità */
+  width: auto;
+  margin-right: 20px; /* Maggiore spazio tra il logo e i link */
+}
+
+/* Layout per rendere il footer responsive */
+@media screen and (max-width: 768px) {
+  footer {
+    flex-direction: column; /* Disposizione verticale sui dispositivi mobili */
+    align-items: center;
+    padding: 20px;
+  }
+
+  footer a {
+    margin: 10px 0; /* Maggiore spazio verticale tra i link */
+    font-size: 16px; /* Font size aumentato per i dispositivi mobili */
+  }
+
+  footer .logoA {
+    margin-bottom: 15px; /* Maggiore spazio sotto il logo */
+  }
 }

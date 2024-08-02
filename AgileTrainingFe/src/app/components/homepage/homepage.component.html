@@ -1,23 +1,24 @@
-<app-header></app-header>
 
-    <h1>Benvenuto {{ usernameUtente  }}</h1>
-
-    <h3>Corsi a cui sei iscritto</h3>
-    <div id="corsiIscritti">
-        <div *ngFor="let coursesSubscription of coursesSubscription" [attr.data-course-id]="coursesSubscription[0]" (click)="saveCourseId($event, coursesSubscription[0])">
-            <a href="corso">
-                <img [src]="'../../../assets/images/' + coursesSubscription[3]" [alt]="coursesSubscription[4]" >
-            </a>
-        </div>
+<div class="homepage-background">
+  <div class="content">
+    <div class="greeting">
+      <img
+        class="user-photo"
+        [src]="user?.profileImageUrl || '../../../assets/images/profile-pic.jpg'"
+        alt="Foto Profilo" loading="lazy"
+      /><br />
+      <h1 class="benvenuto">Benvenuto, {{ userName }}!</h1>
     </div>
-
-    <h3>Corsi a cui potresti essere interessato</h3>
-    <div id="corsiInteressanti">
-        <div *ngFor="let coursesMore of coursesMore" [attr.data-course-id]="coursesMore[0]" (click)="saveCourseId($event, coursesMore[0])">
-            <a href="anteprimaCorso">
-                <img [src]="'../../../assets/images/' + coursesMore[3]" [alt]="coursesMore[4]" >
-            </a>
-        </div>
+    <div class="actions">
+      <a href="/corsi">
+        <button class="imparaBtn">Inizia ad imparare</button>
+      </a>
     </div>
+  </div>
+  <div class="company-image">
+    <img src="../../../assets/images/e-learn.png" alt="rightImg" />
+  </div>
 
-<app-footer></app-footer>
+  
+</div>
+

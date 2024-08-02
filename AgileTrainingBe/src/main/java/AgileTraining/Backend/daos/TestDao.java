@@ -1,8 +1,9 @@
 package AgileTraining.Backend.daos;
 
-import AgileTraining.Backend.entities.Test;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+
+import AgileTraining.Backend.entities.Test;
 
 public interface TestDao extends JpaRepository<Test, Integer> {
 

@@ -1,9 +1,18 @@
 package AgileTraining.Backend.entities;
 
 
-import jakarta.persistence.*;
+import java.sql.Date;
+import java.util.List;
 
-import java.util.Date;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 
 @Entity
@@ -23,9 +32,44 @@ public class User {
     private String homeAddress;
     private String gender;
     private String placeOfBirth;
+
+    @Temporal(TemporalType.DATE)
     private Date birthDate;
+
     private Long phoneNumber;
     private String profileImageUrl;
+    private Boolean isLoggedIn;
+
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Activity> activities;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Subscription> subscriptions;
+
+    public List<Subscription> getSubscriptions() {
+        return subscriptions;
+    }
+
+    public void setSubscriptions(List<Subscription> subscriptions) {
+        this.subscriptions = subscriptions;
+    }
+
+    public List<Activity> getActivities() {
+        return activities;
+    }
+
+    public void setActivities(List<Activity> activities) {
+        this.activities = activities;
+    }
+
+    public Boolean getLoggedIn() {
+        return isLoggedIn;
+    }
+
+    public void setIsLoggedIn(Boolean loggedIn) {
+        this.isLoggedIn = loggedIn;
+    }
 
     public String getProfileImageUrl() {
         return profileImageUrl;

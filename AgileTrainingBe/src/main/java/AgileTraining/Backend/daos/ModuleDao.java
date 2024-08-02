@@ -1,11 +1,12 @@
 package AgileTraining.Backend.daos;
 
 
-import AgileTraining.Backend.entities.Module;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import java.util.List;
+import AgileTraining.Backend.entities.Module;
 
 public interface ModuleDao extends JpaRepository<Module, Integer> {
 

@@ -1,8 +1,9 @@
 package AgileTraining.Backend.daos;
 
-import AgileTraining.Backend.entities.Certificate;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+
+import AgileTraining.Backend.entities.Certificate;
 
 public interface CertificateDao extends JpaRepository<Certificate, Integer> 
 {

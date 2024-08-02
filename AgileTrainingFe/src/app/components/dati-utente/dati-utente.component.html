@@ -1,4 +1,4 @@
-<app-header></app-header>
+
 
 <div class="profiloDiv">
   <h1>Profilo Utente</h1>
@@ -9,10 +9,10 @@
     <div class="fotoDiv">
       <img
         class="fotoProfilo"
-        src="../../../assets/images/profile-pic.jpg"
+        [src]="user?.profileImageUrl || '../../../assets/images/profile-pic.jpg'"
         alt="Foto Profilo"
       />
-      <h3>Mario Rossi</h3>
+      <h3>{{ user.name }} {{ user.surname }}</h3>
     </div>
     <div class="divOpzione">
       <ul>
@@ -20,7 +20,7 @@
         <li><a href="/datiUtente" id="datiUtenteLink">Dati Utente</a></li>
         <li><a href="/corsiIscritti">Corsi Iscritti</a></li>
         <li><a href="/certificati">Certificati</a></li>
-        <li><a href="/fotoProfilo">Foto profilo</a></li>
+        <li><a href="/fotoProfilo">Foto Profilo</a></li>
         <li><a href="/cancellaAccount">Cancella Account</a></li>
         <li><a href="/logout">Logout</a></li>
       </ul>
@@ -28,28 +28,16 @@
   </div>
 
   <div class="rightDiv">
-    <div class="inpDiv">
-      <form class="form">
-        <div class="form-row">
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input name="email" type="email" required />
-          </div>
-          <div class="form-group">
-            <label for="username">Username</label>
-            <input name="username" type="text" required />
-          </div>
-        </div>
-      </form>
+    <div class="profile-info">
+      <p><strong>Email:</strong> {{ user.email }}</p>
+      <p><strong>Username:</strong> {{ user.username }}</p>
     </div>
 
     <div class="btnDiv">
       <a href="/reimpostaUsername"> <button class="btnUser">Reimposta Username</button></a>
       <a href="/cambioPassword"><button class="btnPass">Reimposta Password</button></a>
-      
-      
     </div>
   </div>
 </div>
 
-<app-footer></app-footer>
+

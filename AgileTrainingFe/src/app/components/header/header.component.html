@@ -1,29 +1,58 @@
-<div class="navbar">
-    <div class="chiudi"><i class="fa-solid fa-xmark fa-2x"></i></div>
-    <ul>
-        <li><a class="logoNavbar" href="home">Logo(Home)</a></li>
-        <li class="navbar-item"><a href="corsi">I nostri corsi</a></li>
-        <li class="navbar-item"><input class="input" type="text" placeholder="Search.."></li>
+<nav>
+  <div class="nav-bar">
+    <i class='bx bx-menu sidebarOpen' (click)="toggleSidebar()" [ngClass]="{'hidden': showSidebar}"></i>
+    
+    <span class="logo navLogo">
+      <a href="home"><img class="logoNormale" src="../../../assets/images/Logo.png" alt="">
+      <img class="logoChiaro" src="../../../assets/images/LogoChiaro.png" alt=""></a>
+    </span>
+
+    <div class="menu-overlay" *ngIf="showSidebar" (click)="toggleSidebar()"></div>
+
+    <div class="menu" [ngClass]="{'active': showSidebar}">
+      <div class="logo-toggle">
+        <i class='bx bx-x siderbarClose' (click)="toggleSidebar()" [ngClass]="{'hidden': !showSidebar}"></i>
+      </div>
+
+      <ul class="nav-links">
+       
+        <li class="navbar-item"><a href="corsi">{{ 'header.courses' | translate }}</a></li>
+        
+        <li class="navbar-item"><a href="datiAnagrafici">{{ 'header.profile' | translate }}</a></li>
         <li class="navbar-item">
-            <div class="dropdown ">
-                <button class="dropbtn">Lingua
-                    <i class="fa fa-caret-down"></i>
-                </button>
-                <div class="dropdown-content">
-                    <a href="#">Italiano</a>
-                    <a href="#">Inglese</a>
-                </div>
+          <div class="dropdown" [ngClass]="{'active': dropdownOpen}">
+            <button class="dropbtn" (click)="toggleDropdown()">
+              {{ 'header.language' | translate }} <span class="arrowDown">&#11163;</span>
+            </button>
+            <div class="dropdown-content">
+              <a [class.active]="switchLang === 'it'" (click)="selectedLanguage('it')">{{ 'header.it' | translate }}</a>
+              <a [class.active]="switchLang === 'en'" (click)="selectedLanguage('en')">{{ 'header.en' | translate }}</a>
             </div>
+          </div>
         </li>
-        <li class="navbar-item"><a href="datiAnagrafici">Profilo Utente</a></li>
-    </ul>
-</div>
-<div class="stratoSemiTrasparente"></div>
-<div class="navbarSopra">
-    <div class="hamburger">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
+       
+        <li class="navbar-item logout"><a href="logout">Logout</a></li>
+        
+      </ul>
     </div>
-    <div><a class="logo" href="home">Logo(Home)</a></div>
-</div>
+
+    <div class="darkLight-searchBox">
+      <div class="dark-light" (click)="toggleDarkMode()">
+      
+        
+        <i class='bx bx-moon moon' [ngClass]="{'active': isDarkMode}"></i>
+        <i class='bx bx-sun' [ngClass]="{'active': !isDarkMode}"></i>
+      </div>
+      
+      <div class="searchToggle" (click)="toggleSearchBox()">
+        <i class='bx bx-search'></i>
+      </div>
+    
+      <div class="searchBox" [ngClass]="{'active': showSearchBox}">
+        <input type="text" placeholder="Cerca...">
+        <i class='bx bx-x cancel' (click)="toggleSearchBox()"></i>
+      </div>
+    </div>
+    
+  </div>
+</nav>

@@ -1,5 +1,3 @@
-<app-header></app-header>
-
 <div class="profiloDiv">
   <h1>Profilo Utente</h1>
 </div>
@@ -9,30 +7,32 @@
     <div class="fotoDiv">
       <img
         class="fotoProfilo"
-        src="../../../assets/images/profile-pic.jpg"
+        [src]="user?.profileImageUrl || '../../../assets/images/profile-pic.jpg'"
         alt="Foto Profilo"
+        width="70"
+        height="70"
+        loading="lazy"
       />
-      <h3>Mario Rossi</h3>
+      <h3>{{ user?.name }} {{ user?.surname }}</h3>
     </div>
 
     <!-- Menu a discesa per mobile -->
     <div class="mobile-menu">
       <select id="menuSelect" (change)="handleMenuChange($event)">
         <option value="/datiAnagrafici">Dati Anagrafici</option>
-        <option value="/datiUtente" id="datiUtenteOption">Dati Utente</option>
+        <option value="/datiUtente">Dati Utente</option>
         <option value="/corsiIscritti">Corsi Iscritti</option>
         <option value="/certificati">Certificati</option>
         <option value="/fotoProfilo">Foto Profilo</option>
         <option value="/cancellaAccount">Cancella Account</option>
         <option value="/logout">Logout</option>
       </select>
-      
     </div>
 
     <div class="divOpzione">
       <ul>
         <li><a href="/datiAnagrafici">Dati Anagrafici</a></li>
-        <li><a href="/datiUtente" id="datiUtenteLink">Dati Utente</a></li>
+        <li><a href="/datiUtente">Dati Utente</a></li>
         <li><a href="/corsiIscritti">Corsi Iscritti</a></li>
         <li><a href="/certificati">Certificati</a></li>
         <li><a href="/fotoProfilo">Foto Profilo</a></li>
@@ -48,44 +48,44 @@
         <div class="form-row">
           <div class="form-group">
             <label for="nome">Nome</label>
-            <h6>Mario</h6>
+            <h6>{{ user?.name }}</h6>
           </div>
           <div class="form-group">
             <label for="">Cognome</label>
-            <h6>Rossi</h6>
+            <h6>{{ user?.surname }}</h6>
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
             <label for="">Codice Fiscale</label>
-           <h6>PCGSLC73H65C704Y</h6>
+            <h6>{{ user?.fiscalCode }}</h6>
           </div>
           <div class="form-group">
             <label for="">Genere</label>
-            <h6>M</h6>
+            <h6>{{ user?.gender }}</h6>
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
             <label for="">Data di Nascita</label>
-            <h6>01/01/1996</h6>
+            <h6>{{ user?.birthDate | date: 'dd/MM/yyyy' }}</h6>
           </div>
           <div class="form-group">
             <label for="">Luogo di nascita</label>
-            <h6>Roma</h6>
+            <h6>{{ user?.placeOfBirth }}</h6>
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
             <label for="">Indirizzo di Residenza</label>
-            <h6>Via Donna Olimpia,42</h6>
+            <h6>{{ user?.residentialAddress }}</h6>
           </div>
           <div class="form-group">
             <label for="">Indirizzo di Domicilio</label>
-            <h6>Via Portuense,51</h6>
+            <h6>{{ user?.homeAddress }}</h6>
           </div>
         </div>
       </form>
@@ -98,5 +98,3 @@
     <br />
   </div>
 </div>
-
-<app-footer></app-footer>

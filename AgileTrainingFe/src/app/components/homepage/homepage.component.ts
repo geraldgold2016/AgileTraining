@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { UserService } from '../../user.service'; // Assicurati che il percorso sia corretto
+import { Router } from '@angular/router';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 import { DataService } from '../../data.service';
@@ -9,69 +11,49 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [HeaderComponent, FooterComponent, CommonModule],
   templateUrl: './homepage.component.html',
-  styleUrl: './homepage.component.css'
+  styleUrls: ['./homepage.component.css']
 })
-export class HomepageComponent 
-{
-    constructor(private dataService: DataService) {}  
-    userId: string = '';
-    token: string = '';
-    usernameUtente: string = '';
-    coursesSubscription: any[] = [];    
-    coursesMore: any[] = [];    
-    error: string = '';
+export class HomepageComponent implements OnInit {
+  userName: string = '';
+  user: any = {};  // Oggetto per memorizzare i dati dell'utente
 
-  ngOnInit(): void 
-  {
-    //ottengo l'idUtente e il Token dal Local Storage
-    const storedUserId = localStorage.getItem('userId');
-    if (storedUserId != null) {this.userId = storedUserId;} 
-    else {this.userId = 'idUtente non trovato';}
-    console.log('User ID:',storedUserId);    
+  constructor(
+    private userService: UserService,
+    private router: Router
+  ) {}
 
-    //ottengo il Token dal Local Storage
-    const storedToken = localStorage.getItem('authToken');    
-    if (storedToken != null) {this.token = storedToken;} 
-    else {this.token = 'Token non trovato';}
-    console.log('Token:',storedToken);
-
-    //Richiamo il metodo getUtenteById
-    this.dataService.getUtenteById(this.userId).subscribe({
-      next: (user: any) => {
-        this.usernameUtente = user.username;
-      },
-      error: (err: any) => {
-        console.error("Errore nel recupero dell'utente", err);
-        this.error = 'Errore nel recupero degli utenti';
-      }
-    });
-
-    //Richiamo il metodo getCoursesSubscriptions
-    this.dataService.getCoursesSubscriptions(this.userId).subscribe({
-      next: (data: any[]) => {
-        this.coursesSubscription = data;
-      },
-      error: (err: any) => {
-        console.error('Errore nel recupero dei corsi', err);
-        this.error = 'Errore nel recupero dei corsi';
-      }
-    });
-
-    //Richiamo il metodo getMoreCourses
-    this.dataService.getMoreCourses(this.userId).subscribe({
-      next: (data: any[]) => {
-        this.coursesMore = data;
-        // console.log(this.coursesMore);
-      },
-      error: (err: any) => {
-        console.error('Errore nel recupero dei corsi', err);
-        this.error = 'Errore nel recupero dei corsi';
-      }
-    });
+  ngOnInit(): void {
+    this.loadUserData();
+ 
+   
   }
-  saveCourseId(event: Event, courseId: string): void {
-    console.log('Saving Course ID:', courseId);
-    localStorage.setItem('selectedCourseId', courseId);
-    // event.preventDefault();
+
+  loadUserData(): void {
+    const userId = this.getUserIdFromSession();
+    if (userId) {
+      this.userService.getUserById(userId).subscribe({
+        next: (data) => {
+          this.user = data; // Memorizza i dati dell'utente
+          this.userName = `${data.name} ${data.surname}`;
+        },
+        error: (error) => {
+          console.error('Errore durante il recupero dei dati dell\'utente', error);
+          alert('Impossibile recuperare i dati dell\'utente. Verifica che il token sia valido.');
+          this.router.navigate(['/login']);
+        }
+      });
+    } else {
+      console.log('No user ID found, redirecting to login');
+      this.router.navigate(['/login']);
+    }
   }
+
+  private getUserIdFromSession(): number | null {
+    const userId = localStorage.getItem('userId');
+    return userId ? parseInt(userId, 10) : null;
+  }
+
+ 
+
+
 }

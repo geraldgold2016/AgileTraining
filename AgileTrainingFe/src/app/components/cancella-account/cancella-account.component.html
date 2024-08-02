@@ -1,28 +1,67 @@
-<div class="container">
-    <h2 class="heading">Cancellazione Account</h2>
-    <br />
-    <form action="">
-      <div class="usernameDiv">
-        <label>Username</label><br />
-        <input type="text" id="userInp"  /><br>
-        
-      </div>
-      <div class="emailDiv">
-        <label>Email</label><br />
-        <input type="email" id="emailInp"  /><br>
-        
-      </div>
-      <div class="passDiv">
-        <label>Password</label><br />
-        <input type="password" id="passInp" /><br>
-        <input  type="checkbox" (click)="passFun()"  />vedi password
-      </div>
-      <br />
-    </form>
-    <a href="/avvisocancellazione"><button class="btnElimina">Elimina Account</button></a>
-    
-    <p style="font-size: 12px;color: red;">Stai per cancellare il tuo account. Confermi? Perderai l'accesso a tutti i corsi disponibili.</p>
-   <a href="/datiAnagrafici"><button class="btnUtente">Torna al profilo Utente</button></a> 
+
+
+
+<div class="profiloDiv">
+  <h1>Profilo Utente</h1>
+</div>
+
+<div class="dueDiv">
+  <div class="leftDiv">
+    <div class="fotoDiv">
+      <img
+        class="fotoProfilo"
+        [src]="user?.profileImageUrl || '../../../assets/images/profile-pic.jpg'"
+        alt="Foto Profilo"
+      />
+      <h3>{{ user?.name }} {{ user?.surname }}</h3>
+    </div>
+
+    <!-- Menu a discesa per mobile -->
+    <div class="mobile-menu">
+      <select id="menuSelect" (change)="handleMenuChange($event)">
+        <option value="/datiAnagrafici">Dati Anagrafici</option>
+        <option value="/datiUtente">Dati Utente</option>
+        <option value="/corsiIscritti">Corsi Iscritti</option>
+        <option value="/certificati">Certificati</option>
+        <option value="/fotoProfilo">Foto Profilo</option>
+        <option value="/cancellaAccount">Cancella Account</option>
+        <option value="/logout">Logout</option>
+      </select>
+    </div>
+
+    <div class="divOpzione">
+      <ul>
+        <li><a href="/datiAnagrafici">Dati Anagrafici</a></li>
+        <li><a href="/datiUtente">Dati Utente</a></li>
+        <li><a href="/corsiIscritti">Corsi Iscritti</a></li>
+        <li><a href="/certificati">Certificati</a></li>
+        <li><a href="/fotoProfilo">Foto Profilo</a></li>
+        <li><a href="/cancellaAccount">Cancella Account</a></li>
+        <li><a href="/logout">Logout</a></li>
+      </ul>
+    </div>
   </div>
-  
-  
+
+  <div class="rightDiv">
+   <div class="container">
+  <h2 class="heading">Elimina Account</h2>
+  <form (ngSubmit)="deleteAccount()">
+    <div class="passDiv">
+      <label for="password">Password:</label>
+      <input id="password" [(ngModel)]="password" name="password" type="password" required />
+    </div>
+    <button type="submit" class="btnElimina">Elimina</button>
+  </form>
+  <div *ngIf="message">
+    <p class="message">{{ message }}</p>
+  </div>
+</div>
+
+</div>
+
+
+
+
+
+
+

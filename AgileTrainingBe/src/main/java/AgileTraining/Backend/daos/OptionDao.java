@@ -1,12 +1,12 @@
 package AgileTraining.Backend.daos;
 
-import AgileTraining.Backend.entities.Option;
-
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+
+import AgileTraining.Backend.entities.Option;
 
 public interface OptionDao extends JpaRepository<Option, Integer> 
 {

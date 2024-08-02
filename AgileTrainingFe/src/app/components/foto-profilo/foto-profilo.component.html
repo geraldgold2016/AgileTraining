@@ -1,16 +1,23 @@
-<app-header></app-header>
 <div class="profiloDiv">
   <h1>Profilo Utente</h1>
 </div>
+
 <div class="dueDiv">
   <div class="leftDiv">
     <div class="fotoDiv">
-      <img
-        class="fotoProfilo"
-        [src]="retrievedImage || '../../../assets/images/profile-pic.jpg'"
-        alt="Foto Profilo"
-      />
-      <h3>Mario Rossi</h3>
+      <div *ngIf="profileImageUrl">
+        <h3>
+          {{ user?.name || "Nome non disponibile" }}
+          {{ user?.surname || "Cognome non disponibile" }}
+        </h3>
+        <img
+          class="fotoProfilo"
+          [src]="
+            user?.profileImageUrl || '../../../assets/images/profile-pic.jpg'
+          "
+          alt="Foto Profilo"
+        />
+      </div>
     </div>
     <div class="divOpzione">
       <ul>
@@ -18,25 +25,29 @@
         <li><a href="/datiUtente" id="datiUtenteLink">Dati Utente</a></li>
         <li><a href="/corsiIscritti">Corsi Iscritti</a></li>
         <li><a href="/certificati">Certificati</a></li>
-        <li><a href="/fotoProfilo">Foto profilo</a></li>
+        <li><a href="/fotoProfilo">Foto Profilo</a></li>
         <li><a href="/cancellaAccount">Cancella Account</a></li>
         <li><a href="/logout">Logout</a></li>
       </ul> 
     </div>
   </div>
+
   <div class="rightDiv">
-    <div class="upload-section">
-      <h1>Upload Image</h1>
-      <input type="file" (change)="onFileChanged($event)">
-      <input type="button" (click)="onUpload()" value="Upload">
-      <hr />
-      <div *ngIf="message">{{message}}</div>
-      <input type="text" placeholder="Image Name" [(ngModel)]="imageName" name="name">
-      <input type="button" (click)="getImage()" value="Get Image">
-      <div *ngIf="retrievedImage">
-        <img [src]="retrievedImage">
+    <div>
+      <h2 class="caricaFoto">Carica Foto Profilo</h2>
+      <input type="file" (change)="onFileChange($event)" />
+      <button (click)="uploadImage()" [disabled]="!selectedFile">
+        Carica Immagine
+      </button>
+
+      <div *ngIf="isLoading" class="loader">
+        <div class="spinner"></div>
+      </div>
+
+      <div *ngIf="previewUrl">
+        <h3>Anteprima dell'immagine:</h3>
+        <img [src]="previewUrl" alt="Anteprima Immagine" />
       </div>
     </div>
   </div>
 </div>
-<app-footer></app-footer>

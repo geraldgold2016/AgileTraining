@@ -62,14 +62,14 @@ public class SubscriptionController {
 
     // endpoint per ottenere i corsi a cui l'utente è iscritto -- TESTATO
     @GetMapping("/{id}/subscriptions")
-    public ResponseEntity getCourses(@PathVariable Integer id) {
+    public ResponseEntity<Object> getCourses(@PathVariable Integer id) {
         List<Object[]> courses = sDao.getCourses(id);
         return ResponseEntity.status(200).body(courses);
     }
 
     // endpoint per ottenere i corsi a cui l'utente non è iscritto -- TESTATO
     @GetMapping("/{id}/coursesAvailable")
-    public ResponseEntity getMoreCourses(@PathVariable Integer id) {
+    public ResponseEntity<Object> getMoreCourses(@PathVariable Integer id) {
         List<Object[]> courses = sDao.getMoreCourses(id);
         return ResponseEntity.status(200).body(courses);
     }

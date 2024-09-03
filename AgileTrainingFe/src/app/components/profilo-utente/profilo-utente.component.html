@@ -1,12 +1,13 @@
-<app-header></app-header>
 <div class="profiloDiv"><h1>Profilo Utente</h1></div>
 <div class="dueDiv">
   <div class="leftDiv">
     <div class="fotoDiv">
       <img
         class="fotoProfilo"
-        src="../../../assets/images/profile-pic.jpg"
-        alt=""
+        [src]="user?.profileImageUrl || (user?.gender === 'Maschile' 
+        ? '../../../assets/images/profile-pic-man.jpg' 
+        : '../../../assets/images/profile-pic-woman.png')"
+        alt="Foto Profilo"
       />
       <h3>Mario Rossi</h3>
     </div>
@@ -24,7 +25,6 @@
   </div>
   <div class="rightDiv">
 
-
   </div>
 </div>
-<app-footer></app-footer>
+

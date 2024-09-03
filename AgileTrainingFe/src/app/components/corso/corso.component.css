@@ -58,7 +58,7 @@ h1
 
 #contenitore
 {
-    padding: 10px 100px 40px 100px;
+    padding: 10px 100px 100px 100px;
 }
 
 h3
@@ -118,4 +118,258 @@ i
 {
     display: flex;
     justify-content: center;
+}
+
+
+
+
+
+/* video-player.component.css */
+.video-container {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  margin: auto;
+}
+
+#playPauseButton {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#playPauseButton:hover {
+  background-color: #0056b3;
+}
+
+/* Contenitore del video */
+.video-container {
+  position: relative;
+  background-color: #000;
+  border-radius: 8px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 800px; /* Imposta una larghezza massima per il video */
+  margin: 20px auto;
+}
+
+
+/* Pulsanti di controllo */
+.video-container button {
+  background-color: #333;
+  border: none;
+  color: #fff;
+  border-radius: 5px;
+  padding: 8px 12px;
+  margin: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  /* Aggiunta per dimensioni fisse */
+  width: 40px; /* Regola la larghezza come necessario */
+  height: 40px; /* Regola l'altezza come necessario */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-container button i {
+  font-size: 16px; /* Regola la dimensione dell'icona */
+}
+
+/* Pulsante Play/Pause */
+#playPauseButton {
+  background-color: #4caf50;
+}
+
+#playPauseButton:hover {
+  background-color: #45a049;
+}
+
+
+.video-container button:hover {
+  background-color: #555;
+  transform: scale(1.05);
+}
+
+/* Pulsante Play/Pause */
+#playPauseButton {
+  background-color: #4caf50;
+}
+
+#playPauseButton:hover {
+  background-color: #45a049;
+}
+
+/* Pulsante Volume */
+#volumeButton {
+  background-color: #2196f3;
+}
+
+#volumeButton:hover {
+  background-color: #1976d2;
+}
+
+/* Pulsante Mute */
+#muteButton {
+  background-color: #f44336;
+}
+
+#muteButton:hover {
+  background-color: #e53935;
+}
+.video-container .volume-slider {
+  display: block;
+  position: absolute;
+  top: -40px; /* Posizionamento sopra il pulsante */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 4px;
+  background: #2196f3;
+  cursor: pointer;
+}
+
+.video-container button {
+  position: relative;
+}
+
+.video-container .volume-slider {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+}
+
+.video-container button:hover .volume-slider {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Barra di progresso */
+.progress-container 
+{
+  display: flex;
+  align-items: center;
+  width: 80%;
+  margin-top: 10px;
+}
+
+.progress-container input[type="range"] 
+{
+  flex: 1;
+  /* -webkit-appearance: none; */
+  background: #555;
+  height: 5px;
+  border-radius: 5px;
+  outline: none;
+  cursor: pointer;
+}
+
+.progress-container input[type="range"]::-webkit-slider-thumb 
+{
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+}
+
+.progress-container input[type="range"]::-moz-range-thumb 
+{
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+}
+
+.progress-container span 
+{
+  color: #fff;
+  margin: 0 5px;
+}
+
+/* Stili per la durata e il tempo corrente */
+span#currentTime, span#totalTime 
+{
+  font-size: 14px;
+}
+
+
+
+
+
+
+.controls {
+  flex-direction: row;
+  border-radius: 8px;
+  bottom: 0;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  background: rgba(0, 0, 0, 0.5); 
+  color: white;
+  z-index: 1; 
+  transition: opacity 0.3s; 
+}
+
+.controls.fullscreen
+{
+  position: fixed;
+  bottom: 10px; 
+  left: 0;
+  right: 0;
+  bottom:0px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 10px;
+  background: rgba(0, 0, 0, 0.5); 
+  color: white;
+  z-index: 1002;
+  transition: opacity 0.3s; 
+}
+
+iframe.fullscreen
+{
+  background: black;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1001;
+}
+
+iframe
+{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
 }

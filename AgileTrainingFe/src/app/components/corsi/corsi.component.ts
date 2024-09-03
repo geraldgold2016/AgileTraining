@@ -3,6 +3,7 @@ import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 import { DataService } from '../../data.service'; // Importa il servizio
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-corsi',
@@ -13,17 +14,18 @@ import { CommonModule } from '@angular/common';
 })
 export class CorsiComponent 
 {
+  userId: string = '';
+  idCorso: string = '';
   coursesFrontEnd: any[] = [];
   coursesBackEnd: any[] = [];
   coursesDatabase: any[] = [];
   primi4CorsiFront: any[] = [];
   primi4CorsiBack: any[] = [];
   primi4CorsiData: any[] = [];
+  isIscritto: boolean = false;
   error: string | null = null;
 
-  constructor(private dataService: DataService) {}
-
-
+  constructor(private dataService: DataService, private router: Router) {}
 
   ngOnInit(): void 
   {
@@ -34,8 +36,8 @@ export class CorsiComponent
         {
           this.primi4CorsiFront[i] = data[i];
         }
-        console.log(this.coursesFrontEnd);
-        console.log(this.primi4CorsiFront);
+        // console.log(this.coursesFrontEnd);
+        // console.log(this.primi4CorsiFront);
       },
       error: (err: any) => {
         console.error('Errore nel recupero dei corsi', err);
@@ -49,7 +51,7 @@ export class CorsiComponent
         {
           this.primi4CorsiBack[i] = data[i];
         }
-        console.log(this.primi4CorsiBack);
+        // console.log(this.primi4CorsiBack);
       },
       error: (err: any) => {
         console.error('Errore nel recupero dei corsi', err);
@@ -63,15 +65,53 @@ export class CorsiComponent
         {
           this.primi4CorsiData[i] = data[i];
         }
-        console.log(this.primi4CorsiData);
+        // console.log(this.primi4CorsiData);
       },
       error: (err: any) => {
         console.error('Errore nel recupero dei corsi', err);
         this.error = 'Errore nel recupero dei corsi';
       }
     });
+
+    //ottengo l'idUtente e il Token dal Local Storage
+    const storedUserId = localStorage.getItem('userId');
+    if (storedUserId != null) {this.userId = storedUserId;} 
+    else {this.userId = 'idUtente non trovato';}
+    // console.log('User ID:',storedUserId);   
   }
 
+  saveCourseId(courseId: string): void 
+  {
+    console.log('Saving Course ID:', courseId);
+    localStorage.setItem('selectedCourseId', courseId);
+  }
+
+  checkIscrizioneCorso(idCorso: string, idUtente: string): void 
+  {
+    this.dataService.checkIscrizioneCorso(idCorso, idUtente).subscribe({
+      next: (data) => {
+        this.isIscritto = data;
+        if (this.isIscritto == true)
+        {
+          this.router.navigate(['/corso']);
+        }
+        else
+        {
+          this.router.navigate(['/anteprimaCorso']);
+        }
+        console.log(this.isIscritto);
+      },
+      error: (error) => {
+        console.error('Errore ricerca del corso', error);
+      }
+    })
+  }
+  
+  handleCourseClick(idCorso: string, idUtente: string): void 
+  {
+    this.saveCourseId(idCorso);
+    this.checkIscrizioneCorso(idCorso, idUtente);
+  }
 
   VediCorsiFrontEnd()
   {

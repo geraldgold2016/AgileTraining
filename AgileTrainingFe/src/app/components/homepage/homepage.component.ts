@@ -30,7 +30,8 @@ export class HomepageComponent implements OnInit {
 
   loadUserData(): void {
     const userId = this.getUserIdFromSession();
-    if (userId) {
+    if (userId) 
+    {
       this.userService.getUserById(userId).subscribe({
         next: (data) => {
           this.user = data; // Memorizza i dati dell'utente

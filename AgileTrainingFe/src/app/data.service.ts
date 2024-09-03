@@ -55,6 +55,12 @@ export class DataService
     return this.http.get<any>(`${this.baseUrl}/${courseId}/Course`);
   }
 
+  // Metodo per cercare i corsi per nome
+  getCoursesByName(name: string): Observable<any[]> 
+  {
+    return this.http.get<any[]>(`${this.baseUrl}/searchCourse/${name}`);
+  }
+
   //si ottengono il nome e la descrizione di un corso con il suo id
   getChaptersByIdCourse(courseId: string): Observable<any[]> 
   {
@@ -73,6 +79,13 @@ export class DataService
   {
     const unsubscribeData = { userId, courseId };
     return this.http.delete<any>(`${this.baseUrl}/unsubscribeFromCourse`, {body: unsubscribeData});
+  }
+
+  // Verifica se l'utente è iscritto a un corso specifico
+  checkIscrizioneCorso(idCorso: string, idUtente: string): Observable<boolean> 
+  {
+    const params = new HttpParams().set('idCorso', idCorso).set('idUtente', idUtente);
+    return this.http.get<boolean>(`${this.baseUrl}/checkIscrizioneCorso`, { params });
   }
 
   //si ottengono tutte le domande del test dall'id del corso

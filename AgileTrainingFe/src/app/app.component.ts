@@ -26,7 +26,15 @@ export class AppComponent implements OnInit, OnDestroy {
     // Monitor routing events to check if the user is on an auth page
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        this.isAuthPage = ['/login', '/logout'].includes(event.urlAfterRedirects);
+        // Controllo se l'URL è uno degli URL esatti
+        const staticAuthPages = ['/login', '/logout', '/introEsame'];
+      
+        // Controllo se l'URL inizia con "/esame/"
+        const isDynamicEsamePage = event.urlAfterRedirects.startsWith('/esame/');
+  
+        // Determina se si tratta di una auth page
+        this.isAuthPage = staticAuthPages.includes(event.urlAfterRedirects) || isDynamicEsamePage;
+  
         if (this.isAuthPage) {
           // On auth pages, do not start the idle service or add activity listeners
           this.stopIdleService();

@@ -7,11 +7,12 @@
     <div class="fotoDiv">
       <img
         class="fotoProfilo"
-        [src]="user?.profileImageUrl || '../../../assets/images/profile-pic.jpg'"
+        [src]="user?.profileImageUrl || (user?.gender === 'Maschile' 
+        ? '../../../assets/images/profile-pic-man.jpg' 
+        : '../../../assets/images/profile-pic-woman.png')"
         alt="Foto Profilo"
         width="70"
         height="70"
-        loading="lazy"
       />
       <h3>{{ user?.name }} {{ user?.surname }}</h3>
     </div>
@@ -25,7 +26,7 @@
         <option value="/certificati">Certificati</option>
         <option value="/fotoProfilo">Foto Profilo</option>
         <option value="/cancellaAccount">Cancella Account</option>
-        <option value="/logout">Logout</option>
+        <option value="/login">Logout</option>
       </select>
     </div>
 
@@ -37,7 +38,7 @@
         <li><a href="/certificati">Certificati</a></li>
         <li><a href="/fotoProfilo">Foto Profilo</a></li>
         <li><a href="/cancellaAccount">Cancella Account</a></li>
-        <li><a href="/logout">Logout</a></li>
+        <li><a href="/login">Logout</a></li>
       </ul>
     </div>
   </div>

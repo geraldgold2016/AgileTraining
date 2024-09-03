@@ -19,6 +19,6 @@ public interface CourseDao extends JpaRepository<Course, Integer>
     @Query(value="SELECT * FROM courses where courses.id = :id", nativeQuery = true)
     Course getCoursesById(@Param("id") Integer id);
     
-    @Query(value="SELECT * FROM courses where courses.course_name = :name", nativeQuery = true)
+    @Query(value="SELECT * FROM courses where courses.course_name LIKE %:name%", nativeQuery = true)
     List<Course> getCoursesByName(@Param("name") String name);
 }

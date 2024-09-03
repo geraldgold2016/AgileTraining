@@ -4,8 +4,10 @@
     <div class="greeting">
       <img
         class="user-photo"
-        [src]="user?.profileImageUrl || '../../../assets/images/profile-pic.jpg'"
-        alt="Foto Profilo" loading="lazy"
+        [src]="user?.profileImageUrl || (user?.gender === 'Maschile' 
+        ? '../../../assets/images/profile-pic-man.jpg' 
+        : '../../../assets/images/profile-pic-woman.png')"
+        alt="Foto Profilo"
       /><br />
       <h1 class="benvenuto">Benvenuto, {{ userName }}!</h1>
     </div>

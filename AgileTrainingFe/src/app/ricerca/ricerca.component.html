@@ -1,0 +1,11 @@
+<div class="contenitoreRicerca">
+    <h2>{{numeroRisultati}} Risultati Trovati</h2>
+
+    <div class="corsi">
+        <div *ngFor="let listaCorsi of listaCorsi" [attr.data-course-id]="listaCorsi.id" 
+            (click)="handleCourseClick(listaCorsi.id, userId)">
+            <img [src]="'../../../assets/images/' + listaCorsi.courseImageUrl" [alt]="listaCorsi.courseName">
+        </div>
+    </div>
+</div>
+

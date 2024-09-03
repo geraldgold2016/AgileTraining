@@ -24,7 +24,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@ngx-translate/core": "^15.0.0",
     "@ngx-translate/http-loader": "^8.0.0",
-    "@vimeo/player": "^2.23.0",
+    "@vimeo/player": "^2.24.0",
     "browser-image-compression": "^2.0.2",
     "cropperjs": "^1.6.2",
     "crypto-js": "^4.2.0",

@@ -1,7 +1,7 @@
 h1
 {
     text-align: center;
-   
+    margin-top: 70px;
 }
 
 h2
@@ -12,7 +12,6 @@ h2
 
 .TornaIndietro
 {
-    /* margin-top: 110px; */
     margin-left: 100px;
     padding: 10px;
     cursor: pointer;
@@ -24,15 +23,17 @@ h2
 {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 .categoria
 {
     margin: 10px;
-    height: 400px;
+    height: auto;
     width: 460px;
     border: solid black 5px;
     border-radius: 20px;
+    margin-bottom: 100px;
 }
 
 .contenitoriCorsi
@@ -82,6 +83,7 @@ h2
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 img
@@ -97,20 +99,50 @@ a
 }
 
 
-@media screen and (min-width: 891px) and (max-width: 1024px)/*al di sopra dei 891 pixel*/
+@media screen and (min-width: 891px) and (max-width: 1024px)/*al di sopra dei 891 pixel e sotto i 1024 pixel*/
 {
-    #corsi div
+    .corsi div
     {
-        height: 160px;
-        width: 225px;
+        height: 120px;
+        width: 180px;
+    }
+
+    #contenitoreCategorie
+    {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+}
+
+@media screen and (min-width: 500px) and (max-width: 891px)/*al di sopra dei 500 pixel e sotto i 891 pixel*/
+{
+    .corsi div
+    {
+        height: 100px;
+        width: 160px;
+    }
+    
+    #contenitoreCategorie
+    {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
     }
 }
 
 @media screen and (min-width: 360px) and (max-width: 500px) /*al di sopra dei 360 pixel e al di sotto dei 500 pixel*/
 {
-  #corsi div
-  {
-    height: 80px;
-    width: 140px;
-  }
+    .corsi div
+    {
+      height: 80px;
+      width: 140px;
+    }
+  
+    #contenitoreCategorie
+    {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
 }

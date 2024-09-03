@@ -1,38 +1,69 @@
-<app-header></app-header>
-
 <h1>Corso {{ nomeCorso }}</h1>
 
 <div class="dropdown">
-    <button class="dropbtn">Opzioni Corso
-        <i class="fa fa-caret-down"></i>
-    </button>
-    <div class="dropdown-content">
-      <a *ngIf="certificatoEsiste" href="certificatoCorso">Vedi Certificato</a>    
-        <a href="avvisoSceltaAnnulaIscrizione">Annulla l'iscrizione al corso</a>
-    </div>
+  <button class="dropbtn">Opzioni Corso
+    <i class="fa fa-caret-down"></i>
+  </button>
+  <div class="dropdown-content">
+    <a *ngIf="certificatoEsiste" href="certificatoCorso">Vedi Certificato</a>
+    <a href="avvisoSceltaAnnulaIscrizione">Annulla l'iscrizione al corso</a>
+  </div>
 </div>
 
 <div id="contenitore">
 
-    <h3>Capitoli del Corso</h3>
+  <h3>Capitoli del Corso</h3>
 
-    <ng-container *ngFor="let capitolo of capitoliCorso">
-        <button class="accordion" (click)="toggleAccordion($event)">
-          <i class="fa-solid fa-angle-down"></i> {{ capitolo.moduleName }}
-        </button>
-        <div class="panel">
-          <p>{{ capitolo.moduleDescription }}</p>
-          <div class="video-container">
-            <!--<iframe src="https://player.vimeo.com/video/992155478?h=369ce54f1a" width="640" height="564" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>-->
-        </div>
+  <ng-container *ngFor="let capitolo of capitoliCorso; let i = index">
+    <button class="accordion" (click)="toggleAccordion($event)">
+      <i class="fa-solid fa-angle-down"></i> {{ capitolo.moduleName }}
+    </button>
+    <div class="panel">
+      <p>{{ capitolo.moduleDescription }}</p>
+      <ng-container *ngIf="lunghezzaVideo[i] > 0; else noVideo">
+        <div class="video-container">
+          <div style="padding:56.25% 0 0 0;position:relative;">
+            <iframe #vimeoPlayer [src]="urlVideo[i]" frameborder="0"
+              allow="autoplay; fullscreen; picture-in-picture; clipboard-write" title="Video Prova">
+            </iframe>
+          </div>
+          <div #controlVideo class="controls">
+            <button #playPauseButton (click)="togglePlayPause(i)">
+              <i class="fas fa-play" *ngIf="!isPlaying[i]"></i>
+              <i class="fas fa-pause" *ngIf="isPlaying[i]"></i>
+            </button>
+            <button #volumeButton (click)="toggleMute(i)" (mouseenter)="showVolumeSlider(i)" (mouseleave)="hideVolumeSlider(i)">
+              <i class="fas" [ngClass]="isMuted[i] ? 'fa-volume-mute' : 'fa-volume-up'"></i>
+              <!-- <input type="range" min="0" max="100" step="1" class="volume-slider" 
+                     *ngIf="showingSlider[i]" (input)="setVolume($event, i)" [value]="currentVolume[i]"> -->
+            </button>
+            <div class="progress-container">
+              <input #progressBar type="range" min="0" class="progress-bar" value="0" (input)="seekVideo($event, i)" />
+              <span #currentTime>00:00</span> / <span #totalTime>00:00</span>
+            </div>
+            <button #fullscreenButton (click)="toggleFullscreen(i)" class="fullscreen-button">
+              <i class="fas" [ngClass]="isFullscreen[i] ? 'fa-compress' : 'fa-expand'"></i>
+            </button>
+          </div>
+          <script src="https://player.vimeo.com/api/player.js"></script>
         </div>
       </ng-container>
-
-    <button class="accordion" (click)="toggleAccordion($event)"><i class="fa-solid fa-angle-down"></i>   Esame finale</button>
-    <div class="panel">
-      <p id="paginaEsame"><a href="#" (click)="openExamPage($event)">Vai alla pagina dell'esame</a></p>
     </div>
+  </ng-container>
+
+
+
+  <!--https://player.vimeo.com/video/1003952308?controls=0&keyboard=0&badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479-->
+  <!--https://player.vimeo.com/video/1005350558?controls=0&keyboard=0&badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479-->
+  <!-- Template alternativo se non c'è il video -->
+  <ng-template #noVideo>
+    <p>Video non disponibile</p>
+  </ng-template>
+
+  <button class="accordion" (click)="toggleAccordion($event)"><i class="fa-solid fa-angle-down"></i> Esame
+    finale</button>
+  <div class="panel">
+    <p id="paginaEsame"><a href="#" (click)="openExamPage($event)">Vai alla pagina dell'esame</a></p>
+  </div>
 
 </div>
-
-<app-footer></app-footer>

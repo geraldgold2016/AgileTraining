@@ -101,7 +101,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           console.warn('User ID not found or invalid in response');
         }
 
-        this.router.navigate(['/datiAnagrafici']); // Redirigi alla pagina dei dati anagrafici
+        this.router.navigate(['/home']); // Redirigi alla pagina dei dati anagrafici
       },
       (error: HttpErrorResponse) => {
         console.error('Login failed', error);

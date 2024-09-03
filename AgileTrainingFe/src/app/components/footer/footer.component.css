@@ -34,7 +34,6 @@ footer a:hover {
 footer .logoA img {
   height: 40px; /* Altezza maggiore del logo per una migliore visibilità */
   width: auto;
-  margin-right: 20px; /* Maggiore spazio tra il logo e i link */
 }
 
 /* Layout per rendere il footer responsive */

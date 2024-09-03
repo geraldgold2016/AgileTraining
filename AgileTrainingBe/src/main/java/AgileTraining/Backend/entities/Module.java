@@ -1,6 +1,8 @@
 package AgileTraining.Backend.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -22,12 +24,14 @@ public class Module {
     private String moduleDescription;
 
 
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
 
     private Integer duration;
+    
+    private String videoUrl;
 
     public Integer getDuration() {
         return duration;
@@ -65,6 +69,22 @@ public class Module {
     public void setModuleDescription(String moduleDescription) {
         this.moduleDescription = moduleDescription;
     }
+
+	public Course getCourse() {
+		return course;
+	}
+
+	public void setCourse(Course course) {
+		this.course = course;
+	}
+
+	public String getVideoUrl() {
+		return videoUrl;
+	}
+
+	public void setVideoUrl(String videoUrl) {
+		this.videoUrl = videoUrl;
+	}
 
 
 }

@@ -23,8 +23,16 @@ declare module '@vimeo/player' {
         pause(): Promise<void>;
         setCurrentTime(seconds: number): Promise<number>;
         getCurrentTime(): Promise<number>;
+        setPlaybackRate(speed: number): Promise<number>;
+        getDuration(): Promise<number>; 
+        getPaused(): Promise<boolean>
         setVolume(volume: number): Promise<number>;
         getVolume(): Promise<number>;
+        setMuted(muted: boolean): Promise<boolean>;
+        getMuted(): Promise<number>;
+        requestFullscreen(): Promise<void>;
+        exitFullscreen(): Promise<void>;
+        getFullscreen(): Promise<boolean>;
         on(event: 'timeupdate', callback: (data: VimeoEvent) => void): void;
     }
 }

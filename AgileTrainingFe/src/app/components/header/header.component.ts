@@ -92,26 +92,42 @@ export class HeaderComponent implements OnInit {
     const sidebarCloseIcon = document.querySelector('.siderbarClose');
     const logoImg = document.querySelector('.navLogo img');
 
-    if (menu && overlay && sidebarOpenIcon && sidebarCloseIcon && logoImg) {
+    if (menu && overlay && sidebarOpenIcon && sidebarCloseIcon && logoImg) 
+    {
       menu.classList.toggle('active', this.showSidebar);
       overlay.classList.toggle('active', this.showSidebar);
       sidebarOpenIcon.classList.toggle('d-none', this.showSidebar);
       sidebarCloseIcon.classList.toggle('d-none', !this.showSidebar);
-      if (this.showSidebar) {
+      if (this.showSidebar) 
+      {
         logoImg.classList.add('d-none');
-      } else {
+      } 
+      else 
+      {
         logoImg.classList.remove('d-none');
       }
     }
   }
 
-  closeSidebar(): void {
+  closeSidebar(): void 
+  {
     this.showSidebar = false;
     document.querySelector('.menu-overlay')?.classList.remove('active');
     document.querySelector('.menu')?.classList.remove('active');
   }
 
-  toggleDropdown(): void {
+  toggleDropdown(): void 
+  {
     this.dropdownOpen = !this.dropdownOpen;
+  }
+
+  ricercaCorso():void
+  {
+    const searchInput = (document.querySelector('.ricerca') as HTMLInputElement).value;
+
+    if (searchInput.trim()) 
+    {
+      this.router.navigate(['/ricerca'], { queryParams: { query: searchInput } });
+    }
   }
 }

@@ -10,16 +10,25 @@
 
 <h3>Capitoli del Corso</h3>
 
-<ng-container *ngFor="let capitolo of capitoliCorso">
-  <button class="accordion" (click)="toggleAccordion($event)">
-    <i class="fa-solid fa-angle-down"></i> {{ capitolo.moduleName }}
-  </button>
-  <div class="panel">
-    <p>{{ capitolo.moduleDescription }}</p>
-    <p><i class="fa-regular fa-circle-play"></i>   Video {{ capitolo.moduleName }}, durata {{ capitolo.duration }} minuti</p>
-  </div>
+<!-- Controlla se ci sono capitoli prima di fare il ciclo -->
+<ng-container *ngIf="capitoliCorso && capitoliCorso.length > 0; else noModules">
+  <ng-container *ngFor="let capitolo of capitoliCorso">
+    <button class="accordion" (click)="toggleAccordion($event)">
+      <i class="fa-solid fa-angle-down"></i> {{ capitolo.moduleName }}
+    </button>
+    <div class="panel">
+      <p>{{ capitolo.moduleDescription }}</p>
+      <p><i class="fa-regular fa-circle-play"></i> Video {{ capitolo.moduleName }}, durata {{ capitolo.duration }} minuti</p>
+    </div>
+  </ng-container>
 </ng-container>
 
+<!-- Template alternativo se non ci sono moduli -->
+<ng-template #noModules>
+  <p>Attualmente, questo corso non ha capitoli disponibili.</p>
+</ng-template>
+
+<ng-container *ngIf="capitoliCorso && capitoliCorso.length > 0;">
 <button class="accordion" (click)="toggleAccordion($event)">
   <i class="fa-solid fa-angle-down"></i><span> Esame finale</span>
 </button>
@@ -27,7 +36,7 @@
   <p>{{ esameCorso.moduleDescription }}</p>
   <p>Durata del test: {{ esameCorso.duration }} minuti</p>
 </div>
-
+</ng-container>
 
 <p id="durataVideo">Durata totale video: {{oreTotaliVideoCorso}} ore e {{minutiTotaliVideoCorso}} minuti</p>
 

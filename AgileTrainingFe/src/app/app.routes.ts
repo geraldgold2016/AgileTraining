@@ -39,6 +39,7 @@ import { ModulodatiComponent } from './components/modulodati/modulodati.componen
 import { IntroEsameComponent } from './components/intro-esame/intro-esame.component';
 import { authGuardCertificato } from './auth.guardCertificato';
 import { authGuardEsame } from './auth.guardEsame';
+import { RicercaComponent } from './ricerca/ricerca.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' }, //se l'utente non inserisce niente nella url allora si apre la pagina login
@@ -79,5 +80,6 @@ export const routes: Routes = [
   { path: 'logout',component: LogoutComponent },
   { path: 'cancAcc',component: CancellaAccComponent },
   { path: 'avvisoLogout',component: AvvisoLogoutComponent },
-  { path: 'modulodati',component: ModulodatiComponent }
+  { path: 'modulodati',component: ModulodatiComponent },
+  { path: 'ricerca',component: RicercaComponent }
 ];

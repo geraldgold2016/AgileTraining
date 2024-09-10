@@ -1,85 +1,94 @@
+<div class="corsi-background">
+
 <h1>Tutti i corsi</h1>
 
-<button class="TornaIndietro" id="Indietro" (click) = TornaIndietro()>Torna Indietro</button>
+<button class="TornaIndietro" id="Indietro" (click)=TornaIndietro()>Torna Indietro</button>
 
-<div id="contenitoreCategorie">
-    <div class="categoria">
-        <h2>Corsi FrontEnd</h2>
-        <div class="contenitoriCorsi">
-            <div class="corsi">
-                <div *ngFor="let primi4CorsiFront of primi4CorsiFront" [attr.data-course-id]="primi4CorsiFront.id" (click)="handleCourseClick(primi4CorsiFront.id, userId)">
-                    <!-- <a href="anteprimaCorso"> -->
+    <div id="contenitoreCategorie">
+        <div class="categoria">
+            <h2>Corsi FrontEnd</h2>
+            <div class="contenitoriCorsi">
+                <div class="corsi">
+                    <div *ngFor="let primi4CorsiFront of primi4CorsiFront" [attr.data-course-id]="primi4CorsiFront.id"
+                        (click)="handleCourseClick(primi4CorsiFront.id, userId)">
+                        <!-- <a href="anteprimaCorso"> -->
                         <img [src]="'../../../assets/images/' + primi4CorsiFront.courseImageUrl"
                             [alt]="primi4CorsiFront.courseName">
-                    <!-- </a> -->
+                        <!-- </a> -->
+                    </div>
                 </div>
+                <button class="VediCorsi" (click)="VediCorsiFrontEnd()">Clicca qui per vedere i
+                    corsi</button>
             </div>
-            <button class="VediCorsi" (click)="VediCorsiFrontEnd()">Clicca qui per vedere i
-                corsi</button>
         </div>
-    </div>
-    <div class="categoria">
-        <h2>Corsi BackEnd</h2>
-        <div class="contenitoriCorsi">
-            <div class="corsi">
-                <div *ngFor="let primi4CorsiBack of primi4CorsiBack" [attr.data-course-id]="primi4CorsiBack.id" (click)="handleCourseClick(primi4CorsiBack.id, userId)">
-                    <!-- <a href="anteprimaCorso"> -->
+        <div class="categoria">
+            <h2>Corsi BackEnd</h2>
+            <div class="contenitoriCorsi">
+                <div class="corsi">
+                    <div *ngFor="let primi4CorsiBack of primi4CorsiBack" [attr.data-course-id]="primi4CorsiBack.id"
+                        (click)="handleCourseClick(primi4CorsiBack.id, userId)">
+                        <!-- <a href="anteprimaCorso"> -->
                         <img [src]="'../../../assets/images/' + primi4CorsiBack.courseImageUrl"
                             [alt]="primi4CorsiBack.courseName">
-                    <!-- </a> -->
+                        <!-- </a> -->
+                    </div>
                 </div>
+                <button class="VediCorsi" (click)="VediCorsiBackEnd()">Clicca qui per vedere i corsi</button>
             </div>
-            <button class="VediCorsi" (click)="VediCorsiBackEnd()">Clicca qui per vedere i corsi</button>
         </div>
-    </div>
-    <div class="categoria">
-        <h2>Corsi Database</h2>
-        <div class="contenitoriCorsi">
-            <div class="corsi">
-                <div *ngFor="let primi4CorsiData of primi4CorsiData" [attr.data-course-id]="primi4CorsiData.id" (click)="handleCourseClick(primi4CorsiData.id, userId)">
-                    <!-- <a href="anteprimaCorso"> -->
+        <div class="categoria">
+            <h2>Corsi Database</h2>
+            <div class="contenitoriCorsi">
+                <div class="corsi">
+                    <div *ngFor="let primi4CorsiData of primi4CorsiData" [attr.data-course-id]="primi4CorsiData.id"
+                        (click)="handleCourseClick(primi4CorsiData.id, userId)">
+                        <!-- <a href="anteprimaCorso"> -->
                         <img [src]="'../../../assets/images/' + primi4CorsiData.courseImageUrl"
                             [alt]="primi4CorsiData.courseName">
-                    <!-- </a> -->
+                        <!-- </a> -->
+                    </div>
                 </div>
+                <button class="VediCorsi" (click)="VediCorsiDatabase()">Clicca qui per vedere i corsi</button>
             </div>
-            <button class="VediCorsi" (click)="VediCorsiDatabase()">Clicca qui per vedere i corsi</button>
         </div>
     </div>
-</div>
 
-<!-- Vedi i corsi per categoria -->
+    <!-- Vedi i corsi per categoria -->
 
-<div id="corsiFrontEnd">
-    <div class="corsi">
-        <div *ngFor="let coursesFrontEnd of coursesFrontEnd" [attr.data-course-id]="coursesFrontEnd.id" (click)="handleCourseClick(coursesFrontEnd.id, userId)">
-            <!-- <a href="anteprimaCorso"> -->
+    <div id="corsiFrontEnd">
+        <div class="corsi">
+            <div *ngFor="let coursesFrontEnd of coursesFrontEnd" [attr.data-course-id]="coursesFrontEnd.id"
+                (click)="handleCourseClick(coursesFrontEnd.id, userId)">
+                <!-- <a href="anteprimaCorso"> -->
                 <img [src]="'../../../assets/images/' + coursesFrontEnd.courseImageUrl"
                     [alt]="coursesFrontEnd.courseName">
-            <!-- </a> -->
+                <!-- </a> -->
+            </div>
         </div>
     </div>
-</div>
 
-<div id="corsiBackEnd">
-    <div class="corsi">
-        <div *ngFor="let coursesBackEnd of coursesBackEnd" [attr.data-course-id]="coursesBackEnd.id" (click)="handleCourseClick(coursesBackEnd.id, userId)">
-            <!-- <a href="anteprimaCorso"> -->
+    <div id="corsiBackEnd">
+        <div class="corsi">
+            <div *ngFor="let coursesBackEnd of coursesBackEnd" [attr.data-course-id]="coursesBackEnd.id"
+                (click)="handleCourseClick(coursesBackEnd.id, userId)">
+                <!-- <a href="anteprimaCorso"> -->
                 <img [src]="'../../../assets/images/' + coursesBackEnd.courseImageUrl"
                     [alt]="coursesBackEnd.courseName">
-            <!-- </a> -->
+                <!-- </a> -->
+            </div>
         </div>
     </div>
-</div>
 
 
-<div id="corsiDatabase">
-    <div class="corsi">
-        <div *ngFor="let coursesDatabase of coursesDatabase" [attr.data-course-id]="coursesDatabase.id" (click)="handleCourseClick(coursesDatabase.id, userId)">
-            <!-- <a href="anteprimaCorso"> -->
+    <div id="corsiDatabase">
+        <div class="corsi">
+            <div *ngFor="let coursesDatabase of coursesDatabase" [attr.data-course-id]="coursesDatabase.id"
+                (click)="handleCourseClick(coursesDatabase.id, userId)">
+                <!-- <a href="anteprimaCorso"> -->
                 <img [src]="'../../../assets/images/' + coursesDatabase.courseImageUrl"
                     [alt]="coursesDatabase.courseName">
-            <!-- </a> -->
+                <!-- </a> -->
+            </div>
         </div>
     </div>
 </div>

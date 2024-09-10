@@ -22,6 +22,7 @@ body.dark .logoChiaro {
 /* Logo Scuro - Visibile solo in modalità chiara */
 .navLogo img:not(.logoChiaro) {
   display: block; /* Mostra il logo scuro per impostazione predefinita */
+  user-select: none;
 }
 
 body.dark .navLogo img:not(.logoChiaro) {
@@ -55,6 +56,7 @@ main {
   color: white;
   height: 100%; /* Altezza della navbar uguale all'altezza minima */
   background-color: var(--header-background);
+  user-select: none;
 }
 
 /* Logo nella Navbar */
@@ -70,6 +72,7 @@ main {
 /* Icone del menu */
 .nav-bar .bx-menu {
   display: none;
+  color: var(--text-color);
 }
 
 .dropdown-content {
@@ -101,6 +104,7 @@ main {
   cursor: pointer;
   margin-right: 5px;
   background-color: rgba(212, 155, 50, 1);
+  background-color: var(--header-background);
   border: none;
   padding: 5px;
 }
@@ -236,7 +240,6 @@ main {
   top: 100%;
   background-color: var(--nav-color);
   padding: 3px;
-  /* border-radius: 6px; */
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
   opacity: 0;
   transform: scaleX(0);
@@ -384,11 +387,12 @@ nav {
     align-items: flex-start;
     height: 68px;
     width: 100%;
+    user-select: none;
   }
 
   .nav-bar .bx-menu {
     display: block; /* Mostra l'icona del menu */
-    position: absolute; /* Posizionamento assoluto */
+    position: relative; /* Posizionamento assoluto */
     top: 10px; /* Spazio dalla parte superiore */
     left: 10px; /* Spazio dalla parte sinistra */
     cursor: pointer;
@@ -541,6 +545,7 @@ nav {
     height: 50px; /* Altezza maggiore per schermi più grandi */
     margin-left: 60px;
     margin-right: 60px;
+    user-select: none;
   }
 
   .nav-bar .bx-menu {
@@ -606,6 +611,7 @@ nav {
     font-size: 14px; /* Dimensione del font per il pulsante dropdown */
     margin: 0; /* Rimuovi il margine extra */
     background-color: rgba(212, 155, 50, 1); /* Colore di sfondo */
+    background-color: var(--header-background);
     color: var(--text-color); /* Colore del testo */
     border: none;
     border-radius: 4px; /* Border radius per il pulsante */
@@ -622,6 +628,7 @@ nav {
     flex-direction: row; /* Layout a riga per schermi desktop */
     align-items: center; /* Allineamento degli elementi centrato */
     height: 70px; /* Altezza maggiore per schermi desktop */
+    user-select: none; /*l'user non può selezionare il testo o immagini*/
   }
 
   .nav-bar .bx-menu {
@@ -629,7 +636,7 @@ nav {
   }
 
   .navLogo img {
-    max-height: 130px; /* Altezza dell'immagine del logo per desktop */
+    max-height: 160px; /* Altezza dell'immagine del logo per desktop */
     margin-left: 30px; /* Margine sinistro per il logo */
   }
 

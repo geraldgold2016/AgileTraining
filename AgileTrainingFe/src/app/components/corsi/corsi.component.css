@@ -1,3 +1,9 @@
+#app
+{
+    height: 1500px;
+    background: linear-gradient(to bottom right, var(--background-color), rgba(212,155,50,0.5));
+}
+
 h1
 {
     text-align: center;
@@ -15,7 +21,7 @@ h2
     margin-left: 100px;
     padding: 10px;
     cursor: pointer;
-
+    width: 120px;
     display: none;
 }
 
@@ -86,6 +92,18 @@ h2
     cursor: pointer;
 }
 
+.corsi-background
+{
+    height: 100vh;
+    background: linear-gradient(to bottom right, var(--background-color), rgba(212, 155, 50, 0.5));
+    display: flex;
+    text-align: center;
+    color: var(--text-color);
+    overflow: hidden;
+    position: relative;
+    flex-direction: column;
+}
+
 img
 {
     width: 100%;
@@ -113,6 +131,10 @@ a
         justify-content: center;
         flex-wrap: wrap;
     }
+    .corsi-background
+    {
+        height: 100vh;
+    }
 }
 
 @media screen and (min-width: 500px) and (max-width: 891px)/*al di sopra dei 500 pixel e sotto i 891 pixel*/
@@ -129,6 +151,10 @@ a
         justify-content: center;
         flex-wrap: wrap;
     }
+    .corsi-background
+    {
+        height: auto;
+    }
 }
 
 @media screen and (min-width: 360px) and (max-width: 500px) /*al di sopra dei 360 pixel e al di sotto dei 500 pixel*/
@@ -144,5 +170,10 @@ a
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
+        margin: 0px 0px 100px 0px;
+    }
+    .corsi-background
+    {
+        height: auto;
     }
 }

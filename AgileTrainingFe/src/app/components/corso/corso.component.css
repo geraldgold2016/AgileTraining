@@ -22,6 +22,7 @@ h1
   background-color: inherit;
   font-family: inherit;
   margin: 0;
+  width: 160px;
 }
 .dropdown:hover .dropbtn 
 {
@@ -125,12 +126,6 @@ i
 
 
 /* video-player.component.css */
-.video-container {
-  position: relative;
-  width: 100%;
-  max-width: 640px;
-  margin: auto;
-}
 
 #playPauseButton {
   display: block;
@@ -159,9 +154,9 @@ i
   margin: 20px auto;
 }
 
-
 /* Pulsanti di controllo */
 .video-container button {
+  position: relative;  
   background-color: #333;
   border: none;
   color: #fff;
@@ -223,44 +218,36 @@ i
 #muteButton:hover {
   background-color: #e53935;
 }
-.video-container .volume-slider {
-  display: block;
-  position: absolute;
-  top: -40px; /* Posizionamento sopra il pulsante */
-  left: 50%;
-  transform: translateX(-50%);
+
+
+.volume-slider 
+{
+  transform: translateX(-45%) translateY(-25px);
+  rotate: 270deg;
   width: 100px;
-  height: 4px;
+  height: 10px;
   background: #2196f3;
   cursor: pointer;
 }
 
-.video-container button {
-  position: relative;
-}
+div.volume-container .volume-slider-container
+{
+  position: absolute;
+  left: 0%;
+  bottom: 90%;
+  width: 50px;
+  height: 115px;
 
-.video-container .volume-slider {
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease;
 }
 
-.video-container button:hover .volume-slider {
+div.volume-container:hover .volume-slider-container
+{
   opacity: 1;
-  visibility: visible;
+  visibility: visible;  
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* Barra di progresso */
 .progress-container 
@@ -314,11 +301,6 @@ span#currentTime, span#totalTime
   font-size: 14px;
 }
 
-
-
-
-
-
 .controls {
   flex-direction: row;
   border-radius: 8px;
@@ -329,7 +311,7 @@ span#currentTime, span#totalTime
   right: 0;
   display: flex;
   align-items: center;
-  padding: 0 10px;
+  justify-content: center;
   background: rgba(0, 0, 0, 0.5); 
   color: white;
   z-index: 1; 
@@ -372,4 +354,27 @@ iframe
   width: 100%;
   height: 100%;
   z-index: 0;
+}
+
+
+.volume-container 
+{
+  position: relative;
+  display: inline-block;
+}
+
+
+@media screen and (max-width: 500px)/*sotto i 500 pixel*/
+{
+  #contenitore
+  {
+    padding: 10px 10px 130px 10px;
+  }
+}
+@media screen and (min-width: 500px ) and (max-width: 1024px)/*sopra i 500 pixel e sotto i 1024px*/
+{
+  #contenitore
+  {
+    padding: 10px 10px 130px 10px;
+  }
 }

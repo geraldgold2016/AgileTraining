@@ -32,11 +32,17 @@
               <i class="fas fa-play" *ngIf="!isPlaying[i]"></i>
               <i class="fas fa-pause" *ngIf="isPlaying[i]"></i>
             </button>
-            <button #volumeButton (click)="toggleMute(i)" (mouseenter)="showVolumeSlider(i)" (mouseleave)="hideVolumeSlider(i)">
-              <i class="fas" [ngClass]="isMuted[i] ? 'fa-volume-mute' : 'fa-volume-up'"></i>
-              <!-- <input type="range" min="0" max="100" step="1" class="volume-slider" 
-                     *ngIf="showingSlider[i]" (input)="setVolume($event, i)" [value]="currentVolume[i]"> -->
+            <div class="volume-container">
+              <button #volumeButton (click)="toggleMute(i)" (mouseenter)="showVolumeSlider(i)" (mouseleave)="hideVolumeSlider(i)">
+                <i class="fas" [ngClass]="isMuted[i] ? 'fa-volume-mute' : 'fa-volume-up'"></i>
             </button>
+              <div class="volume-slider-container">
+                <input #volumeBar type="range" min="0" max="100" step="1" value="100" class="volume-slider" (input)="setVolume($event, i)">                
+              </div>
+
+              <!-- <input *ngIf="showingSlider[i]" type="range" min="0" max="100" step="1" 
+                   (input)="setVolume($event, i)" [value]="currentVolume[i]"> -->
+            </div>            
             <div class="progress-container">
               <input #progressBar type="range" min="0" class="progress-bar" value="0" (input)="seekVideo($event, i)" />
               <span #currentTime>00:00</span> / <span #totalTime>00:00</span>

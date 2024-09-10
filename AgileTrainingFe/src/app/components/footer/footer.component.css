@@ -14,6 +14,7 @@ footer {
   font-size: 14px;
   padding: 10px; /* Aggiunto padding per migliore spacing */
   z-index: 1000;
+  user-select: none;
 }
 
 /* Stile per i link nel footer */
@@ -42,6 +43,7 @@ footer .logoA img {
     flex-direction: column; /* Disposizione verticale sui dispositivi mobili */
     align-items: center;
     padding: 20px;
+    user-select: none;
   }
 
   footer a {

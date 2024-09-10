@@ -141,6 +141,7 @@ export class CorsoComponent
 @ViewChildren('vimeoPlayer') vimeoPlayers!: QueryList<ElementRef>;
 @ViewChildren('fullscreenButton') fullscreenButtons!: QueryList<ElementRef>;
 @ViewChildren('controlVideo') controlVideos!: QueryList<ElementRef>;
+@ViewChildren('volumeBar') volumeBars!: QueryList<ElementRef>;
 
 private players: Player[] = [];
 private videoDurations: number[] = [];
@@ -151,6 +152,7 @@ isMuted: boolean[] = [];
 currentVolume: number[] = [];
 showingSlider: boolean[] = [];
 isFullscreen: boolean[] = [];
+isMouseOnSlider: boolean[] = new Array(this.players.length).fill(false);
 
 ngAfterViewInit(): void 
 {
@@ -160,7 +162,6 @@ ngAfterViewInit(): void
       this.setupPlayers();
     });
   }, 0);
-  
 }
 
 private setupProgressBars(): void 
@@ -199,10 +200,6 @@ private setupPlayers(): void {
     this.beginValues[index] = 0;
     this.maxAllowedTimes[index] = 0;
 
-    this.isMuted[index] = false;
-    this.currentVolume[index] = 100; // Volume massimo iniziale
-    this.showingSlider[index] = false;
-
     player.setCurrentTime(this.beginValues[index]).then(() => {
       this.progressBars.toArray()[index].nativeElement.value = this.beginValues[index].toString();
       this.currentTimeElems.toArray()[index].nativeElement.textContent = this.formatTime(this.beginValues[index]);
@@ -224,14 +221,10 @@ private setupPlayerControls(index: number): void {
           // Imposta i listener per play/pause
           playPauseButton.addEventListener('click', () => this.togglePlayPause(index));
 
-          // Imposta i listener per il controllo del volume
-          volumeButton.addEventListener('click', () => this.toggleMute(index));
-          volumeButton.addEventListener('mouseenter', () => this.showVolumeSlider(index));
-          volumeButton.addEventListener('mouseleave', () => this.hideVolumeSlider(index));
-
           // Aggiungi l'evento per il volume slider
           const volumeSlider = volumeButton.querySelector('.volume-slider');
-          if (volumeSlider) {
+          if (volumeSlider) 
+          {
               volumeSlider.addEventListener('input', (event: Event) => this.setVolume(event, index));
           }
 
@@ -323,43 +316,108 @@ togglePlayPause(index: number): void {
   }
 }
 
+toggleMute(index: number): void 
+{
+  const volumeBar = this.volumeBars.toArray()[index]?.nativeElement;
+  const volumeButton = this.volumeButtons.toArray()[index]?.nativeElement;
 
-toggleMute(index: number): void {
-  if (this.players[index]) {
-    this.isMuted[index] = !this.isMuted[index];
-    const newVolume = this.isMuted[index] ? 0 : this.currentVolume[index] / 100;
-    this.players[index].setVolume(newVolume).catch(error => {
-      console.error(`Errore nell'impostazione del volume del video ${index}:`, error);
-    });
+  if (volumeButton && volumeBar)
+  {
+    if (this.isMuted[index]) 
+    {
+      // Se è già mutato, ripristina il volume (ad esempio, 100)
+      volumeBar.value = '100'; // Imposta la barra del volume al massimo
+      this.currentVolume[index] = 100;
+      volumeButton.querySelector('i')?.classList.remove('fa-volume-mute');
+      volumeButton.querySelector('i')?.classList.add('fa-volume-up');
+
+      // Imposta il volume del player a 1 (volume massimo)
+      this.players[index].setVolume(1).catch(error => {
+        console.error(`Errore nell'impostazione del volume per il video ${index}:`, error);
+      });
+    }   
+    else
+    {
+      // Se non è mutato, imposta il volume a 0 (mute)
+      volumeBar.value = '0'; // Imposta la barra del volume a 0
+      this.currentVolume[index] = 0;
+      volumeButton.querySelector('i')?.classList.remove('fa-volume-up');
+      volumeButton.querySelector('i')?.classList.add('fa-volume-mute');
+
+      // Imposta il volume del player a 0 (mute)
+      this.players[index].setVolume(0).catch(error => {
+        console.error(`Errore nell'impostazione del volume per il video ${index}:`, error);
+      });
+    }
+
+    // Inverti lo stato di muting
+    this.isMuted[index] = !this.isMuted[index];     
   }
 }
 
-showVolumeSlider(index: number): void {
+
+
+showVolumeSlider(index: number): void 
+{
   this.showingSlider[index] = true;
 }
 
-hideVolumeSlider(index: number): void {
-  this.showingSlider[index] = false;
+hideVolumeSlider(index: number): void 
+{
+  setTimeout(() => {
+    if (!this.isMouseOnSlider[index]) 
+    {
+      this.showingSlider[index] = false;
+    }
+  }, 200);
 }
 
-setVolume(event: Event, index: number): void {
+keepSliderVisible(index: number): void 
+{
+  this.isMouseOnSlider[index] = true;
+}
+
+setVolume(event: Event, index: number): void 
+{
   const input = event.target as HTMLInputElement;
   const volume = parseInt(input.value, 10) / 100;
   this.currentVolume[index] = parseInt(input.value, 10);
+  const volumeButton = this.volumeButtons.toArray()[index]?.nativeElement;
+  const volumeBar = this.volumeBars.toArray()[index]?.nativeElement;
   
-  if (!this.isMuted[index]) {
-    this.players[index].setVolume(volume).catch(error => {
-      console.error(`Errore nell'impostazione del volume per il video ${index}:`, error);
-    });
+  if (volumeButton && volumeBar)
+  {
+    if (this.currentVolume[index] == 0) 
+    {
+      volumeButton.querySelector('i')?.classList.remove('fa-volume-up');
+      volumeButton.querySelector('i')?.classList.add('fa-volume-mute');
+      this.isMuted[index] = true; 
+      this.players[index].setVolume(0).catch(error => {
+        console.error(`Errore nell'impostazione del volume per il video ${index}:`, error);
+      });
+    } 
+    else if (this.currentVolume[index] > 0 && this.currentVolume[index] <= 100) 
+    {
+      volumeButton.querySelector('i')?.classList.remove('fa-volume-mute');
+      volumeButton.querySelector('i')?.classList.add('fa-volume-up');
+      this.isMuted[index] = false; 
+      
+      this.players[index].setVolume(volume).catch(error => {
+        console.error(`Errore nell'impostazione del volume per il video ${index}:`, error);
+      });
+    }    
   }
 }
-private formatTime(seconds: number): string {
+
+private formatTime(seconds: number): string 
+{
   const minutes = Math.floor(seconds / 60);
   const remainingSeconds = Math.floor(seconds % 60);
   return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
 }
 
-toggleFullscreen(index: number): void {
+toggleFullscreen(index: number): void 
+{
   const iframe = this.vimeoPlayers.toArray()[index]?.nativeElement;
   const fullscreenButton = this.fullscreenButtons.toArray()[index]?.nativeElement;
   const controlVideo = this.controlVideos.toArray()[index]?.nativeElement;

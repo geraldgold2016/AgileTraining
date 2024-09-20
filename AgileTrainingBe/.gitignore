@@ -37,4 +37,4 @@ src/main/resources/
 /bin/
 
 #AWS
-.env
+credenzialiAWS.properties

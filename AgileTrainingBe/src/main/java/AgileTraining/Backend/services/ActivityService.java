@@ -2,29 +2,21 @@ package AgileTraining.Backend.services;
 
 import AgileTraining.Backend.daos.ActivityDao;
 import AgileTraining.Backend.daos.CourseDao;
-import AgileTraining.Backend.daos.ModuleDao;
 import AgileTraining.Backend.daos.UserDao;
 import AgileTraining.Backend.entities.Activity;
 import AgileTraining.Backend.entities.Course;
-import AgileTraining.Backend.entities.Module;
 import AgileTraining.Backend.entities.User;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
-import java.sql.Time;
 import java.time.LocalTime;
-import java.util.List;
 
 @Service
 public class ActivityService {
 
     @Autowired
     private ActivityDao aDao;
-
-    @Autowired
-    private ModuleDao mDao;
 
     @Autowired
     private UserDao uDao;
@@ -35,8 +27,6 @@ public class ActivityService {
 
     @Transactional
     public Activity addActivity(Integer moduleId, Integer userId, Integer courseId) {
-        Module module = mDao.findById(moduleId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid module ID: " + moduleId));
         User user = uDao.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user ID: " + userId));
         Course course = cDao.findById(courseId)

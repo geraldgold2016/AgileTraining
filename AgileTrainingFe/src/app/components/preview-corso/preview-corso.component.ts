@@ -25,6 +25,7 @@ export class PreviewCorsoComponent
   esameCorso: any = '';
   descrizioneCapitoliCorso: any[] = [];
   rispostaIscrizioneCorso: string = '';
+  rispostaInizalizzatoCorso: string = '';
   error: string = '';
 
   ngOnInit(): void 
@@ -107,6 +108,16 @@ export class PreviewCorsoComponent
     this.dataService.subscribeToCourse(this.userId, this.idCorso).subscribe({
       next: () => {
         this.rispostaIscrizioneCorso = 'Iscrizione avvenuta con successo!';
+      },
+      error: (err: any) => {
+        this.error = 'Errore durante il login';
+        console.error('Errore:', err);
+      }
+    });
+
+    this.dataService.inizializeVideoCourse(this.userId, this.idCorso).subscribe({
+      next: () => {
+        this.rispostaInizalizzatoCorso = 'Corso inizializzato con successo!';
       },
       error: (err: any) => {
         this.error = 'Errore durante il login';

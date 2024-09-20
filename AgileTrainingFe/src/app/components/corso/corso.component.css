@@ -8,9 +8,14 @@ h1
 .dropdown 
 {
   float: right;
+  /* position: relative;
+  right: 0px; */
   margin: 0px 200px 0px 200px;
   overflow: hidden;
   background-color: black;
+  display: flex;
+  flex-direction: column;
+  width: 245px;
 }
 .dropdown .dropbtn 
 {
@@ -22,7 +27,7 @@ h1
   background-color: inherit;
   font-family: inherit;
   margin: 0;
-  width: 160px;
+  width: 245px;
 }
 .dropdown:hover .dropbtn 
 {
@@ -31,9 +36,9 @@ h1
 .dropdown-content 
 {
   display: none;
-  position: absolute;
+  /* position: absolute; */
   background-color: #f9f9f9;
-  min-width: 160px;
+  min-width: 245px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
 }
@@ -80,6 +85,21 @@ h3
     outline: none;
     font-size: 15px;
     transition: 0.4s;
+    user-select: none;
+}
+.accordion.disabled
+{
+    background-color: #888888;
+    color: #000000;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    pointer-events: none;
+    opacity: 0.5;
+    user-select: none;
 }
 
 .accordion:hover
@@ -316,6 +336,8 @@ span#currentTime, span#totalTime
   color: white;
   z-index: 1; 
   transition: opacity 0.3s; 
+  opacity: 0;
+  transition: opacity 0.5s ease;
 }
 
 .controls.fullscreen
@@ -333,6 +355,9 @@ span#currentTime, span#totalTime
   color: white;
   z-index: 1002;
   transition: opacity 0.3s; 
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none; /* Disabilita l'interazione con i controlli nascosti */
 }
 
 iframe.fullscreen
@@ -363,6 +388,11 @@ iframe
   display: inline-block;
 }
 
+.video-container:hover .controls 
+{
+  opacity: 1;
+  pointer-events: auto; /* Abilita l'interazione con i controlli quando visibili */
+}
 
 @media screen and (max-width: 500px)/*sotto i 500 pixel*/
 {
@@ -370,11 +400,23 @@ iframe
   {
     padding: 10px 10px 130px 10px;
   }
+  .dropdown
+  {
+    float: none;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 @media screen and (min-width: 500px ) and (max-width: 1024px)/*sopra i 500 pixel e sotto i 1024px*/
 {
   #contenitore
   {
     padding: 10px 10px 130px 10px;
+  }
+  .dropdown
+  {
+    float: none;
+    margin-left: auto;
+    margin-right: auto;
   }
 }

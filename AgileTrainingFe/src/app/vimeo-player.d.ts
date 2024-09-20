@@ -17,7 +17,8 @@ declare module '@vimeo/player' {
         seconds: number;
     }
 
-    export default class Player extends EventEmitter {
+    export default class Player extends EventEmitter 
+    {
         constructor(element: HTMLElement | string, options?: VimeoPlayerOptions);
         play(): Promise<void>;
         pause(): Promise<void>;
@@ -33,6 +34,8 @@ declare module '@vimeo/player' {
         requestFullscreen(): Promise<void>;
         exitFullscreen(): Promise<void>;
         getFullscreen(): Promise<boolean>;
+        on(event: 'loaded', callback: (data: VimeoEvent) => void): void;
+        on(event: 'ended', callback: (data: VimeoEvent) => void): void;
         on(event: 'timeupdate', callback: (data: VimeoEvent) => void): void;
     }
 }

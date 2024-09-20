@@ -14,12 +14,14 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "allowedCommonJsDependencies": [
+             "deepmerge",
               "raf",
               "rgbcolor",
               "core-js",
               "html2canvas",
               "dompurify",
-              "canvg"
+              "canvg",
+              "ngx-translate-multi-http-loader"
             ],
             "outputPath": "dist/agile-training-fe",
             "index": "src/index.html",
@@ -33,15 +35,7 @@
               "src/styles.css",
               "node_modules/@fortawesome/fontawesome-free/css/all.css"
             ],
-            "scripts": [],
-            "allowedCommonJsDependencies": [
-              "canvg",
-              "core-js",
-              "raf",
-              "rgbcolor",
-              "ngx-translate-multi-http-loader",
-              "html2canvas"
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -59,12 +53,14 @@
               ],
               "outputHashing": "all",
               "allowedCommonJsDependencies": [
-                "canvg",
-                "core-js",
+                "deepmerge",
                 "raf",
                 "rgbcolor",
-                "ngx-translate-multi-http-loader",
-                "html2canvas"
+                "core-js",
+                "html2canvas",
+                "dompurify",
+                "canvg",
+                "ngx-translate-multi-http-loader"
               ]
             },
             "development": {
@@ -72,12 +68,14 @@
               "extractLicenses": false,
               "sourceMap": true,
               "allowedCommonJsDependencies": [
-                "canvg",
-                "core-js",
+                "deepmerge",
                 "raf",
                 "rgbcolor",
-                "ngx-translate-multi-http-loader",
-                "html2canvas"
+                "core-js",
+                "html2canvas",
+                "dompurify",
+                "canvg",
+                "ngx-translate-multi-http-loader"
               ]
             }
           },

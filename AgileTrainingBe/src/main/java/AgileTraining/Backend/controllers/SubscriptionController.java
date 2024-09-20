@@ -1,8 +1,8 @@
 package AgileTraining.Backend.controllers;
 
-
-
+import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,9 +17,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import AgileTraining.Backend.daos.ActivityDao;
 import AgileTraining.Backend.daos.CourseDao;
 import AgileTraining.Backend.daos.SubscriptionDao;
 import AgileTraining.Backend.daos.UserDao;
+import AgileTraining.Backend.daos.ModuleDao;
+import AgileTraining.Backend.entities.Activity;
 import AgileTraining.Backend.entities.Course;
 import AgileTraining.Backend.entities.Subscription;
 import AgileTraining.Backend.entities.User;
@@ -37,6 +40,12 @@ public class SubscriptionController {
 
     @Autowired
     private UserDao uDao;
+    
+    @Autowired
+    private ActivityDao aDao;
+    
+    @Autowired
+    private ModuleDao mDao;
 
     public static class SubscriptionRequest {
         private Integer userId;
@@ -93,8 +102,8 @@ public class SubscriptionController {
 
     // endpoint per iscriversi a un corso -- TESTATO
     @PostMapping("/subscribeToCourse")
-    public ResponseEntity<?> subscribeToCourse(@RequestBody SubscriptionRequest subscriptionRequest) {
-
+    public ResponseEntity<?> subscribeToCourse(@RequestBody SubscriptionRequest subscriptionRequest) 
+    {
         // controllo che l'utente e il corso esistano
         Optional<Course> courseOptional = cDao.findById(subscriptionRequest.getCourseId());
         Course course;
@@ -121,14 +130,14 @@ public class SubscriptionController {
 
         Subscription subscription;
 
-            subscription = new Subscription();
-            subscription.setUser(user);
-            subscription.setCourse(course);
-            // aggiungo la data di registrazione
-            subscription.setRegistrationDate(new Date(System.currentTimeMillis()));
-            sDao.save(subscription);
-            return ResponseEntity.status(200).body("Subscription updated successfully");
-
+        subscription = new Subscription();
+        subscription.setUser(user);
+        subscription.setCourse(course);
+        
+        // aggiungo la data di registrazione
+        subscription.setRegistrationDate(new Date(System.currentTimeMillis()));
+        sDao.save(subscription);
+        return ResponseEntity.status(200).body("Subscription updated successfully");
     }
 
     @DeleteMapping("/unsubscribeFromCourse")
@@ -161,6 +170,47 @@ public class SubscriptionController {
         }
     }
 
+    @PostMapping("/inizializeVideoCourse")
+    public ResponseEntity<?> inizializeVideoCourse(@RequestParam Integer userId, @RequestParam Integer courseId) 
+    {
+    	
+        // Controllo che l'utente e il corso esistano
+        Optional<Course> courseOptional = cDao.findById(courseId);
+        Course course;
+        if (courseOptional.isPresent()) 
+        {
+            course = courseOptional.get();
+        } 
+        else 
+        {
+            return ResponseEntity.badRequest().body("Course not found");
+        }
+        
+        Optional<User> userOptional = uDao.findById(userId);
+        User user;
+        if (userOptional.isPresent()) 
+        {
+            user = userOptional.get();
+        } 
+        else 
+        {
+            return ResponseEntity.badRequest().body("User not found");
+        }
+    	
+        Activity activity =  new Activity();
+        LocalTime elapsedTime = LocalTime.of(0, 0, 0); 
+        BigDecimal percentuale = new BigDecimal(0);
+        
+        activity.setUser(user); 
+        activity.setCourse(course);
+        activity.setTotalModules(mDao.getTotalModules(courseId));
+        activity.setTotalModulesCompleted(0); 
+        activity.setCurrentPercentage(percentuale);
+        activity.setCurrentElapsedTime(elapsedTime);
+
+        aDao.save(activity);
+        return ResponseEntity.status(200).body("Inizializzato corso con successo");
+    }
 
 
     @PostMapping("/newTest")
@@ -188,13 +238,4 @@ public class SubscriptionController {
             this.userId = userId;
         }
     }
-
-
-
-
-
-
 }
-
-
-

@@ -99,7 +99,7 @@ export class CorsiComponent
         {
           this.router.navigate(['/anteprimaCorso']);
         }
-        console.log(this.isIscritto);
+        console.log("utente iscritto al corso " + this.isIscritto);
       },
       error: (error) => {
         console.error('Errore ricerca del corso', error);

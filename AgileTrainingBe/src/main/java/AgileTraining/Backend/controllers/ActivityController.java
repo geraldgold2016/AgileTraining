@@ -16,8 +16,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,54 +40,103 @@ public class ActivityController {
     @Autowired
     private ActivityService activityService;
 
-/*
-    @PostMapping("/newActivity")
-    public ResponseEntity<?> createActivity(
-            @RequestParam Integer moduleId,
-            @RequestParam Integer userId,
-            @RequestParam Course courseId,
-            @RequestParam Date prevTime,
-            @RequestParam Boolean isCompleted) {
-        return ResponseEntity.ok().body(aDao.save(new Activity(moduleId, userId, courseId, prevTime, isCompleted)));
-    }
-*/
-
     // update activity as completed  -- TESTATO
     @PutMapping("/{activityId}/complete")
-    public Activity markActivityAsCompleted(@PathVariable Integer activityId) {
+    public Activity markActivityAsCompleted(@PathVariable Integer activityId) 
+    {
         return activityService.markActivityAsCompleted(activityId);
     }
 
-
-    // Get all activities completed by a user   -- TESTATO
-    @GetMapping("/{userId}/completed-activities")
-    public ResponseEntity<?> getCompletedActivities(@PathVariable Integer userId) {
-        try {
-            List<Activity> activities = activityService.getCompletedActivitiesByUserId(userId);
-            if (activities.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No completed activities found for user " + userId);
-            }
-            return ResponseEntity.ok(activities);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error fetching completed activities");
-        }
+    // esempio: http://localhost:8080/updateActivityFineVideo?userId=3&courseId=1
+    @PutMapping("/updateActivityFineVideo")
+    public ResponseEntity<?> updateActivityFineVideo(@RequestParam Integer userId,@RequestParam Integer courseId) 
+    {
+        try 
+        {
+        	aDao.updateActivityFineVideo(userId, courseId);
+            return ResponseEntity.status(200).body(new BackendResponse("Activity aggiornata"));
+        } 
+        catch (IllegalArgumentException e) {return ResponseEntity.status(400).body(e.getMessage());} 
+        catch (Exception e) {return ResponseEntity.status(500).body("Errore interno del server");}
+    }
+    
+    // esempio: http://localhost:8080/updateActivityVisioneVideo
+    @PutMapping("/updateActivityVisioneVideo")
+    public ResponseEntity<?> updateActivityVisioneVideo(@RequestBody UpdateVisioneVideo updateVisioneVideo) 
+    {
+        try 
+        {    	
+    		aDao.updateActivityVisioneVideo(updateVisioneVideo.getUserId(), updateVisioneVideo.getCourseId(), updateVisioneVideo.getCurrentElapsedTime(), updateVisioneVideo.getCurrentPercentage());
+            return ResponseEntity.status(200).body(new BackendResponse("Visione video aggiornata"));
+        } 
+        catch (IllegalArgumentException e) {return ResponseEntity.status(400).body(e.getMessage());} 
+        catch (Exception e) {return ResponseEntity.status(500).body("Errore interno del server");}
     }
 
-
-    // endpoint per aggiornare tempo -- TESTATO
-    // esempio: http://localhost:8080/updateActivity?activityId=10&prevTime=20:00:01
-    @PutMapping("/updateActivity")
-    public ResponseEntity<?> updateActivity(@RequestParam Integer activityId,@RequestParam Time prevTime) {
-        try {
-            Activity updatedActivity = activityService.updateActivity(activityId, prevTime);
-            return ResponseEntity.status(200).body(updatedActivity);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(400).body(e.getMessage());
-        } catch (Exception e) {
+    //endpoint: http://localhost:8080/getActivity?userId=1&courseId=1
+    @GetMapping("/getActivity")
+    public ResponseEntity<?> getActivity(@RequestParam Integer userId,@RequestParam Integer courseId) 
+    {
+    	try 
+    	{
+    		Activity activity =  aDao.findActivityByUserAndCourse(userId, courseId);
+    		return ResponseEntity.status(200).body(activity);   		
+    	}
+    	catch (Exception e)
+    	{
             return ResponseEntity.status(500).body("Errore interno del server");
-        }
+    	}
     }
+    
+    public static class UpdateVisioneVideo 
+    {
+        private Integer userId;
+        private Integer courseId;
+        private LocalTime currentElapsedTime;
+        private BigDecimal currentPercentage;
 
+        public Integer getCourseId() 
+        {
+            return courseId;
+        }
+
+        public void setCourseId(Integer courseId) 
+        {
+            this.courseId = courseId;
+        }
+
+        public Integer getUserId() 
+        {
+            return userId;
+        }
+
+        public void setUserId(Integer userId) 
+        {
+            this.userId = userId;
+        }
+
+		public LocalTime getCurrentElapsedTime() 
+		{
+			return currentElapsedTime;
+		}
+
+		public void setCurrentElapsedTime(LocalTime currentElapsedTime) 
+		{
+			this.currentElapsedTime = currentElapsedTime;
+		}
+
+		public BigDecimal getCurrentPercentage() {
+			return currentPercentage;
+		}
+
+		public void setCurrentPercentage(BigDecimal currentPercentage) 
+		{
+			this.currentPercentage = currentPercentage;
+		}
+        
+        
+    }
+    
     public static class NewActivityRequest {
         private Integer moduleId;
         private Integer userId;

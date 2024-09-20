@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -21,10 +22,6 @@ public class ActivityService {
 
     @Autowired
     private ActivityDao aDao;
-
-    public List<Activity> getCompletedActivitiesByUserId(Integer userId) {
-        return aDao.findCompletedActivitiesByUserId(userId);
-    }
 
     @Autowired
     private ModuleDao mDao;
@@ -46,7 +43,6 @@ public class ActivityService {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid course ID: " + courseId));
 
         Activity activity = new Activity();
-        activity.setModule(module);
         activity.setUser(user);
         activity.setCourse(course);
 
@@ -59,17 +55,15 @@ public class ActivityService {
         Activity activity = aDao.findById(activityId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid activity ID: " + activityId));
 
-        activity.setIsCompleted(true);
-
         return aDao.save(activity);
     }
 
 
     @Transactional
-    public Activity updateActivity(Integer activityId, Time prevTime){
+    public Activity updateActivity(Integer activityId, LocalTime prevTime){
         Activity activity = aDao.findById(activityId)
                 .orElseThrow(() -> new IllegalArgumentException("Activity non trovata: " + activityId));
-        activity.setPrevTime(prevTime);
+        activity.setCurrentElapsedTime(prevTime);
         return aDao.save(activity);
     }
 }

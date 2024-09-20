@@ -15,13 +15,13 @@
   <h3>Capitoli del Corso</h3>
 
   <ng-container *ngFor="let capitolo of capitoliCorso; let i = index">
-    <button class="accordion" (click)="toggleAccordion($event)">
+    <button class="accordion" (click)="verifyAccordion($event, i)" [ngClass]="{'disabled': i >= capitoliCompletati}">
       <i class="fa-solid fa-angle-down"></i> {{ capitolo.moduleName }}
     </button>
     <div class="panel">
       <p>{{ capitolo.moduleDescription }}</p>
-      <ng-container *ngIf="lunghezzaVideo[i] > 0; else noVideo">
-        <div class="video-container">
+      <ng-container *ngIf="esistenzaVideo[i] == true; else noVideo">
+        <div #videoContainer class="video-container">
           <div style="padding:56.25% 0 0 0;position:relative;">
             <iframe #vimeoPlayer [src]="urlVideo[i]" frameborder="0"
               allow="autoplay; fullscreen; picture-in-picture; clipboard-write" title="Video Prova">
@@ -39,35 +39,28 @@
               <div class="volume-slider-container">
                 <input #volumeBar type="range" min="0" max="100" step="1" value="100" class="volume-slider" (input)="setVolume($event, i)">                
               </div>
-
-              <!-- <input *ngIf="showingSlider[i]" type="range" min="0" max="100" step="1" 
-                   (input)="setVolume($event, i)" [value]="currentVolume[i]"> -->
             </div>            
             <div class="progress-container">
               <input #progressBar type="range" min="0" class="progress-bar" value="0" (input)="seekVideo($event, i)" />
               <span #currentTime>00:00</span> / <span #totalTime>00:00</span>
             </div>
-            <button #fullscreenButton (click)="toggleFullscreen(i)" class="fullscreen-button">
+            <button #fullscreenButton (click)="toggleFullscreen(i)">
               <i class="fas" [ngClass]="isFullscreen[i] ? 'fa-compress' : 'fa-expand'"></i>
             </button>
           </div>
-          <script src="https://player.vimeo.com/api/player.js"></script>
         </div>
       </ng-container>
     </div>
   </ng-container>
 
-
-
-  <!--https://player.vimeo.com/video/1003952308?controls=0&keyboard=0&badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479-->
-  <!--https://player.vimeo.com/video/1005350558?controls=0&keyboard=0&badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479-->
   <!-- Template alternativo se non c'è il video -->
   <ng-template #noVideo>
     <p>Video non disponibile</p>
   </ng-template>
 
-  <button class="accordion" (click)="toggleAccordion($event)"><i class="fa-solid fa-angle-down"></i> Esame
-    finale</button>
+  <button class="accordion" (click)="verifyAccordion($event, capitoliCorso.length)" [ngClass]="{'disabled': capitoliCompletati - 1 < capitoliCorso.length}">
+    <i class="fa-solid fa-angle-down"></i> Esame finale
+  </button>
   <div class="panel">
     <p id="paginaEsame"><a href="#" (click)="openExamPage($event)">Vai alla pagina dell'esame</a></p>
   </div>

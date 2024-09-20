@@ -8,8 +8,6 @@ export class DataService
 {
   private baseUrl = 'http://localhost:8080';
 
-  private questionsCache: any[] = [];
-
   constructor(private http: HttpClient) {}
 
   // Login dell'utente
@@ -79,6 +77,34 @@ export class DataService
   {
     const unsubscribeData = { userId, courseId };
     return this.http.delete<any>(`${this.baseUrl}/unsubscribeFromCourse`, {body: unsubscribeData});
+  }
+
+  //all'iscrizione del corso si inizializza il primo video del primo modulo
+  inizializeVideoCourse(userId: string, courseId: string): Observable<any> 
+  {
+    const params = new HttpParams().set('userId', userId).set('courseId', courseId);
+    return this.http.post<any>(`${this.baseUrl}/inizializeVideoCourse`, params);
+  }
+
+  //si ottiene l'activity dell'utente per corso
+  getActivity(userId: string, courseId: string): Observable<any> 
+  {
+    const params = new HttpParams().set('userId', userId).set('courseId', courseId);
+    return this.http.get<any>(`${this.baseUrl}/getActivity`, {params});
+  }
+
+  //aggiorna l'activity dell'utente
+  updateActivityFineVideo(userId: string, courseId: string): Observable<any> 
+  {
+    const params = new HttpParams().set('userId', userId).set('courseId', courseId);
+    return this.http.put<any>(`${this.baseUrl}/updateActivityFineVideo`,{}, {params});
+  }
+
+  //aggiorna l'activity dell'utente
+  updateActivityVisioneVideo(userId: string, courseId: string, tempoVisione: string, percentuale: number): Observable<any> 
+  {
+    const body = {userId: userId, courseId: courseId, currentElapsedTime: tempoVisione,currentPercentage: percentuale};
+    return this.http.put<any>(`${this.baseUrl}/updateActivityVisioneVideo`, body);
   }
 
   // Verifica se l'utente è iscritto a un corso specifico

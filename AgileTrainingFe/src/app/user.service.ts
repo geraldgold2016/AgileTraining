@@ -5,15 +5,12 @@ import { catchError, Observable, throwError } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class UserService 
+{
   private userApiUrl = 'http://localhost:8080/users'; // URL per gli utenti
   private baseUrl = 'http://localhost:8080'; // Base URL del server
 
-
   constructor(private http: HttpClient) {}
-
-
-
 
 // Metodo per cambiare la password
 changePassword(id: number, oldPassword: string, newPassword: string): Observable<any> {
@@ -31,9 +28,6 @@ changePassword(id: number, oldPassword: string, newPassword: string): Observable
   return this.http.put<any>(url, body, { headers });
 }
  
-
- 
-
   // Ottieni i dati utente per ID
   getUserById(id: number): Observable<any> {
     const token = localStorage.getItem('authToken');

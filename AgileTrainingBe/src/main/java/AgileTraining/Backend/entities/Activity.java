@@ -3,8 +3,8 @@ package AgileTraining.Backend.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
-
-import java.sql.Date;
+import java.time.LocalTime;
+import java.math.BigDecimal;
 import java.sql.Time;
 
 @Entity
@@ -14,21 +14,15 @@ public class Activity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    
+    @Column(precision = 5, scale = 2)
+    private BigDecimal  currentPercentage; 
 
-    private Date duration;
-
-    private Time prevTime;
-
-
-
-    // il suo valore di default dovrebbe essere false.
-    // non sono sicura che funzioni...
-    @Column(nullable = false)
-    private Boolean isCompleted = false;
-
-    @ManyToOne
-    @JoinColumn(name = "module_id")
-    private Module module;
+    private LocalTime currentElapsedTime;
+    
+    private Integer totalModules;
+    
+    private Integer totalModulesCompleted;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -40,15 +34,11 @@ public class Activity {
     @JsonIgnore
     private Course course;
 
-    public Activity(Integer moduleId, Integer userId, Course courseId, java.util.Date prevTime, Boolean isCompleted) {
-    }
+    public Activity(Integer moduleId, Integer userId, Course courseId, Time elapsedTime) 
+    {}
 
     public Course getCourse() {
         return course;
-    }
-
-    public User getUser() {
-        return user;
     }
 
     public void setCourse(Course course) {
@@ -59,14 +49,6 @@ public class Activity {
     public Activity() {
     }
 
-    public Module getModule() {
-        return module;
-    }
-
-    public void setModule(Module module) {
-        this.module = module;
-    }
-
     public Integer getId() {
         return id;
     }
@@ -75,31 +57,44 @@ public class Activity {
         this.id = id;
     }
 
-    public Date getDuration() {
-        return duration;
-    }
+	public BigDecimal getCurrentPercentage() {
+		return currentPercentage;
+	}
 
-    public void setDuration(Date duration) {
-        this.duration = duration;
-    }
+	public void setCurrentPercentage(BigDecimal currentPercentage) {
+		this.currentPercentage = currentPercentage;
+	}
 
-    public Time getPrevTime() {
-        return prevTime;
-    }
+	public LocalTime getCurrentElapsedTime() { 
+		return currentElapsedTime;
+	}
 
-    public void setPrevTime(Time prevTime) {
-        this.prevTime = prevTime;
-    }
+	public void setCurrentElapsedTime(LocalTime currentElapsedTime) {
+		this.currentElapsedTime = currentElapsedTime;
+	}
 
-    public void setUser(User user) {
+	public User getUser() {
+        return user;
+    }
+	
+	public void setUser(User user) {
         this.user = user;
     }
 
-    public Boolean getIsCompleted() {
-        return isCompleted;
-    }
+	public Integer getTotalModules() {
+		return totalModules;
+	}
 
-    public void setIsCompleted(Boolean isCompleted) {
-        this.isCompleted = isCompleted;
-    }
+	public void setTotalModules(Integer totalModules) {
+		this.totalModules = totalModules;
+	}
+
+	public Integer getTotalModulesCompleted() {
+		return totalModulesCompleted;
+	}
+
+	public void setTotalModulesCompleted(Integer totalModulesCompleted) {
+		this.totalModulesCompleted = totalModulesCompleted;
+	}
+    
 }

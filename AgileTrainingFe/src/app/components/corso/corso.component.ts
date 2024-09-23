@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChildren, QueryList } from '@angular/core';
+import { Component, ElementRef, ViewChildren, QueryList, HostListener } from '@angular/core';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 import { CommonModule } from '@angular/common';
@@ -352,9 +352,9 @@ private setupPlayerControls(index: number): void
                     this.percentualeVideo = Number(((100 * currentTime)/this.tempoTotale).toFixed(2));
                     // console.log(this.percentualeVideo);
                     this.tempoCorrente = this.convertToTime(currentTime);
-                    this.dataService.updateActivityVisioneVideo(this.userId, this.idCorso, this.tempoCorrente, this.percentualeVideo).subscribe({
-                      error: (err: any) => {console.error("Errore nel recupero dell'activity", err);}
-                    });
+                    // this.dataService.updateActivityVisioneVideo(this.userId, this.idCorso, this.tempoCorrente, this.percentualeVideo).subscribe({
+                    //   error: (err: any) => {console.error("Errore nel recupero dell'activity", err);}
+                    // });
                   }
 
                 }).catch(error => {
@@ -471,7 +471,31 @@ togglePlayPause(index: number): void
   }
 }
 
+@HostListener('window:beforeunload', ['$event'])
+unloadNotification($event: any): void 
+{
+ this.players[this.capitoliCompletati].getCurrentTime().then(() => {
 
+      // this.dataService.updateActivityVisioneVideo(this.userId, this.idCorso, this.tempoCorrente, this.percentualeVideo).subscribe({
+      //   error: (err: any) => {console.error("Errore nel recupero dell'activity", err);}
+      // });
+
+      const data = {
+        userId: this.userId,
+        idCorso: this.idCorso,
+        tempoCorrente: this.tempoCorrente,
+        percentualeVideo: this.percentualeVideo
+      };
+
+          // Utilizza sendBeacon per inviare i dati
+    navigator.sendBeacon('/api/updateActivityVisioneVideo', JSON.stringify(data));
+
+  }).catch(error => {
+    console.error(`Errore nel recupero del tempo corrente del video ${this.capitoliCompletati}:`, error);
+});  
+  $event.returnValue = 'Sei sicuro di voler lasciare la pagina?';
+ 
+}
 
 toggleMute(index: number): void 
 {

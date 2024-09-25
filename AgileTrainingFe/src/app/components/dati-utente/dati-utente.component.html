@@ -9,10 +9,12 @@
     <div class="fotoDiv">
       <img
         class="fotoProfilo"
-        [src]="user?.profileImageUrl || '../../../assets/images/profile-pic.jpg'"
+        [src]="user?.profileImageUrl || (user?.gender === 'Maschile' 
+        ? '../../../assets/images/profile-pic-man.jpg' 
+        : '../../../assets/images/profile-pic-woman.png')"
         alt="Foto Profilo"
       />
-      <h3>{{ user.name }} {{ user.surname }}</h3>
+      <h3>{{ user.name }} {{ user.surname }}</h3> 
     </div>
     <div class="divOpzione">
       <ul>

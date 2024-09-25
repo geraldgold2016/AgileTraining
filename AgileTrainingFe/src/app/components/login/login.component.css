@@ -8,7 +8,7 @@
 .logo {
   margin-top: 5px;
   width: 100px;
-  height: 60px;
+  height: 110px;
 }
 
 .intro {
@@ -58,11 +58,15 @@
   padding: 10px 40px;
   font-size: 20px;
   border-radius: 25px;
+  color: white;
+  background-color: #2d9bf0;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .btnLogin:hover {
   color: white;
-  background-color: #2d9bf0;
+  background-color: #1a7bb9;
 }
 
 .error-message {
@@ -208,7 +212,7 @@ input.passInp::selection {
 
   .logo {
     width: 140px;
-    height: 60px;
+    height: 110px;
     border-radius: 25px;
     margin: 0 auto;
     display: block;

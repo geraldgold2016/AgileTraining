@@ -253,6 +253,8 @@ main {
 {
   opacity: 1;
   transform: scaleX(1);
+  background-color: rgb(212 155 50);
+  background-color: var(--header-background);
   width: 100%;
   height: 40px;
   justify-content: center;
@@ -688,6 +690,7 @@ nav {
     display: flex; /* Mostra la ricerca come flex */
     gap: 20px; /* Spazio tra gli elementi */
     margin-right: 60px;
+
   }
 
   .searchToggle {

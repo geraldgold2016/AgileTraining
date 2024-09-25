@@ -12,9 +12,9 @@
         </h3>
         <img
           class="fotoProfilo"
-          [src]="
-            user?.profileImageUrl || '../../../assets/images/profile-pic.jpg'
-          "
+          [src]="user?.profileImageUrl || (user?.gender === 'Maschile' 
+          ? '../../../assets/images/profile-pic-man.jpg' 
+          : '../../../assets/images/profile-pic-woman.png')"
           alt="Foto Profilo"
         />
       </div>
